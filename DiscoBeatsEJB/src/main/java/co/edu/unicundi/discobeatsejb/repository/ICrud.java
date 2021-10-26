@@ -1,5 +1,7 @@
 package co.edu.unicundi.discobeatsejb.repository;
 
+import java.util.List;
+
 /**
  *
  * @author Tatiana Ramos Villanueva
@@ -8,6 +10,15 @@ package co.edu.unicundi.discobeatsejb.repository;
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface ICrud {
+public interface ICrud<T, ID> {
     
+    public List<T> listarTodos();
+    
+    public T listarPorId(ID id);
+    
+    public void guardar(T obj);
+    
+    public void editar(T obj);
+    
+    public void eliminar(ID id);
 }
