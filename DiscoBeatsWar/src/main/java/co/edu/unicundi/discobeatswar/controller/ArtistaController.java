@@ -61,7 +61,7 @@ public class ArtistaController {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response agregarArtista(Artista artistaNuevo) throws ConflictException, Exception {
+    public Response agregarArtista(@Valid Artista artistaNuevo) throws ConflictException {
 
         this.artistaService.guardarArtista(artistaNuevo);
         

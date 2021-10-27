@@ -11,6 +11,7 @@ import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 /**
  *
@@ -20,6 +21,7 @@ import javax.ws.rs.ext.ExceptionMapper;
  * @version 1.0.0
  * @since 1.0.0
  */
+@Provider
 public class ValidationExceptionHandler implements ExceptionMapper<ConstraintViolationException> {
 
     /**

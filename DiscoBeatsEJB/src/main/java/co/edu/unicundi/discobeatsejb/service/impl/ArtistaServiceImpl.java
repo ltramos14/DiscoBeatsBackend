@@ -47,10 +47,10 @@ public class ArtistaServiceImpl implements IArtistaService {
     @Override
     public void guardarArtista(Artista artistaNuevo) {
         try {
-            repo.guardar(artistaNuevo);
+        repo.guardar(artistaNuevo);  
         } catch (Exception ex) {
             throw ex;
-        }
+    }
     }
 
     @Override

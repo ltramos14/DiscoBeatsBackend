@@ -30,6 +30,8 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(co.edu.unicundi.discobeatswar.controller.ArtistaController.class);
+        resources.add(co.edu.unicundi.discobeatswar.exception.ExceptionHandler.class);
+        resources.add(co.edu.unicundi.discobeatswar.exception.ValidationExceptionHandler.class);
     }
     
 }

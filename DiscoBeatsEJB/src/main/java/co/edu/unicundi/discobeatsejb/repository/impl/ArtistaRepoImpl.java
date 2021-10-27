@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.ws.rs.PathParam;
 
 /**
  *
@@ -55,5 +54,5 @@ public class ArtistaRepoImpl implements IArtistaRepo{
         query.setParameter("nombre", nombre);
         return query.getSingleResult().intV;
     }*/
-    
+
 }
