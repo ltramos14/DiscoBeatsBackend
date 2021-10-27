@@ -1,6 +1,8 @@
 package co.edu.unicundi.discobeatsejb.service;
 
 import co.edu.unicundi.discobeatsejb.entity.Artista;
+import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -14,14 +16,14 @@ import javax.ejb.Local;
 @Local
 public interface IArtistaService {
     
-    public void listarArtistas();
+    public List<Artista> listarArtistas();
     
-    public void listarArtistaPorId();
+    public Artista listarArtistaPorId(Integer id) throws ResourceNotFoundException;
     
-    public void guardarArtista();
+    public void guardarArtista(Artista artistaNuevo);
     
     public void editarArtista();
     
-    public void eliminarArtista();
+    public void eliminarArtista(Integer id);
     
 }

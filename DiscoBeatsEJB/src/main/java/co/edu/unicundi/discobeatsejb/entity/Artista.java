@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
@@ -22,7 +24,10 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "artista")
-
+@NamedQueries({
+    @NamedQuery(name = "Artista.ListarTodos", query = "SELECT a FROM Artista a"),
+    @NamedQuery(name = "Artista.ContarPorNombre", query = "SELECT COUNT(t) FROM Artista t WHERE t.nombreArtistico =:nombre")
+})
 public class Artista implements Serializable {
 
     @Id
@@ -34,8 +39,8 @@ public class Artista implements Serializable {
     @Column(name = "nombre_artistico", nullable = false, length = 25, unique = true)
     private String nombreArtistico;
 
-    @NotNull(message = "La fecha de nacimiento es obligatoria")
-    @Column(name = "fecha_nacimiento", nullable = false)
+    // @NotNull(message = "La fecha de nacimiento es obligatoria")
+    @Column(name = "fecha_nacimiento", nullable = true)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaNacimiento;
 

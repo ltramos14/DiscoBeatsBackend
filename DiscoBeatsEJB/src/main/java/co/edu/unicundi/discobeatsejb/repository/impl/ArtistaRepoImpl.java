@@ -6,6 +6,9 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.ws.rs.PathParam;
 
 /**
  *
@@ -23,17 +26,18 @@ public class ArtistaRepoImpl implements IArtistaRepo{
 
     @Override
     public List<Artista> listarTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TypedQuery<Artista> query = this.em.createNamedQuery("Artista.ListarTodos", Artista.class);
+        return query.getResultList();
     }
 
     @Override
     public Artista listarPorId(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.em.find(Artista.class, id);
     }
 
     @Override
-    public void guardar(Artista obj) {
-        this.em.persist(obj);
+    public void guardar(Artista objArtista) {
+        this.em.persist(objArtista);
     }
 
     @Override
@@ -45,5 +49,11 @@ public class ArtistaRepoImpl implements IArtistaRepo{
     public void eliminar(Integer id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    /*public int contarPorNombreArtistico(String nombre) {
+        Query query = this.em.createNamedQuery("Artista.ContarPorNombre", Artista.class);
+        query.setParameter("nombre", nombre);
+        return query.getSingleResult().intV;
+    }*/
     
 }

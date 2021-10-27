@@ -1,9 +1,11 @@
 package co.edu.unicundi.discobeatswar.exception;
 
 import co.edu.unicundi.discobeatsejb.exception.ConflictException;
+import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.NotAllowedException;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -43,6 +45,10 @@ public class ExceptionHandler implements ExceptionMapper<Exception> {
 
         Response.Status status = Response.Status.BAD_REQUEST;
 
+        if (exception instanceof ResourceNotFoundException  || exception instanceof NotFoundException) {
+            System.out.println("Entro a la excepcion");
+            status = Response.Status.NOT_FOUND;
+        }
         if (exception instanceof ConflictException) {
             status = Response.Status.CONFLICT;
         }
