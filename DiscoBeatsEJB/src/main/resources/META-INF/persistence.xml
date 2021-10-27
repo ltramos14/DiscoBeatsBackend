@@ -3,6 +3,10 @@
   <persistence-unit name="conexionPostgresql" transaction-type="JTA">
     <jta-data-source>jdbc/discobeats</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties/>
+    <properties>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="eclipselink.logging.level.sql" value="FINE"/>
+      <property name="eclipselink.logging.parameters" value="true"/> 
+    </properties>
   </persistence-unit>
 </persistence>

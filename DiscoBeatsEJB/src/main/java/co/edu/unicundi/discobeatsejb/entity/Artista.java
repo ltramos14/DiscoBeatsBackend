@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -19,46 +20,43 @@ import javax.validation.constraints.Size;
  * @version 1.0.0
  * @since 1.0.0
  */
-
 @Entity
 @Table(name = "artista")
 
+public class Artista implements Serializable {
 
-public class Artista implements Serializable{
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     @NotNull(message = "El nombre artistico es obligatorio")
     @Size(min = 3, max = 25, message = "El nombre artistico debe estar entre 3 y 25 caracteres")
     @Column(name = "nombre_artistico", nullable = false, length = 25, unique = true)
     private String nombreArtistico;
-    
+
     @NotNull(message = "La fecha de nacimiento es obligatoria")
     @Column(name = "fecha_nacimiento", nullable = false)
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaNacimiento;
-    
-    
+
     @NotNull(message = "La nacionalidad es obligatoria")
     @Size(min = 5, max = 20, message = "La nacionalidad debe estar entre 5 y 20 caracteres")
     @Column(name = "nacionalidad", nullable = false, length = 20)
     private String nacionalidad;
-    
+
     @NotNull(message = "La ocupacion es obligatoria")
     @Size(min = 5, max = 15, message = "La ocupacion debe estar entre 5 y 15 caracteres")
     @Column(name = "ocupacion", nullable = false, length = 15)
     private String ocupacion;
-    
-    
+
     @Column(name = "imagen", nullable = true, length = 255)
     private String imagen;
-    
+
     @NotNull(message = "El genero musical es obligatorio")
     @Size(min = 3, max = 15, message = "El genero musical debe estar entre 5 y 15 caracteres")
     @Column(name = "genero_musical", nullable = false, length = 15)
     private String generoMusical;
-    
+
     @NotNull(message = "La descripcion es obligatoria")
     @Size(min = 15, max = 255, message = "La descripcion debe estar entre 15 y 255 caracteres")
     @Column(name = "descripcion", nullable = false, length = 255)
@@ -141,8 +139,5 @@ public class Artista implements Serializable{
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
-    
-    
-    
+
 }
