@@ -11,6 +11,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -40,9 +41,9 @@ public class Artista implements Serializable {
     @Column(name = "nombre_artistico", nullable = false, length = 25, unique = true)
     private String nombreArtistico;
 
-    @NotNull(message = "La fecha de nacimiento es obligatoria")
-    @Column(name = "fecha_nacimiento", nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
+    // @NotNull(message = "La fecha de nacimiento es obligatoria")
+    @Column(name = "fecha_nacimiento", nullable = true)
+    @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
 
     @NotNull(message = "La nacionalidad es obligatoria")
