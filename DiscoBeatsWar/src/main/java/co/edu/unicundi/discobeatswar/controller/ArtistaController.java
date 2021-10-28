@@ -71,9 +71,9 @@ public class ArtistaController {
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response editarArtista() throws ResourceNotFoundException, ConflictException, Exception {
-
+    //@Produces(MediaType.APPLICATION_JSON)
+    public Response editarArtista(Artista artista) throws ResourceNotFoundException, ConflictException, Exception {
+        this.artistaService.editarArtista(artista);
         return Response.status(Response.Status.OK).entity(null).build();
 
     }
@@ -82,9 +82,8 @@ public class ArtistaController {
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response eliminarArtista(@PathParam("id") @Pattern(regexp = "^([0-9])*$") Integer id)
-                                throws ResourceNotFoundException, Exception {
-
+    public Response eliminarArtista(@PathParam("id") Integer id) throws ResourceNotFoundException {
+        this.artistaService.eliminarArtista(id);
         return Response.status(Response.Status.NO_CONTENT).build();
 
     }

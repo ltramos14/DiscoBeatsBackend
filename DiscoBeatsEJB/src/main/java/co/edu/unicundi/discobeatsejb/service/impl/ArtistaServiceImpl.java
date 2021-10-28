@@ -54,13 +54,24 @@ public class ArtistaServiceImpl implements IArtistaService {
     }
 
     @Override
-    public void editarArtista() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void editarArtista(Artista artistaEditado) throws ResourceNotFoundException {
+        if(artistaEditado.getId() != null){
+            Artista artista = this.listarArtistaPorId(artistaEditado.getId());
+            this.repo.editar(artistaEditado);
+        }else{
+            // Excepcion 400
+        }
     }
 
     @Override
-    public void eliminarArtista(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void eliminarArtista(Integer id) throws ResourceNotFoundException {
+        Long count = repo.validarExistenciaPorId(id);
+
+        if (count > 0) {
+            repo.eliminar(id); 
+        } else {
+            throw new ResourceNotFoundException("Artista no encontrado");
+        }
     }
     
 }

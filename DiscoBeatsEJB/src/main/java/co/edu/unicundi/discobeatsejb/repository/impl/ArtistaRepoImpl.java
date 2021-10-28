@@ -41,18 +41,20 @@ public class ArtistaRepoImpl implements IArtistaRepo{
 
     @Override
     public void editar(Artista obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.em.merge(obj);
     }
 
     @Override
     public void eliminar(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query query = this.em.createNativeQuery("DELETE FROM public.artista WHERE id = " + id);
+        query.executeUpdate();
     }
     
-    /*public int contarPorNombreArtistico(String nombre) {
-        Query query = this.em.createNamedQuery("Artista.ContarPorNombre", Artista.class);
-        query.setParameter("nombre", nombre);
-        return query.getSingleResult().intV;
-    }*/
+    @Override
+    public Long validarExistenciaPorId(Integer id) {
+        Query query = this.em.createNamedQuery("Artista.ContarPorId", Artista.class);
+        query.setParameter("id", id);
+        return (Long) query.getSingleResult();
+    }
 
 }

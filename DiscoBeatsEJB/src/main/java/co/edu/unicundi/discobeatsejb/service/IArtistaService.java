@@ -22,8 +22,8 @@ public interface IArtistaService {
     
     public void guardarArtista(Artista artistaNuevo);
     
-    public void editarArtista();
+    public void editarArtista(Artista artistaEditado) throws ResourceNotFoundException;
     
-    public void eliminarArtista(Integer id);
+    public void eliminarArtista(Integer id) throws ResourceNotFoundException;
     
 }
