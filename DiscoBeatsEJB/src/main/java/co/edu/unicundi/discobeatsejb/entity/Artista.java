@@ -26,7 +26,8 @@ import javax.validation.constraints.Size;
 @Table(name = "artista")
 @NamedQueries({
     @NamedQuery(name = "Artista.ListarTodos", query = "SELECT a FROM Artista a"),
-    @NamedQuery(name = "Artista.ContarPorId", query = "SELECT COUNT(t) FROM Artista t WHERE t.id=:id")
+    @NamedQuery(name = "Artista.ContarPorId", query = "SELECT COUNT(t) FROM Artista t WHERE t.id=:id"),
+    @NamedQuery(name = "Artista.ContarPorNombre", query = "SELECT COUNT(t) FROM Artista t WHERE t.nombreArtistico=:nombre")
 })
 public class Artista implements Serializable {
 
@@ -39,8 +40,8 @@ public class Artista implements Serializable {
     @Column(name = "nombre_artistico", nullable = false, length = 25, unique = true)
     private String nombreArtistico;
 
-    // @NotNull(message = "La fecha de nacimiento es obligatoria")
-    @Column(name = "fecha_nacimiento", nullable = true)
+    @NotNull(message = "La fecha de nacimiento es obligatoria")
+    @Column(name = "fecha_nacimiento", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaNacimiento;
 
@@ -144,5 +145,4 @@ public class Artista implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
 }

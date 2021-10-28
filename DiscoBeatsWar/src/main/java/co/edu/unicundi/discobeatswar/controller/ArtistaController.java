@@ -2,13 +2,13 @@ package co.edu.unicundi.discobeatswar.controller;
 
 import co.edu.unicundi.discobeatsejb.entity.Artista;
 import co.edu.unicundi.discobeatsejb.exception.ConflictException;
+import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
 import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
 import co.edu.unicundi.discobeatsejb.service.IArtistaService;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -34,17 +34,17 @@ public class ArtistaController {
 
     @EJB
     IArtistaService artistaService;
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response obtenerArtistas() throws Exception{
+    public Response obtenerArtistas() throws Exception {
 
         List<Artista> listaArtistas = this.artistaService.listarArtistas();
-        
+
         if (listaArtistas == null) {
             return Response.status(Response.Status.NO_CONTENT).build();
         }
-        
+
         return Response.status(Response.Status.OK).entity(listaArtistas).build();
     }
 
@@ -55,7 +55,7 @@ public class ArtistaController {
 
         System.out.println(id);
         Artista artista = this.artistaService.listarArtistaPorId(id);
-        
+
         return Response.status(Response.Status.OK).entity(artista).build();
     }
 
@@ -64,21 +64,19 @@ public class ArtistaController {
     public Response agregarArtista(@Valid Artista artistaNuevo) throws ConflictException {
 
         this.artistaService.guardarArtista(artistaNuevo);
-        
-        return Response.status(Response.Status.CREATED).build();
 
+        return Response.status(Response.Status.CREATED).build();
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    //@Produces(MediaType.APPLICATION_JSON)
-    public Response editarArtista(Artista artista) throws ResourceNotFoundException, ConflictException, Exception {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response editarArtista(Artista artista) throws ResourceNotFoundException, ConflictException, LogicBusinessException {
         this.artistaService.editarArtista(artista);
-        return Response.status(Response.Status.OK).entity(null).build();
+        return Response.status(Response.Status.OK).entity(artista).build();
 
     }
 
-    
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)

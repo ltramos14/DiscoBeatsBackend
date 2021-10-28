@@ -57,4 +57,11 @@ public class ArtistaRepoImpl implements IArtistaRepo{
         return (Long) query.getSingleResult();
     }
 
+    @Override
+    public Long validarExistenciaPorNombre(String nombre) {
+        Query query = this.em.createNamedQuery("Artista.ContarPorNombre", Artista.class);
+        query.setParameter("nombre", nombre);
+        return (Long) query.getSingleResult();
+    }
+
 }

@@ -1,6 +1,7 @@
 package co.edu.unicundi.discobeatswar.exception;
 
 import co.edu.unicundi.discobeatsejb.exception.ConflictException;
+import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
 import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.InternalServerErrorException;
@@ -47,8 +48,10 @@ public class ExceptionHandler implements ExceptionMapper<Exception> {
 
         Response.Status status = Response.Status.BAD_REQUEST;
 
-        if (exception instanceof ResourceNotFoundException  || exception instanceof NotFoundException) {
-            System.out.println("Entro a la excepcion");
+        if (exception instanceof LogicBusinessException) {
+            status = Response.Status.BAD_REQUEST;
+        }
+        if (exception instanceof ResourceNotFoundException || exception instanceof NotFoundException) {
             status = Response.Status.NOT_FOUND;
         }
         if (exception instanceof ConflictException) {
@@ -66,7 +69,5 @@ public class ExceptionHandler implements ExceptionMapper<Exception> {
 
         msg = new ExceptionWrapper(status.getStatusCode(), status, exception.getMessage(), endpoint);
         return Response.status(status).type(MediaType.APPLICATION_JSON).entity(msg).build();
-
     }
-
 }

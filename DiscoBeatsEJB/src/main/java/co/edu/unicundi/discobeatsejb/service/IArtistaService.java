@@ -1,6 +1,8 @@
 package co.edu.unicundi.discobeatsejb.service;
 
 import co.edu.unicundi.discobeatsejb.entity.Artista;
+import co.edu.unicundi.discobeatsejb.exception.ConflictException;
+import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
 import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
 import java.util.List;
 import javax.ejb.Local;
@@ -20,9 +22,9 @@ public interface IArtistaService {
     
     public Artista listarArtistaPorId(Integer id) throws ResourceNotFoundException;
     
-    public void guardarArtista(Artista artistaNuevo);
+    public void guardarArtista(Artista artistaNuevo) throws ConflictException;
     
-    public void editarArtista(Artista artistaEditado) throws ResourceNotFoundException;
+    public void editarArtista(Artista artistaEditado) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
     
     public void eliminarArtista(Integer id) throws ResourceNotFoundException;
     
