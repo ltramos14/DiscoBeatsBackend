@@ -33,7 +33,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @NamedQueries({
     @NamedQuery(name = "Artista.ListarTodos", query = "SELECT a FROM Artista a"),
     @NamedQuery(name = "Artista.ContarPorId", query = "SELECT COUNT(t) FROM Artista t WHERE t.id=:id"),
-    @NamedQuery(name = "Artista.ContarPorNombre", query = "SELECT COUNT(t) FROM Artista t WHERE t.nombreArtistico=:nombre")
+    @NamedQuery(name = "Artista.ContarPorNombre", query = "SELECT COUNT(t) FROM Artista t WHERE t.nombreArtistico=:nombre"),
+    @NamedQuery(name = "Artista.EliminarArtista", query = "DELETE FROM Artista a WHERE a.id=:id")
 })
 public class Artista implements Serializable {
 

@@ -46,7 +46,8 @@ public class ArtistaRepoImpl implements IArtistaRepo{
 
     @Override
     public void eliminar(Integer id) {
-        Query query = this.em.createNativeQuery("DELETE FROM public.artista WHERE id = " + id);
+        Query query = this.em.createNamedQuery("Artista.EliminarArtista", Artista.class);
+        query.setParameter("id", id);
         query.executeUpdate();
     }
     
