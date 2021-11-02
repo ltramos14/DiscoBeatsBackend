@@ -55,7 +55,6 @@ public class ArtistaServiceImpl implements IArtistaService {
         } else {
             throw new ConflictException("Ya existe un artista con el nombre: " + artistaNuevo.getNombreArtistico());
         }
-
     }
 
     @Override

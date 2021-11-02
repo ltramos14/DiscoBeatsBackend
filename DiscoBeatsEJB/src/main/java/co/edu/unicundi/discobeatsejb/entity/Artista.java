@@ -2,18 +2,23 @@ package co.edu.unicundi.discobeatsejb.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -68,12 +73,14 @@ public class Artista implements Serializable {
     @Size(min = 15, max = 255, message = "La descripcion debe estar entre 15 y 255 caracteres")
     @Column(name = "descripcion", nullable = false, length = 255)
     private String descripcion;
+    
+    @OneToMany(mappedBy = "artista", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Cancion> canciones;
 
     public Artista() {
     }
 
-    public Artista(Integer id, String nombreArtistico, Date fechaNacimiento, String nacionalidad, String ocupacion, String imagen, String generoMusical, String descripcion) {
-        this.id = id;
+    public Artista(String nombreArtistico, Date fechaNacimiento, String nacionalidad, String ocupacion, String imagen, String generoMusical, String descripcion, List<Cancion> canciones) {
         this.nombreArtistico = nombreArtistico;
         this.fechaNacimiento = fechaNacimiento;
         this.nacionalidad = nacionalidad;
@@ -81,7 +88,10 @@ public class Artista implements Serializable {
         this.imagen = imagen;
         this.generoMusical = generoMusical;
         this.descripcion = descripcion;
+        this.canciones = canciones;
     }
+
+    
 
     public Integer getId() {
         return id;
@@ -146,4 +156,13 @@ public class Artista implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    public List<Cancion> getCanciones() {
+        return canciones;
+    }
+
+    public void setCanciones(List<Cancion> canciones) {
+        this.canciones = canciones;
+    }
+    
 }
