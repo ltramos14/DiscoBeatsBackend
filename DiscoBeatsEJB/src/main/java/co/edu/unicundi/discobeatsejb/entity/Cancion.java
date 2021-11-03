@@ -64,9 +64,9 @@ public class Cancion implements Serializable{
     @JoinColumn(name = "id_artista", nullable = false )
     private Artista artista;
     
-    @JsonIgnore
-    @JoinColumn(name = "id_genero_musical")
-    private GeneroMusical generoMusical;
+    //@JsonIgnore
+    //@JoinColumn(name = "id_genero_musical", nullable = false )
+    //private GeneroMusical generoMusical;
     
     public Cancion() {
     }
@@ -80,7 +80,7 @@ public class Cancion implements Serializable{
         this.precio = precio;
         this.duracion = duracion;
         this.artista = artista;
-        this.generoMusical = generoMusical;
+        //this.generoMusical = generoMusical;
     }
 
     public Integer getId() {
@@ -147,13 +147,13 @@ public class Cancion implements Serializable{
         this.artista = artista;
     }
 
-    public GeneroMusical getGeneroMusical() {
-        return generoMusical;
-    }
-
-    public void setGeneroMusical(GeneroMusical generoMusical) {
-        this.generoMusical = generoMusical;
-    }
+//    public GeneroMusical getGeneroMusical() {
+//        return generoMusical;
+//    }
+//
+//    public void setGeneroMusical(GeneroMusical generoMusical) {
+//        this.generoMusical = generoMusical;
+//    }
     
     
  
