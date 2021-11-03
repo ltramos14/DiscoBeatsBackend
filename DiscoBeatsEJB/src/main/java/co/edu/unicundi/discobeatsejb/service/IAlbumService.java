@@ -5,7 +5,7 @@
  */
 package co.edu.unicundi.discobeatsejb.service;
 
-import co.edu.unicundi.discobeatsejb.entity.Cancion;
+import co.edu.unicundi.discobeatsejb.entity.Album;
 import co.edu.unicundi.discobeatsejb.exception.ConflictException;
 import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
 import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
@@ -21,15 +21,16 @@ import javax.ejb.Local;
  * @since 1.0.0
  */
 @Local
-public interface ICancionService {
+public interface IAlbumService {
     
-    public List<Cancion> listarCanciones();
+    public List<Album> listarAlbumes();
     
-    public Cancion listarCancionPorId(Integer id) throws ResourceNotFoundException;
+    public Album listarAlbumPorId(Integer id) throws ResourceNotFoundException;
     
-    public void guardarCancion(Cancion cancionNueva);
+    public void guardarAlbum(Album artistaNuevo) throws ConflictException;
     
-    public void editarCancion(Cancion artistaEditado) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
+    public void editarAlbum(Album artistaEditado) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
     
-    public void eliminarCancion(Integer id) throws ResourceNotFoundException;
+    public void eliminarAlbu(Integer id) throws ResourceNotFoundException;
+    
 }

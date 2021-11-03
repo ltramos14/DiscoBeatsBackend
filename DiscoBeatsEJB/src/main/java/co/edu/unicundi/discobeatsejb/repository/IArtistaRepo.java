@@ -12,7 +12,7 @@ import javax.ejb.Local;
  * @since 1.0.0
  */
 @Local
-public interface IArtistaRepo extends ICrud<Artista, Integer>{
+public interface IArtistaRepo extends ICrud<Artista, Integer> {
 
     public Long validarExistenciaPorId(Integer id);
     
