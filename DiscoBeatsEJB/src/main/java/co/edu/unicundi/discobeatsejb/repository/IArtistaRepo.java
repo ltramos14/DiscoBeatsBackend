@@ -1,6 +1,8 @@
 package co.edu.unicundi.discobeatsejb.repository;
 
 import co.edu.unicundi.discobeatsejb.entity.Artista;
+import co.edu.unicundi.discobeatsejb.views.ArtistaView;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -17,4 +19,6 @@ public interface IArtistaRepo extends ICrud<Artista, Integer> {
     public Long validarExistenciaPorId(Integer id);
     
     public Long validarExistenciaPorNombre(String nombre);
+    
+    public List<ArtistaView> listarArtistasConCanciones();
 }

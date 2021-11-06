@@ -6,6 +6,7 @@ import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
 import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
 import co.edu.unicundi.discobeatsejb.repository.IArtistaRepo;
 import co.edu.unicundi.discobeatsejb.service.IArtistaService;
+import co.edu.unicundi.discobeatsejb.views.ArtistaView;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -90,6 +91,15 @@ public class ArtistaServiceImpl implements IArtistaService {
             repo.eliminar(id);
         } else {
             throw new ResourceNotFoundException("Artista no encontrado");
+        }
+    }
+
+    @Override
+    public List<ArtistaView> listarArtistasConCaciones() {
+        if (!repo.listarArtistasConCanciones().isEmpty()) {
+            return repo.listarArtistasConCanciones();
+        } else {
+            return null;
         }
     }
 
