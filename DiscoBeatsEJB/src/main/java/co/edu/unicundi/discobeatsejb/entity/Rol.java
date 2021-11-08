@@ -1,5 +1,8 @@
 package co.edu.unicundi.discobeatsejb.entity;
 
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +11,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -18,8 +25,11 @@ import javax.persistence.Column;
  * @since 1.0.0
  */
 @Entity
-@Table(name = "rol")
-public class Rol {
+@Table(name = "roles")
+@NamedQueries({
+    @NamedQuery(name = "Rol.ListarRoles", query = "SELECT r FROM Rol r")
+})
+public class Rol implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,13 +39,17 @@ public class Rol {
     @Size(min = 3, max = 15, message = "El tipo de rol de usuario debe estar entre 3 y 15 caracteres")
     @Column(name = "rol", nullable = false, length = 15)
     private String rol;
+    
+    @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Usuario> listaUsuarios;
 
     public Rol() {
     }
 
-    public Rol(Integer id, String rol) {
+    public Rol(Integer id, String rol, List<Usuario> listaUsuarios) {
         this.id = id;
         this.rol = rol;
+        this.listaUsuarios = listaUsuarios;
     }
 
     public Integer getId() {
@@ -52,6 +66,14 @@ public class Rol {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    public List<Usuario> getListaUsuarios() {
+        return listaUsuarios;
+    }
+
+    public void setListaUsuarios(List<Usuario> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
     }
 
 }

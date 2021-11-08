@@ -27,14 +27,14 @@ import javax.validation.constraints.Size;
  * @since 1.0.0
  */
 @Entity
-@Table(name = "genero_musical")
+@Table(name = "generos_musicales")
 @NamedQueries({
     @NamedQuery(name = "GeneroMusical.ListarTodos", query = "SELECT g FROM GeneroMusical g"),
     @NamedQuery(name = "GeneroMusical.EliminarGenero", query = "DELETE FROM GeneroMusical g WHERE g.id=:id"),
     @NamedQuery(name = "GeneroMusical.ContarPorId", query = "SELECT COUNT(g) FROM GeneroMusical g WHERE g.id=:id"),
 })
 @NamedNativeQueries({
-    @NamedNativeQuery(name = "GeneroMusical.ContarPorNombre", query = "SELECT COUNT(*) FROM genero_musical WHERE UPPER(nombre_genero_musical) = UPPER(?)")
+    @NamedNativeQuery(name = "GeneroMusical.ContarPorNombre", query = "SELECT COUNT(*) FROM generos_musicales WHERE UPPER(nombre_genero_musical) = UPPER(?)")
 })
 public class GeneroMusical implements Serializable {
     
@@ -49,16 +49,24 @@ public class GeneroMusical implements Serializable {
 
     @OneToMany(mappedBy = "generoMusical", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Artista> listaArtistas;
+    
+    @OneToMany(mappedBy = "generoMusical", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Artista> listaCanciones;
+    
+    @OneToMany(mappedBy = "generoMusical", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Artista> listaAlbumes;
             
     public GeneroMusical() {
     }
 
-    public GeneroMusical(Integer id, String nombreGeneroMusical, List<Artista> listaArtistas) {
+    public GeneroMusical(Integer id, String nombreGeneroMusical, List<Artista> listaArtistas, List<Artista> listaCanciones, List<Artista> listaAlbumes) {
         this.id = id;
         this.nombreGeneroMusical = nombreGeneroMusical;
         this.listaArtistas = listaArtistas;
+        this.listaCanciones = listaCanciones;
+        this.listaAlbumes = listaAlbumes;
     }
-
+    
     public Integer getId() {
         return id;
     }
@@ -82,4 +90,21 @@ public class GeneroMusical implements Serializable {
     public void setListaArtistas(List<Artista> listaArtistas) {
         this.listaArtistas = listaArtistas;
     }
+
+    public List<Artista> getListaCanciones() {
+        return listaCanciones;
+    }
+
+    public void setListaCanciones(List<Artista> listaCanciones) {
+        this.listaCanciones = listaCanciones;
+    }
+
+    public List<Artista> getListaAlbumes() {
+        return listaAlbumes;
+    }
+
+    public void setListaAlbumes(List<Artista> listaAlbumes) {
+        this.listaAlbumes = listaAlbumes;
+    }
+
 }

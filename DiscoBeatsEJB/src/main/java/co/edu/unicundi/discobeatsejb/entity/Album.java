@@ -24,34 +24,13 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @since 1.0.0
  */
 @Entity
-@Table(name = "album")
+@Table(name = "albumes")
 public class Album implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @NotNull(message = "El nombre del album es obligatorio")
-    @Size(min = 3, max = 20, message = "El nombre del album debe estar entre 3 y 25 caracteres")
-    @Column(name = "nombre", nullable = false, length = 20)
-    private String nombre;
-    
-    @NotNull(message = "La descripcion es obligatoria")
-    @Size(min = 3, max = 250, message = "La descripcion debe estar entre 3 y 250 caracteres")
-    @Column(name = "descripcion", nullable = false, length = 250)
-    private String descripcion;
-    
-    @Column(name = "fecha_lanzamiento", nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fechaLanzamiento;
-    
-    @Column(name = "imagen", nullable = true, length = 255)
-    private String imagen;
-    
-    @NotNull(message = "El precio del album es obligatorio")
-    @Column(name = "precio", nullable = false)
-    private Integer precio;
- 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_artista", nullable = false )
@@ -61,7 +40,28 @@ public class Album implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_genero", nullable = false )
     private GeneroMusical generoMusical;
-
+    
+    @NotNull(message = "El nombre del album es obligatorio")
+    @Size(min = 3, max = 20, message = "El nombre del album debe estar entre 3 y 25 caracteres")
+    @Column(name = "nombre", nullable = false, length = 20)
+    private String nombre;
+    
+    @NotNull(message = "La descripcion es obligatoria")
+    @Size(min = 3, max = 250, message = "La descripcion debe estar entre 3 y 250 caracteres")
+    @Column(name = "descripcion", nullable = false, columnDefinition = "text")
+    private String descripcion;
+    
+    @Column(name = "fecha_lanzamiento", nullable = false)
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fechaLanzamiento;
+    
+    @Column(name = "imagen", nullable = true, columnDefinition = "text")
+    private String imagen;
+    
+    @NotNull(message = "El precio del album es obligatorio")
+    @Column(name = "precio", nullable = false)
+    private Integer precio;
+ 
     public Album() {
     }
 

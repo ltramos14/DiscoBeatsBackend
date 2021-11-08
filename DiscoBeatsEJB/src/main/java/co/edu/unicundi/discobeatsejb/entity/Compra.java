@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
  * @since 1.0.0
  */
 @Entity
-@Table(name = "compra")
+@Table(name = "compras")
 public class Compra implements Serializable {
     
     @Id

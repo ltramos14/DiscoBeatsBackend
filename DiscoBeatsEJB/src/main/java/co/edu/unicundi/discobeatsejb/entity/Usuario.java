@@ -6,6 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -19,12 +23,20 @@ import javax.validation.constraints.Size;
  * @since 1.0.0
  */
 @Entity
-@Table(name = "usuario")
+@Table(name = "usuarios")
+@NamedQueries({
+    @NamedQuery(name = "Usuario.ListarTodos", query = "SELECT u FROM Usuario u")
+})
 public class Usuario implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
+    @NotNull(message = "El tipo de usuario es obligatorio")
+    @ManyToOne
+    @JoinColumn(name = "id_rol", nullable = false)
+    private Rol rol;
     
     @NotNull(message = "El nombre de usuario es obligatorio")
     @Size(min = 3, max = 15, message = "El nombre de usuario debe estar entre 3 y 15 caracteres")
@@ -44,11 +56,20 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(Integer id, String nombreUsuario, String correo, String contrasena) {
+    public Usuario(Integer id, Rol rol, String nombreUsuario, String correo, String contrasena) {
         this.id = id;
+        this.rol = rol;
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
         this.contrasena = contrasena;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     public Integer getId() {

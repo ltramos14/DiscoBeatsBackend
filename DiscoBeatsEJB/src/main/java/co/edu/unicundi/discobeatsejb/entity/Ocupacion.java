@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
  * @since 1.0.0
  */
 @Entity
-@Table(name = "ocupacion")
+@Table(name = "ocupaciones")
 @NamedQueries({
     @NamedQuery(name = "Ocupacion.ListarTodas", query = "SELECT o FROM Ocupacion o")
 })

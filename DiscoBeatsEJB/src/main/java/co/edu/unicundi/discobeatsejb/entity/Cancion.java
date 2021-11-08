@@ -11,11 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -26,22 +27,31 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @since 1.0.0
  */
 @Entity
-@Table(name = "cancion")
+@Table(name = "canciones")
 public class Cancion implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
+    @NotNull(message = "El artista de la canción es obligatorio")
+    @ManyToOne
+    @JoinColumn(name = "id_artista", nullable = false )
+    private Artista artista;
+    
+    @NotNull(message = "El genero musical del artista es obligatorio")
+    @ManyToOne
+    @JoinColumn(name = "id_genero", nullable = false)
+    private GeneroMusical generoMusical;
+    
     @NotNull(message = "El nombre de la cancion es obligatorio")
     @Size(min = 3, max = 25, message = "El nombre de la cancion debe estar entre 3 y 25 caracteres")
     @Column(name = "nombre", nullable = false, length = 25)
     private String nombre;
     
-    @NotNull(message = "El genero es obligatorio")
-    @Size(min = 3, max = 25, message = "El genero debe estar entre 3 y 25 caracteres")
-    @Column(name = "genero", nullable = false, length = 25)
-    private String genero;
+    @NotNull(message = "La duracion es obligatoria")
+    @Column(name = "duracion", nullable = false)
+    private Time duracion;
     
     @NotNull(message = "El numero de reproducciones es obligatoria")
     @Column(name = "reproducciones", nullable = false)
@@ -54,33 +64,23 @@ public class Cancion implements Serializable{
     @NotNull(message = "El precio de la cancion es obligatorio")
     @Column(name = "precio", nullable = false)
     private Integer precio;
- 
-    @NotNull(message = "La duracion es obligatoria")
-    @Column(name = "duracion", nullable = false)
-    private Time duracion;
     
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "id_artista", nullable = false )
-    private Artista artista;
-    
-    //@JsonIgnore
-    //@JoinColumn(name = "id_genero_musical", nullable = false )
-    //private GeneroMusical generoMusical;
+    @Column(name = "imagen", nullable = true, columnDefinition = "text")
+    private String imagen;
     
     public Cancion() {
     }
 
-    public Cancion(Integer id, String nombre, String genero, Integer reproducciones, Date fechaLanzamiento, Integer precio, Time duracion, Artista artista, GeneroMusical generoMusical) {
+    public Cancion(Integer id, Artista artista, GeneroMusical generoMusical, String nombre, Time duracion, Integer reproducciones, Date fechaLanzamiento, Integer precio, String imagen) {
         this.id = id;
+        this.artista = artista;
+        this.generoMusical = generoMusical;
         this.nombre = nombre;
-        this.genero = genero;
+        this.duracion = duracion;
         this.reproducciones = reproducciones;
         this.fechaLanzamiento = fechaLanzamiento;
         this.precio = precio;
-        this.duracion = duracion;
-        this.artista = artista;
-        //this.generoMusical = generoMusical;
+        this.imagen = imagen;
     }
 
     public Integer getId() {
@@ -91,6 +91,22 @@ public class Cancion implements Serializable{
         this.id = id;
     }
 
+    public Artista getArtista() {
+        return artista;
+    }
+
+    public void setArtista(Artista artista) {
+        this.artista = artista;
+    }
+
+    public GeneroMusical getGeneroMusical() {
+        return generoMusical;
+    }
+
+    public void setGeneroMusical(GeneroMusical generoMusical) {
+        this.generoMusical = generoMusical;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -99,12 +115,12 @@ public class Cancion implements Serializable{
         this.nombre = nombre;
     }
 
-    public String getGenero() {
-        return genero;
+    public Time getDuracion() {
+        return duracion;
     }
 
-    public void setGenero(String genero) {
-        this.genero = genero;
+    public void setDuracion(Time duracion) {
+        this.duracion = duracion;
     }
 
     public Integer getReproducciones() {
@@ -131,30 +147,12 @@ public class Cancion implements Serializable{
         this.precio = precio;
     }
 
-    public Time getDuracion() {
-        return duracion;
+    public String getImagen() {
+        return imagen;
     }
 
-    public void setDuracion(Time duracion) {
-        this.duracion = duracion;
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
-
-    public Artista getArtista() {
-        return artista;
-    }
-
-    public void setArtista(Artista artista) {
-        this.artista = artista;
-    }
-
-//    public GeneroMusical getGeneroMusical() {
-//        return generoMusical;
-//    }
-//
-//    public void setGeneroMusical(GeneroMusical generoMusical) {
-//        this.generoMusical = generoMusical;
-//    }
-    
-    
- 
+   
 }

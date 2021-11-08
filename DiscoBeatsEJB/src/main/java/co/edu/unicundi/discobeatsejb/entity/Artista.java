@@ -30,7 +30,7 @@ import javax.validation.constraints.Size;
  * @since 1.0.0
  */
 @Entity
-@Table(name = "artista")
+@Table(name = "artistas")
 @NamedQueries({
     @NamedQuery(name = "Artista.ListarTodos", query = "SELECT a FROM Artista a"),
     @NamedQuery(name = "Artista.ContarPorId", query = "SELECT COUNT(t) FROM Artista t WHERE t.id=:id"),
@@ -68,12 +68,12 @@ public class Artista implements Serializable {
     @Column(name = "nacionalidad", nullable = false, length = 20)
     private String nacionalidad;
 
-    @Column(name = "imagen", nullable = true, columnDefinition = "text")
+    @Column(name = "imagen", columnDefinition = "text", nullable = true)
     private String imagen;
 
     @NotNull(message = "La descripcion es obligatoria")
     @Size(min = 15, max = 255, message = "La descripcion debe estar entre 15 y 255 caracteres")
-    @Column(name = "descripcion", nullable = false, columnDefinition = "text")
+    @Column(name = "descripcion", columnDefinition = "text", nullable = false)
     private String descripcion;
     
     @OneToMany(mappedBy = "artista", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
