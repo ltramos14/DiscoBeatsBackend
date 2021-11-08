@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.unicundi.discobeatsejb.repository;
 
 import co.edu.unicundi.discobeatsejb.entity.GeneroMusical;
@@ -19,4 +14,7 @@ import javax.ejb.Local;
 @Local
 public interface IGeneroMusicalRepo extends ICrud<GeneroMusical, Integer> {
     
+   public Long validarExistenciaPorId(Integer id);
+   
+   public Long validarExistenciaPorNombre(String nombre);
 }

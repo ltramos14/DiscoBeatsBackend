@@ -5,7 +5,6 @@ import co.edu.unicundi.discobeatsejb.exception.ConflictException;
 import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
 import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
 import co.edu.unicundi.discobeatsejb.service.IArtistaService;
-import co.edu.unicundi.discobeatsejb.views.ArtistaView;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -49,26 +48,25 @@ public class ArtistaController {
         return Response.status(Response.Status.OK).entity(listaArtistas).build();
     }
     
-    @GET
-    @Path("/vista")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response obtenerArtistasConCanciones() throws Exception {
-
-        List<ArtistaView> listaArtistas = this.artistaService.listarArtistasConCaciones();
-
-        if (listaArtistas == null) {
-            return Response.status(Response.Status.NO_CONTENT).build();
-        }
-
-        return Response.status(Response.Status.OK).entity(listaArtistas).build();
-    }
+//    @GET
+//    @Path("/vista")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response obtenerArtistasConCanciones() throws Exception {
+//
+//        List<ArtistaView> listaArtistas = this.artistaService.listarArtistasConCaciones();
+//
+//        if (listaArtistas == null) {
+//            return Response.status(Response.Status.NO_CONTENT).build();
+//        }
+//
+//        return Response.status(Response.Status.OK).entity(listaArtistas).build();
+//    }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response obtenerArtistaPorId(@PathParam("id") Integer id) throws ResourceNotFoundException {
 
-        System.out.println(id);
         Artista artista = this.artistaService.listarArtistaPorId(id);
 
         return Response.status(Response.Status.OK).entity(artista).build();

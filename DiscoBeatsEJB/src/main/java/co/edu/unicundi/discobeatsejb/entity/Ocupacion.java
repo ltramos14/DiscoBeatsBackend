@@ -1,16 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.unicundi.discobeatsejb.entity;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,6 +26,9 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "ocupacion")
+@NamedQueries({
+    @NamedQuery(name = "Ocupacion.ListarTodas", query = "SELECT o FROM Ocupacion o")
+})
 public class Ocupacion implements Serializable {
     
     @Id
@@ -33,15 +37,19 @@ public class Ocupacion implements Serializable {
     
     @NotNull(message = "La ocupacion del artista es obligatoria")
     @Size(min = 3, max = 15, message = "La ocupacion del artista debe estar entre 3 y 15 caracteres")
-    @Column(name = "ocupacion", nullable = false, length = 15)
-    private String ocupacion;
+    @Column(name = "nombre_ocupacion", nullable = false, length = 15)
+    private String nombreOcupacion;
 
+    @OneToMany(mappedBy = "ocupacion", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Artista> listaArtistas;
+            
     public Ocupacion() {
     }
 
-    public Ocupacion(Integer id, String ocupacion) {
+    public Ocupacion(Integer id, String nombreOcupacion, List<Artista> listaArtistas) {
         this.id = id;
-        this.ocupacion = ocupacion;
+        this.nombreOcupacion = nombreOcupacion;
+        this.listaArtistas = listaArtistas;
     }
 
     public Integer getId() {
@@ -52,12 +60,19 @@ public class Ocupacion implements Serializable {
         this.id = id;
     }
 
-    public String getOcupacion() {
-        return ocupacion;
+    public String getNombreOcupacion() {
+        return nombreOcupacion;
     }
 
-    public void setOcupacion(String ocupacion) {
-        this.ocupacion = ocupacion;
+    public void setNombreOcupacion(String nombreOcupacion) {
+        this.nombreOcupacion = nombreOcupacion;
     }
-    
+
+    public List<Artista> getListaArtistas() {
+        return listaArtistas;
+    }
+
+    public void setListaArtistas(List<Artista> listaArtistas) {
+        this.listaArtistas = listaArtistas;
+    }  
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.Query;
 
 /**
  *
@@ -23,17 +25,18 @@ public class GeneroMusicalRepoImpl implements IGeneroMusicalRepo {
     
     @Override
     public List<GeneroMusical> listarTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       TypedQuery<GeneroMusical> query = this.em.createNamedQuery("GeneroMusical.ListarTodos", GeneroMusical.class);
+       return query.getResultList();
     }
 
     @Override
     public GeneroMusical listarPorId(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return this.em.find(GeneroMusical.class, id);
     }
 
     @Override
     public void guardar(GeneroMusical obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      this.em.persist(obj);
     }
 
     @Override
@@ -43,7 +46,22 @@ public class GeneroMusicalRepoImpl implements IGeneroMusicalRepo {
 
     @Override
     public void eliminar(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       Query query = this.em.createNamedQuery("GeneroMusical.EliminarGenero", GeneroMusical.class);
+       query.setParameter("id", id);
+       query.executeUpdate();
+    }
+
+    @Override
+    public Long validarExistenciaPorId(Integer id) {
+       Query query = this.em.createNamedQuery("GeneroMusical.ContarPorId", GeneroMusical.class);
+       query.setParameter("id", id);
+       return (Long)query.getSingleResult();
+    }
+
+    @Override
+    public Long validarExistenciaPorNombre(String nombre) {
+       Query query = this.em.createNativeQuery("GeneroMusical.ContarPorNombre", GeneroMusical.class);
+       return (Long)query.getSingleResult();
     }
     
 }

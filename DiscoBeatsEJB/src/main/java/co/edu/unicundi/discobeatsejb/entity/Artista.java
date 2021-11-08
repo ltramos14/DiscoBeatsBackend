@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -40,7 +42,17 @@ public class Artista implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+   
+    @NotNull(message = "La ocupación del artista es obligatoria")
+    @ManyToOne
+    @JoinColumn(name = "id_ocupacion", nullable = false)
+    private Ocupacion ocupacion;
+    
+    @NotNull(message = "El genero musical del artista es obligatorio")
+    @ManyToOne
+    @JoinColumn(name = "id_genero", nullable = false)
+    private GeneroMusical generoMusical;
+    
     @NotNull(message = "El nombre artistico es obligatorio")
     @Size(min = 3, max = 25, message = "El nombre artistico debe estar entre 3 y 25 caracteres")
     @Column(name = "nombre_artistico", nullable = false, length = 25, unique = true)
@@ -56,22 +68,12 @@ public class Artista implements Serializable {
     @Column(name = "nacionalidad", nullable = false, length = 20)
     private String nacionalidad;
 
-    @NotNull(message = "La ocupacion es obligatoria")
-    @Size(min = 5, max = 15, message = "La ocupacion debe estar entre 5 y 15 caracteres")
-    @Column(name = "ocupacion", nullable = false, length = 15)
-    private String ocupacion;
-
-    @Column(name = "imagen", nullable = true, length = 255)
+    @Column(name = "imagen", nullable = true, columnDefinition = "text")
     private String imagen;
-
-    @NotNull(message = "El genero musical es obligatorio")
-    @Size(min = 3, max = 15, message = "El genero musical debe estar entre 5 y 15 caracteres")
-    @Column(name = "genero_musical", nullable = false, length = 15)
-    private String generoMusical;
 
     @NotNull(message = "La descripcion es obligatoria")
     @Size(min = 15, max = 255, message = "La descripcion debe estar entre 15 y 255 caracteres")
-    @Column(name = "descripcion", nullable = false, length = 255)
+    @Column(name = "descripcion", nullable = false, columnDefinition = "text")
     private String descripcion;
     
     @OneToMany(mappedBy = "artista", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -80,18 +82,17 @@ public class Artista implements Serializable {
     public Artista() {
     }
 
-    public Artista(String nombreArtistico, Date fechaNacimiento, String nacionalidad, String ocupacion, String imagen, String generoMusical, String descripcion, List<Cancion> canciones) {
+    public Artista(Integer id, Ocupacion ocupacion, GeneroMusical generoMusical, String nombreArtistico, Date fechaNacimiento, String nacionalidad, String imagen, String descripcion, List<Cancion> canciones) {
+        this.id = id;
+        this.ocupacion = ocupacion;
+        this.generoMusical = generoMusical;
         this.nombreArtistico = nombreArtistico;
         this.fechaNacimiento = fechaNacimiento;
         this.nacionalidad = nacionalidad;
-        this.ocupacion = ocupacion;
         this.imagen = imagen;
-        this.generoMusical = generoMusical;
         this.descripcion = descripcion;
         this.canciones = canciones;
     }
-
-    
 
     public Integer getId() {
         return id;
@@ -99,6 +100,22 @@ public class Artista implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Ocupacion getOcupacion() {
+        return ocupacion;
+    }
+
+    public void setOcupacion(Ocupacion ocupacion) {
+        this.ocupacion = ocupacion;
+    }
+
+    public GeneroMusical getGeneroMusical() {
+        return generoMusical;
+    }
+
+    public void setGeneroMusical(GeneroMusical generoMusical) {
+        this.generoMusical = generoMusical;
     }
 
     public String getNombreArtistico() {
@@ -125,28 +142,12 @@ public class Artista implements Serializable {
         this.nacionalidad = nacionalidad;
     }
 
-    public String getOcupacion() {
-        return ocupacion;
-    }
-
-    public void setOcupacion(String ocupacion) {
-        this.ocupacion = ocupacion;
-    }
-
     public String getImagen() {
         return imagen;
     }
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
-    }
-
-    public String getGeneroMusical() {
-        return generoMusical;
-    }
-
-    public void setGeneroMusical(String generoMusical) {
-        this.generoMusical = generoMusical;
     }
 
     public String getDescripcion() {
