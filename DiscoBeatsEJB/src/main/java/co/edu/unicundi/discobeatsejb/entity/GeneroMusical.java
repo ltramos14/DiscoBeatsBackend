@@ -34,7 +34,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "GeneroMusical.ContarPorId", query = "SELECT COUNT(g) FROM GeneroMusical g WHERE g.id=:id"),
 })
 @NamedNativeQueries({
-    @NamedNativeQuery(name = "GeneroMusical.ContarPorNombre", query = "SELECT COUNT(*) FROM GeneroMusical g WHERE g.nombreGeneroMusical=:nombre")
+    @NamedNativeQuery(name = "GeneroMusical.ContarPorNombre", query = "SELECT COUNT(*) FROM genero_musical WHERE UPPER(nombre_genero_musical) = UPPER(?)")
 })
 public class GeneroMusical implements Serializable {
     

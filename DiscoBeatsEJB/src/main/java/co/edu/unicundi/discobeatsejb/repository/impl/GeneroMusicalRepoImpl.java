@@ -60,7 +60,8 @@ public class GeneroMusicalRepoImpl implements IGeneroMusicalRepo {
 
     @Override
     public Long validarExistenciaPorNombre(String nombre) {
-       Query query = this.em.createNativeQuery("GeneroMusical.ContarPorNombre", GeneroMusical.class);
+       Query query = this.em.createNamedQuery("GeneroMusical.ContarPorNombre");
+       query.setParameter(1, nombre);
        return (Long)query.getSingleResult();
     }
     
