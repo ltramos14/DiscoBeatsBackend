@@ -2,13 +2,17 @@ package co.edu.unicundi.discobeatsejb.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
@@ -61,19 +65,28 @@ public class Album implements Serializable {
     @NotNull(message = "El precio del album es obligatorio")
     @Column(name = "precio", nullable = false)
     private Integer precio;
+        
+    @JsonIgnore
+    @OneToMany(mappedBy = "album", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Cancion> listaCanciones;
+    
+    @OneToMany(mappedBy = "album", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CompraAlbum> listaCompras;
  
     public Album() {
     }
 
-    public Album(Integer id, String nombre, String descripcion, Date fechaLanzamiento, String imagen, Integer precio, Artista artista, GeneroMusical generoMusical) {
+    public Album(Integer id, Artista artista, GeneroMusical generoMusical, String nombre, String descripcion, Date fechaLanzamiento, String imagen, Integer precio, List<Cancion> listaCanciones, List<CompraAlbum> listaCompras) {
         this.id = id;
+        this.artista = artista;
+        this.generoMusical = generoMusical;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaLanzamiento = fechaLanzamiento;
         this.imagen = imagen;
         this.precio = precio;
-        this.artista = artista;
-        this.generoMusical = generoMusical;
+        this.listaCanciones = listaCanciones;
+        this.listaCompras = listaCompras;
     }
 
     public Integer getId() {
@@ -82,6 +95,22 @@ public class Album implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Artista getArtista() {
+        return artista;
+    }
+
+    public void setArtista(Artista artista) {
+        this.artista = artista;
+    }
+
+    public GeneroMusical getGeneroMusical() {
+        return generoMusical;
+    }
+
+    public void setGeneroMusical(GeneroMusical generoMusical) {
+        this.generoMusical = generoMusical;
     }
 
     public String getNombre() {
@@ -124,20 +153,21 @@ public class Album implements Serializable {
         this.precio = precio;
     }
 
-    public Artista getArtista() {
-        return artista;
+    public List<Cancion> getListaCanciones() {
+        return listaCanciones;
     }
 
-    public void setArtista(Artista artista) {
-        this.artista = artista;
+    public void setListaCanciones(List<Cancion> listaCanciones) {
+        this.listaCanciones = listaCanciones;
     }
 
-    public GeneroMusical getGeneroMusical() {
-        return generoMusical;
+    public List<CompraAlbum> getListaCompras() {
+        return listaCompras;
     }
 
-    public void setGeneroMusical(GeneroMusical generoMusical) {
-        this.generoMusical = generoMusical;
+    public void setListaCompras(List<CompraAlbum> listaCompras) {
+        this.listaCompras = listaCompras;
     }
+
     
 }

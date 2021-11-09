@@ -1,6 +1,5 @@
 package co.edu.unicundi.discobeatsejb.repository;
 
-import co.edu.unicundi.discobeatsejb.entity.Cancion;
 import javax.ejb.Local;
 
 /**
@@ -12,6 +11,6 @@ import javax.ejb.Local;
  * @since 1.0.0
  */
 @Local
-public interface ICancionRepo extends ICrud<Cancion, Integer>{
+public interface ICompraAlbumRepo {
     
 }

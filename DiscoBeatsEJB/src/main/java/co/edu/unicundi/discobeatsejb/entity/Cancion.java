@@ -4,15 +4,17 @@ package co.edu.unicundi.discobeatsejb.entity;
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
@@ -39,11 +41,16 @@ public class Cancion implements Serializable{
     @JoinColumn(name = "id_artista", nullable = false )
     private Artista artista;
     
-    @NotNull(message = "El genero musical del artista es obligatorio")
+    @NotNull(message = "El genero musical de la canción es obligatorio")
     @ManyToOne
     @JoinColumn(name = "id_genero", nullable = false)
     private GeneroMusical generoMusical;
     
+    @NotNull(message = "El album al que pertenece la canción es obligatorio")
+    @ManyToOne
+    @JoinColumn(name = "id_album", nullable = false)
+    private Album album;
+       
     @NotNull(message = "El nombre de la cancion es obligatorio")
     @Size(min = 3, max = 25, message = "El nombre de la cancion debe estar entre 3 y 25 caracteres")
     @Column(name = "nombre", nullable = false, length = 25)
@@ -68,19 +75,24 @@ public class Cancion implements Serializable{
     @Column(name = "imagen", nullable = true, columnDefinition = "text")
     private String imagen;
     
+    @OneToMany(mappedBy = "cancion", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CompraCancion> listaCompras;
+    
     public Cancion() {
     }
 
-    public Cancion(Integer id, Artista artista, GeneroMusical generoMusical, String nombre, Time duracion, Integer reproducciones, Date fechaLanzamiento, Integer precio, String imagen) {
+    public Cancion(Integer id, Artista artista, GeneroMusical generoMusical, Album album, String nombre, Time duracion, Integer reproducciones, Date fechaLanzamiento, Integer precio, String imagen, List<CompraCancion> listaCompras) {
         this.id = id;
         this.artista = artista;
         this.generoMusical = generoMusical;
+        this.album = album;
         this.nombre = nombre;
         this.duracion = duracion;
         this.reproducciones = reproducciones;
         this.fechaLanzamiento = fechaLanzamiento;
         this.precio = precio;
         this.imagen = imagen;
+        this.listaCompras = listaCompras;
     }
 
     public Integer getId() {
@@ -105,6 +117,14 @@ public class Cancion implements Serializable{
 
     public void setGeneroMusical(GeneroMusical generoMusical) {
         this.generoMusical = generoMusical;
+    }
+
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
     }
 
     public String getNombre() {
@@ -154,5 +174,14 @@ public class Cancion implements Serializable{
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
-   
+
+    public List<CompraCancion> getListaCompras() {
+        return listaCompras;
+    }
+
+    public void setListaCompras(List<CompraCancion> listaCompras) {
+        this.listaCompras = listaCompras;
+    }
+
+    
 }

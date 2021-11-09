@@ -22,23 +22,24 @@ import javax.validation.constraints.NotNull;
  * @since 1.0.0
  */
 @Entity
-@Table(name = "compras_canciones")
-public class CompraCancion implements Serializable {
+@Table(name = "compras_albumes")
+public class CompraAlbum implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @NotNull(message = "La compra debe tener una canción obligatoriamente")
+    @NotNull(message = "La compra debe tener un album obligatoriamente")
     @ManyToOne
-    @JoinColumn(name = "id_cancion", nullable = false )
-    private Cancion cancion;
+    @JoinColumn(name = "id_album", nullable = false )
+    private Album album;
     
     @NotNull(message = "La compra debe pertenecer a un usuario obligatoriamente")
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false )
     private Usuario usuario;
      
+    
     @Column(name = "fecha_compra", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaCompra;
@@ -46,13 +47,13 @@ public class CompraCancion implements Serializable {
     @NotNull(message = "El precio total es obligatorio")
     @Column(name = "precio_total", nullable = false, length = 25)
     private Integer precioTotal;
-    
-    public CompraCancion() {
+
+    public CompraAlbum() {
     }
 
-    public CompraCancion(Integer id, Cancion cancion, Usuario usuario, Date fechaCompra, Integer precioTotal) {
+    public CompraAlbum(Integer id, Album album, Usuario usuario, Date fechaCompra, Integer precioTotal) {
         this.id = id;
-        this.cancion = cancion;
+        this.album = album;
         this.usuario = usuario;
         this.fechaCompra = fechaCompra;
         this.precioTotal = precioTotal;
@@ -66,12 +67,12 @@ public class CompraCancion implements Serializable {
         this.id = id;
     }
 
-    public Cancion getCancion() {
-        return cancion;
+    public Album getAlbum() {
+        return album;
     }
 
-    public void setCancion(Cancion cancion) {
-        this.cancion = cancion;
+    public void setAlbum(Album album) {
+        this.album = album;
     }
 
     public Usuario getUsuario() {
@@ -97,6 +98,5 @@ public class CompraCancion implements Serializable {
     public void setPrecioTotal(Integer precioTotal) {
         this.precioTotal = precioTotal;
     }
-    
     
 }
