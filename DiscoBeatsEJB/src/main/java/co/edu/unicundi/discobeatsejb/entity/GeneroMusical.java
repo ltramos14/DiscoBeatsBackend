@@ -51,15 +51,15 @@ public class GeneroMusical implements Serializable {
     private List<Artista> listaArtistas;
     
     @OneToMany(mappedBy = "generoMusical", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Artista> listaCanciones;
+    private List<Cancion> listaCanciones;
     
     @OneToMany(mappedBy = "generoMusical", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Artista> listaAlbumes;
+    private List<Album> listaAlbumes;
             
     public GeneroMusical() {
     }
 
-    public GeneroMusical(Integer id, String nombreGeneroMusical, List<Artista> listaArtistas, List<Artista> listaCanciones, List<Artista> listaAlbumes) {
+    public GeneroMusical(Integer id, String nombreGeneroMusical, List<Artista> listaArtistas, List<Cancion> listaCanciones, List<Album> listaAlbumes) {
         this.id = id;
         this.nombreGeneroMusical = nombreGeneroMusical;
         this.listaArtistas = listaArtistas;
@@ -91,19 +91,19 @@ public class GeneroMusical implements Serializable {
         this.listaArtistas = listaArtistas;
     }
 
-    public List<Artista> getListaCanciones() {
+    public List<Cancion> getListaCanciones() {
         return listaCanciones;
     }
 
-    public void setListaCanciones(List<Artista> listaCanciones) {
+    public void setListaCanciones(List<Cancion> listaCanciones) {
         this.listaCanciones = listaCanciones;
     }
 
-    public List<Artista> getListaAlbumes() {
+    public List<Album> getListaAlbumes() {
         return listaAlbumes;
     }
 
-    public void setListaAlbumes(List<Artista> listaAlbumes) {
+    public void setListaAlbumes(List<Album> listaAlbumes) {
         this.listaAlbumes = listaAlbumes;
     }
 

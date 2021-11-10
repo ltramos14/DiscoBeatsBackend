@@ -14,4 +14,8 @@ import javax.ejb.Local;
 @Local
 public interface IAlbumRepo extends ICrud<Album, Integer> {
     
+    public Long validarExistenciaPorId(Integer id);
+    
+    public Long validarExistenciaAlbumDeArtista(Integer idArtista, String nombreAlbum);
+   
 }

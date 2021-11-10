@@ -1,10 +1,11 @@
 package co.edu.unicundi.discobeatswar.controller;
 
-import co.edu.unicundi.discobeatsejb.entity.GeneroMusical;
+import co.edu.unicundi.discobeatsejb.dto.AlbumDto;
+import co.edu.unicundi.discobeatsejb.entity.Album;
 import co.edu.unicundi.discobeatsejb.exception.ConflictException;
 import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
 import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
-import co.edu.unicundi.discobeatsejb.service.IGeneroMusicalService;
+import co.edu.unicundi.discobeatsejb.service.IAlbumService;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -29,51 +30,53 @@ import javax.ws.rs.core.Response;
  * @since 1.0.0
  */
 @Stateless
-@Path("/generos")
-public class GeneroMusicalController {
+@Path("/albumes")
+public class AlbumController {
     
     @EJB
-    IGeneroMusicalService generoMusicalService;
+    IAlbumService albumService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response obtenerGenerosMusicales() throws Exception {
+    public Response obtenerAlbumes() throws Exception {
 
-        List<GeneroMusical> listaGeneros = this.generoMusicalService.listarGenerosMusicales();
-        if (listaGeneros == null) {
+        List<Album> listaAlbumes = this.albumService.listarAlbumes();
+        if (listaAlbumes == null) {
             return Response.status(Response.Status.NO_CONTENT).build();
         }
-        return Response.status(Response.Status.OK).entity(listaGeneros).build();
+        return Response.status(Response.Status.OK).entity(listaAlbumes).build();
     }
     
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response obtenerGeneroMusicalPorId(@PathParam("id") Integer id) throws ResourceNotFoundException {
-        GeneroMusical genero = this.generoMusicalService.listarGeneroMusicalPorId(id);
-        return Response.status(Response.Status.OK).entity(genero).build();
+    public Response obtenerAlbumPorId(@PathParam("id") Integer id) throws ResourceNotFoundException {
+        
+        Album album = this.albumService.listarAlbumPorId(id);    
+        return Response.status(Response.Status.OK).entity(album).build();
     }
-
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response agregarGeneroMusical(@Valid GeneroMusical generoNuevo) throws ConflictException {
-        this.generoMusicalService.guardarGeneroMusical(generoNuevo);
+    public Response agregarAlbum(@Valid AlbumDto albumNuevo) throws ConflictException {
+        this.albumService.guardarAlbum(albumNuevo);
         return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response editarGeneroMusical(GeneroMusical genero) throws ResourceNotFoundException, ConflictException, LogicBusinessException {
-        this.generoMusicalService.editarGeneroMusical(genero);
-        return Response.status(Response.Status.OK).entity(genero).build();
+    public Response editarAlbum(Album album) throws ResourceNotFoundException, ConflictException, LogicBusinessException {
+        this.albumService.editarAlbum(album);
+        return Response.status(Response.Status.OK).entity(album).build();
     }
 
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response eliminarGeneroMusical(@PathParam("id") Integer id) throws ResourceNotFoundException {
-        this.generoMusicalService.eliminarGeneroMusical(id);
+        this.albumService.eliminarAlbum(id);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 }
+

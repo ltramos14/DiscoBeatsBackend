@@ -12,6 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,6 +33,14 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @Entity
 @Table(name = "albumes")
+@NamedQueries({
+    @NamedQuery(name = "Album.ListarTodos", query = "SELECT a FROM Album a"),
+    @NamedQuery(name = "Album.ContarPorId", query = "SELECT COUNT(l) FROM Album l WHERE l.id=:id"),
+    @NamedQuery(name = "Album.EliminarAlbum", query = "DELETE FROM Album b WHERE b.id=:id")
+})
+@NamedNativeQueries({
+    @NamedNativeQuery(name = "Album.ContarPorNombre", query = "SELECT COUNT(*) FROM albumes WHERE UPPER(nombre) = UPPER(?) AND id_artista = ?")
+})
 public class Album implements Serializable {
     
     @Id
@@ -66,13 +78,12 @@ public class Album implements Serializable {
     @Column(name = "precio", nullable = false)
     private Integer precio;
         
-    @JsonIgnore
     @OneToMany(mappedBy = "album", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Cancion> listaCanciones;
     
     @OneToMany(mappedBy = "album", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CompraAlbum> listaCompras;
- 
+    
     public Album() {
     }
 
@@ -168,6 +179,4 @@ public class Album implements Serializable {
     public void setListaCompras(List<CompraAlbum> listaCompras) {
         this.listaCompras = listaCompras;
     }
-
-    
 }
