@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
@@ -47,12 +48,12 @@ public class Album implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @JsonIgnore
+    @NotNull(message = "El id del album es obligatorio")
     @ManyToOne
     @JoinColumn(name = "id_artista", nullable = false )
     private Artista artista;
-    
-    @JsonIgnore
+
+    @NotNull(message = "El id del genero musical es obligatorio")
     @ManyToOne
     @JoinColumn(name = "id_genero", nullable = false )
     private GeneroMusical generoMusical;
@@ -87,8 +88,7 @@ public class Album implements Serializable {
     public Album() {
     }
 
-    public Album(Integer id, Artista artista, GeneroMusical generoMusical, String nombre, String descripcion, Date fechaLanzamiento, String imagen, Integer precio, List<Cancion> listaCanciones, List<CompraAlbum> listaCompras) {
-        this.id = id;
+    public Album(Artista artista, GeneroMusical generoMusical, String nombre, String descripcion, Date fechaLanzamiento, String imagen, Integer precio, List<Cancion> listaCanciones, List<CompraAlbum> listaCompras) {
         this.artista = artista;
         this.generoMusical = generoMusical;
         this.nombre = nombre;
@@ -108,6 +108,8 @@ public class Album implements Serializable {
         this.id = id;
     }
 
+    @JsonIgnore
+    @XmlTransient
     public Artista getArtista() {
         return artista;
     }
@@ -116,6 +118,8 @@ public class Album implements Serializable {
         this.artista = artista;
     }
 
+    @JsonIgnore
+    @XmlTransient
     public GeneroMusical getGeneroMusical() {
         return generoMusical;
     }

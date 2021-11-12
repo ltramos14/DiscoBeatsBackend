@@ -5,7 +5,6 @@
  */
 package co.edu.unicundi.discobeatsejb.service;
 
-import co.edu.unicundi.discobeatsejb.dto.AlbumDto;
 import co.edu.unicundi.discobeatsejb.entity.Album;
 import co.edu.unicundi.discobeatsejb.exception.ConflictException;
 import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
@@ -28,7 +27,7 @@ public interface IAlbumService {
     
     public Album listarAlbumPorId(Integer id) throws ResourceNotFoundException;
     
-    public void guardarAlbum(AlbumDto albumNuevo) throws ConflictException;
+    public void guardarAlbum(Album albumNuevo) throws ConflictException;
     
     public void editarAlbum(Album albumEditado) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
     

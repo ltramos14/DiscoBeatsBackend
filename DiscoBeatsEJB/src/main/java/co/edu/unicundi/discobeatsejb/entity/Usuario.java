@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -66,8 +68,7 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(Integer id, Rol rol, String nombreUsuario, String correo, String contrasena, List<CompraAlbum> listaComprasAlbumes, List<CompraCancion> listaComprasCanciones) {
-        this.id = id;
+    public Usuario(Rol rol, String nombreUsuario, String correo, String contrasena, List<CompraAlbum> listaComprasAlbumes, List<CompraCancion> listaComprasCanciones) {
         this.rol = rol;
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
@@ -84,6 +85,8 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
+    @JsonIgnore
+    @XmlTransient
     public Rol getRol() {
         return rol;
     }
@@ -132,5 +135,4 @@ public class Usuario implements Serializable {
         this.listaComprasCanciones = listaComprasCanciones;
     }
 
-    
 }

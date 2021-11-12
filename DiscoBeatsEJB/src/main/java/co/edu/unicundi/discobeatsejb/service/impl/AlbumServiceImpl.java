@@ -1,6 +1,5 @@
 package co.edu.unicundi.discobeatsejb.service.impl;
 
-import co.edu.unicundi.discobeatsejb.dto.AlbumDto;
 import co.edu.unicundi.discobeatsejb.entity.Album;
 import co.edu.unicundi.discobeatsejb.entity.Artista;
 import co.edu.unicundi.discobeatsejb.entity.GeneroMusical;
@@ -49,65 +48,65 @@ public class AlbumServiceImpl implements IAlbumService{
     }
     
     @Override
-     public void guardarAlbum(AlbumDto albumNuevo) throws ConflictException {
+     public void guardarAlbum(Album albumNuevo) throws ConflictException {
       
-       Artista artista = new Artista();
-       artista.setId(albumNuevo.getIdArtista());
-       
-       GeneroMusical genero = new GeneroMusical();
-       genero.setId(albumNuevo.getIdGeneroMusical());
-       
-       Album album = new Album();
-       
-       album.setArtista(artista);
-       album.setGeneroMusical(genero);
-       album.setNombre(albumNuevo.getNombre());
-       album.setDescripcion(albumNuevo.getDescripcion());
-       album.setFechaLanzamiento(albumNuevo.getFechaLanzamiento());
-       album.setImagen(albumNuevo.getImagen());
-       album.setPrecio(albumNuevo.getPrecio());
-
-       Long contarExistenciaPorNombreAlbumDeArtista = repo.validarExistenciaAlbumDeArtista(albumNuevo.getIdArtista(), albumNuevo.getNombre());
-       
-       if(contarExistenciaPorNombreAlbumDeArtista == 0) {
-           repo.guardar(album);
-       } else {
-           throw new ConflictException("El artista " + artista.getNombreArtistico() + "ya tiene un album llamado" + albumNuevo.getNombre());
-       }   
+//       Artista artista = new Artista();
+//       artista.setId(albumNuevo.getIdArtista());
+//       
+//       GeneroMusical genero = new GeneroMusical();
+//       genero.setId(albumNuevo.getIdGeneroMusical());
+//       
+//       Album album = new Album();
+//       
+//       album.setArtista(artista);
+//       album.setGeneroMusical(genero);
+//       album.setNombre(albumNuevo.getNombre());
+//       album.setDescripcion(albumNuevo.getDescripcion());
+//       album.setFechaLanzamiento(albumNuevo.getFechaLanzamiento());
+//       album.setImagen(albumNuevo.getImagen());
+//       album.setPrecio(albumNuevo.getPrecio());
+//
+//       Long contarExistenciaPorNombreAlbumDeArtista = repo.validarExistenciaAlbumDeArtista(albumNuevo.getIdArtista(), albumNuevo.getNombre());
+//       
+//       if(contarExistenciaPorNombreAlbumDeArtista == 0) {
+//           repo.guardar(album);
+//       } else {
+//           throw new ConflictException("El artista " + artista.getNombreArtistico() + "ya tiene un album llamado" + albumNuevo.getNombre());
+//       }   
     }
 
     @Override
     public void editarAlbum(Album albumEditado) throws ResourceNotFoundException, LogicBusinessException, ConflictException {
             
-       Album album = listarAlbumPorId(albumEditado.getId());
-       
-       album.setNombre(albumEditado.getNombre());
-       album.setDescripcion(albumEditado.getDescripcion());
-       album.setFechaLanzamiento(albumEditado.getFechaLanzamiento());
-       album.setImagen(albumEditado.getImagen());
-       album.setPrecio(albumEditado.getPrecio());   
-        
-        if (albumEditado.getId() != null) {
-            Long count = repo.validarExistenciaPorId(albumEditado.getId());
-            if (count > 0) {
-                Album albumDB = this.listarAlbumPorId(albumEditado.getId());
-                AlbumDto albumDto = new AlbumDto();
-                if (albumEditado.getId().equals(albumDB.getId())) {
-                    count = repo.validarExistenciaAlbumDeArtista(albumDto.getIdArtista(), albumEditado.getNombre());
-                    if (count == 0 || albumEditado.getNombre().equalsIgnoreCase(albumDB.getNombre())) {
-                        this.repo.editar(album);
-                    } else {
-                        throw new ConflictException("El artista ya tiene un album llamado " + albumEditado.getNombre());
-                    }
-                } else {
-                    throw new LogicBusinessException("El id enviado es diferente al id del album que va a editar");
-                }
-            } else {
-                throw new ResourceNotFoundException("Album no encontrado");
-            }
-        } else {
-            throw new LogicBusinessException("El id del album no puede ser nulo");
-        }    
+//       Album album = listarAlbumPorId(albumEditado.getId());
+//       
+//       album.setNombre(albumEditado.getNombre());
+//       album.setDescripcion(albumEditado.getDescripcion());
+//       album.setFechaLanzamiento(albumEditado.getFechaLanzamiento());
+//       album.setImagen(albumEditado.getImagen());
+//       album.setPrecio(albumEditado.getPrecio());   
+//        
+//        if (albumEditado.getId() != null) {
+//            Long count = repo.validarExistenciaPorId(albumEditado.getId());
+//            if (count > 0) {
+//                Album albumDB = this.listarAlbumPorId(albumEditado.getId());
+//                AlbumDto albumDto = new AlbumDto();
+//                if (albumEditado.getId().equals(albumDB.getId())) {
+//                    count = repo.validarExistenciaAlbumDeArtista(albumDto.getIdArtista(), albumEditado.getNombre());
+//                    if (count == 0 || albumEditado.getNombre().equalsIgnoreCase(albumDB.getNombre())) {
+//                        this.repo.editar(album);
+//                    } else {
+//                        throw new ConflictException("El artista ya tiene un album llamado " + albumEditado.getNombre());
+//                    }
+//                } else {
+//                    throw new LogicBusinessException("El id enviado es diferente al id del album que va a editar");
+//                }
+//            } else {
+//                throw new ResourceNotFoundException("Album no encontrado");
+//            }
+//        } else {
+//            throw new LogicBusinessException("El id del album no puede ser nulo");
+//        }    
     }
 
     @Override

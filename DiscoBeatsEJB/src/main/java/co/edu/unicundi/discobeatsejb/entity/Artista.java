@@ -20,6 +20,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -82,8 +84,7 @@ public class Artista implements Serializable {
     public Artista() {
     }
 
-    public Artista(Integer id, Ocupacion ocupacion, GeneroMusical generoMusical, String nombreArtistico, Date fechaNacimiento, String nacionalidad, String imagen, String descripcion, List<Cancion> canciones) {
-        this.id = id;
+    public Artista(Ocupacion ocupacion, GeneroMusical generoMusical, String nombreArtistico, Date fechaNacimiento, String nacionalidad, String imagen, String descripcion, List<Cancion> canciones) {
         this.ocupacion = ocupacion;
         this.generoMusical = generoMusical;
         this.nombreArtistico = nombreArtistico;
@@ -102,6 +103,8 @@ public class Artista implements Serializable {
         this.id = id;
     }
 
+    @JsonIgnore
+    @XmlTransient
     public Ocupacion getOcupacion() {
         return ocupacion;
     }
@@ -110,6 +113,8 @@ public class Artista implements Serializable {
         this.ocupacion = ocupacion;
     }
 
+    @JsonIgnore
+    @XmlTransient
     public GeneroMusical getGeneroMusical() {
         return generoMusical;
     }

@@ -56,12 +56,12 @@ public class AlbumController {
         return Response.status(Response.Status.OK).entity(album).build();
     }
     
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response agregarAlbum(@Valid AlbumDto albumNuevo) throws ConflictException {
-        this.albumService.guardarAlbum(albumNuevo);
-        return Response.status(Response.Status.CREATED).build();
-    }
+//    @POST
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public Response agregarAlbum(@Valid AlbumDto albumNuevo) throws ConflictException {
+//        this.albumService.guardarAlbum(albumNuevo);
+//        return Response.status(Response.Status.CREATED).build();
+//    }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)

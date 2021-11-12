@@ -46,8 +46,7 @@ public class Rol implements Serializable {
     public Rol() {
     }
 
-    public Rol(Integer id, String rol, List<Usuario> listaUsuarios) {
-        this.id = id;
+    public Rol(String rol, List<Usuario> listaUsuarios) {
         this.rol = rol;
         this.listaUsuarios = listaUsuarios;
     }

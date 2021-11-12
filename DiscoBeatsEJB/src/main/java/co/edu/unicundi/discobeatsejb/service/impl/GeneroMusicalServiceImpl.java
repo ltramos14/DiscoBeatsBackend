@@ -58,26 +58,24 @@ public class GeneroMusicalServiceImpl implements IGeneroMusicalService {
 
     @Override
     public void editarGeneroMusical(GeneroMusical generoMusicalEditado) throws ResourceNotFoundException, LogicBusinessException, ConflictException {
-         if (generoMusicalEditado.getId() != null) {
-            Long count = repo.validarExistenciaPorId(generoMusicalEditado.getId());
-            if (count > 0) {
-                GeneroMusical genero = this.listarGeneroMusicalPorId(generoMusicalEditado.getId());
-                if (generoMusicalEditado.getId().equals(genero.getId())) {
-                    count = repo.validarExistenciaPorNombre(generoMusicalEditado.getNombreGeneroMusical());
-                    if (count == 0 || generoMusicalEditado.getNombreGeneroMusical().equalsIgnoreCase(genero.getNombreGeneroMusical())) {
-                        this.repo.editar(generoMusicalEditado);
-                    } else {
-                        throw new ConflictException("Ya existe un genero musical llamado: " + generoMusicalEditado.getNombreGeneroMusical());
-                    }
-                } else {
-                    throw new LogicBusinessException("El id enviado es diferente al id del genero musical que va a editar");
-                }
-            } else {
-                throw new ResourceNotFoundException("Genero Musical no encontrado");
-            }
-        } else {
-            throw new LogicBusinessException("El id del genero musical no puede ser nulo");
-        }   
+         //Validacion del id
+        if(generoMusicalEditado.getId() == null) {
+            throw new LogicBusinessException("El id del género musical a editar es obligatorio");
+        }
+        //Validación de existencia de género musical por id
+        Long validarExistenciaGenero = this.repo.validarExistenciaPorId(generoMusicalEditado.getId());
+        if (validarExistenciaGenero < 0) {
+            throw new ResourceNotFoundException("El genero musical no existe");
+        }
+        //Validación de existencia de género musical por nombre
+        Long count = this.repo.validarExistenciaPorNombre(generoMusicalEditado.getNombreGeneroMusical());
+        if(count == 0) {
+            GeneroMusical genero = this.repo.listarPorId(generoMusicalEditado.getId());
+            genero.setNombreGeneroMusical(generoMusicalEditado.getNombreGeneroMusical());
+            this.repo.editar(genero);
+       } else {
+           throw new ConflictException("La el género musical " + generoMusicalEditado.getNombreGeneroMusical() + "ya existe en DiscoBeats");
+       }  
     }
 
     @Override

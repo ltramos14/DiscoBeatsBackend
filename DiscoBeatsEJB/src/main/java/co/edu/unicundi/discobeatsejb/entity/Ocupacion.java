@@ -46,8 +46,7 @@ public class Ocupacion implements Serializable {
     public Ocupacion() {
     }
 
-    public Ocupacion(Integer id, String nombreOcupacion, List<Artista> listaArtistas) {
-        this.id = id;
+    public Ocupacion(String nombreOcupacion, List<Artista> listaArtistas) {
         this.nombreOcupacion = nombreOcupacion;
         this.listaArtistas = listaArtistas;
     }

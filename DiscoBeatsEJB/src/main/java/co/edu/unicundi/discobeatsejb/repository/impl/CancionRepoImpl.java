@@ -11,10 +11,16 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
- * @author Camilo Preciado
+ * @author Tatiana Ramos Villanueva
+ * @author Nicolás Nieto Cárdenas
+ * @author Camilo Preciado Rojas
+ * @version 1.0.0
+ * @since 1.0.0
  */
 @Stateless
 public class CancionRepoImpl implements ICancionRepo{
@@ -24,12 +30,13 @@ public class CancionRepoImpl implements ICancionRepo{
     
     @Override
     public List<Cancion> listarTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TypedQuery<Cancion> query = this.em.createNamedQuery("Cancion.ListarTodas", Cancion.class);
+        return query.getResultList();
     }
 
     @Override
     public Cancion listarPorId(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.em.find(Cancion.class, id);
     }
 
     @Override
@@ -38,13 +45,30 @@ public class CancionRepoImpl implements ICancionRepo{
     }
 
     @Override
-    public void editar(Cancion obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void editar(Cancion objCancion) {
+        this.em.merge(objCancion);
     }
 
     @Override
     public void eliminar(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query query = this.em.createNamedQuery("Cancion.EliminarPorId", Cancion.class);
+        query.setParameter("id", id);
+        query.executeUpdate();
+    }
+
+    @Override
+    public Long validarCancionDeAlbum(String nombreCancion, Integer idAlbum) {
+        Query query = this.em.createNamedQuery("Cancion.ContarCancionAlbum");
+        query.setParameter(1, nombreCancion);
+        query.setParameter(2, idAlbum);
+        return (Long) query.getSingleResult();
+    }
+
+    @Override
+    public Long validarExistenciaPorId(Integer id) {
+        Query query = this.em.createNamedQuery("Cancion.ContarPorId", Cancion.class);
+        query.setParameter("id", id);
+        return (Long) query.getSingleResult();
     }
     
 }

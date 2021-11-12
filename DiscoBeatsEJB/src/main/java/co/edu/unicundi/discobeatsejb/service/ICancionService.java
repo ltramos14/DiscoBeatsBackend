@@ -5,6 +5,7 @@
  */
 package co.edu.unicundi.discobeatsejb.service;
 
+import co.edu.unicundi.discobeatsejb.dto.CancionDto;
 import co.edu.unicundi.discobeatsejb.entity.Cancion;
 import co.edu.unicundi.discobeatsejb.exception.ConflictException;
 import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
@@ -27,9 +28,9 @@ public interface ICancionService {
     
     public Cancion listarCancionPorId(Integer id) throws ResourceNotFoundException;
     
-    public void guardarCancion(Cancion cancionNueva);
+    public void guardarCancion(CancionDto cancionNueva) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
     
-    public void editarCancion(Cancion artistaEditado) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
+    public void editarCancion(CancionDto artistaEditado) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
     
     public void eliminarCancion(Integer id) throws ResourceNotFoundException;
 }

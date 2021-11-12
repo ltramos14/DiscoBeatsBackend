@@ -59,8 +59,7 @@ public class GeneroMusical implements Serializable {
     public GeneroMusical() {
     }
 
-    public GeneroMusical(Integer id, String nombreGeneroMusical, List<Artista> listaArtistas, List<Cancion> listaCanciones, List<Album> listaAlbumes) {
-        this.id = id;
+    public GeneroMusical(String nombreGeneroMusical, List<Artista> listaArtistas, List<Cancion> listaCanciones, List<Album> listaAlbumes) {
         this.nombreGeneroMusical = nombreGeneroMusical;
         this.listaArtistas = listaArtistas;
         this.listaCanciones = listaCanciones;

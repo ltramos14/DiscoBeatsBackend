@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -50,8 +52,7 @@ public class CompraCancion implements Serializable {
     public CompraCancion() {
     }
 
-    public CompraCancion(Integer id, Cancion cancion, Usuario usuario, Date fechaCompra, Integer precioTotal) {
-        this.id = id;
+    public CompraCancion(Cancion cancion, Usuario usuario, Date fechaCompra, Integer precioTotal) {
         this.cancion = cancion;
         this.usuario = usuario;
         this.fechaCompra = fechaCompra;
@@ -66,6 +67,8 @@ public class CompraCancion implements Serializable {
         this.id = id;
     }
 
+    @JsonIgnore
+    @XmlTransient
     public Cancion getCancion() {
         return cancion;
     }
@@ -74,6 +77,8 @@ public class CompraCancion implements Serializable {
         this.cancion = cancion;
     }
 
+    @JsonIgnore
+    @XmlTransient
     public Usuario getUsuario() {
         return usuario;
     }
@@ -97,6 +102,5 @@ public class CompraCancion implements Serializable {
     public void setPrecioTotal(Integer precioTotal) {
         this.precioTotal = precioTotal;
     }
-    
     
 }

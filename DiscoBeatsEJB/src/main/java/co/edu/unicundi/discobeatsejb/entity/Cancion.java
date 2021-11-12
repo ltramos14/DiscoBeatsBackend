@@ -14,11 +14,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -30,13 +36,20 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "canciones")
+@NamedQueries({
+    @NamedQuery(name = "Cancion.ListarTodas", query = "SELECT c.id, c.nombre, c.duracion, c.reproducciones, c.precio, c.imagen FROM Cancion c"),
+    @NamedQuery(name = "Cancion.ContarPorId", query = "SELECT COUNT(c) FROM Cancion c WHERE c.id = :id"),
+    @NamedQuery(name = "Cancion.EliminarPorId", query = "DELETE FROM Cancion c WHERE c.id = :id"),
+})
+@NamedNativeQueries({
+    @NamedNativeQuery(name = "Cancion.ContarCancionAlbum", query = "SELECT COUNT(*) FROM canciones WHERE UPPER(nombre) = UPPER(?) AND id_album = ?")
+})
 public class Cancion implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @NotNull(message = "El artista de la canción es obligatorio")
     @ManyToOne
     @JoinColumn(name = "id_artista", nullable = false )
     private Artista artista;
@@ -46,7 +59,6 @@ public class Cancion implements Serializable{
     @JoinColumn(name = "id_genero", nullable = false)
     private GeneroMusical generoMusical;
     
-    @NotNull(message = "El album al que pertenece la canción es obligatorio")
     @ManyToOne
     @JoinColumn(name = "id_album", nullable = false)
     private Album album;
@@ -56,15 +68,15 @@ public class Cancion implements Serializable{
     @Column(name = "nombre", nullable = false, length = 25)
     private String nombre;
     
-    @NotNull(message = "La duracion es obligatoria")
-    @Column(name = "duracion", nullable = false)
+    //@NotNull(message = "La duracion es obligatoria")
+    @Column(name = "duracion", nullable = true)
     private Time duracion;
     
     @NotNull(message = "El numero de reproducciones es obligatoria")
     @Column(name = "reproducciones", nullable = false)
     private Integer reproducciones;
     
-    @Column(name = "fecha_lanzamiento", nullable = false)
+    @Column(name = "fecha_lanzamiento", nullable = true)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaLanzamiento;
     
@@ -81,8 +93,7 @@ public class Cancion implements Serializable{
     public Cancion() {
     }
 
-    public Cancion(Integer id, Artista artista, GeneroMusical generoMusical, Album album, String nombre, Time duracion, Integer reproducciones, Date fechaLanzamiento, Integer precio, String imagen, List<CompraCancion> listaCompras) {
-        this.id = id;
+    public Cancion(Artista artista, GeneroMusical generoMusical, Album album, String nombre, Time duracion, Integer reproducciones, Date fechaLanzamiento, Integer precio, String imagen, List<CompraCancion> listaCompras) {
         this.artista = artista;
         this.generoMusical = generoMusical;
         this.album = album;
@@ -102,7 +113,9 @@ public class Cancion implements Serializable{
     public void setId(Integer id) {
         this.id = id;
     }
-
+    
+    @JsonIgnore
+    @XmlTransient
     public Artista getArtista() {
         return artista;
     }
@@ -111,6 +124,8 @@ public class Cancion implements Serializable{
         this.artista = artista;
     }
 
+    @JsonIgnore
+    @XmlTransient
     public GeneroMusical getGeneroMusical() {
         return generoMusical;
     }
@@ -118,7 +133,9 @@ public class Cancion implements Serializable{
     public void setGeneroMusical(GeneroMusical generoMusical) {
         this.generoMusical = generoMusical;
     }
-
+    
+    @JsonIgnore
+    @XmlTransient
     public Album getAlbum() {
         return album;
     }
@@ -183,5 +200,4 @@ public class Cancion implements Serializable{
         this.listaCompras = listaCompras;
     }
 
-    
 }
