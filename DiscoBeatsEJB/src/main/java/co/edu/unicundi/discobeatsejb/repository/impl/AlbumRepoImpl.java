@@ -22,23 +22,8 @@ public class AlbumRepoImpl implements IAlbumRepo {
 
     @PersistenceContext(unitName = "conexionPostgresql")
     private EntityManager em;
-
-    @Override
-    public Long validarExistenciaPorId(Integer id) {
-        Query query = this.em.createNamedQuery("Album.ContarPorId", Album.class);
-        query.setParameter("id", id);
-        return (Long) query.getSingleResult();
-    }
-
-    @Override
-    public Long validarExistenciaAlbumDeArtista(Integer idArtista, String nombreAlbum) {
-        Query query = this.em.createNamedQuery("Album.ContarPorNombre");
-        query.setParameter(1, nombreAlbum);
-        query.setParameter(2, idArtista);
-        return (Long)query.getSingleResult();
-    }
-
-    @Override
+    
+     @Override
     public List<Album> listarTodos() {
         TypedQuery<Album> query = this.em.createNamedQuery("Album.ListarTodos", Album.class);
         return query.getResultList();
@@ -54,8 +39,8 @@ public class AlbumRepoImpl implements IAlbumRepo {
     }
 
     @Override
-    public void editar(Album obj) {
-        this.em.merge(obj);
+    public void editar(Album objAlbum) {
+        this.em.merge(objAlbum);
     }
     
     @Override
@@ -63,6 +48,21 @@ public class AlbumRepoImpl implements IAlbumRepo {
         Query query = this.em.createNamedQuery("Album.EliminarAlbum", Album.class);
         query.setParameter("id", id);
         query.executeUpdate();
+    }
+
+    @Override
+    public Long validarExistenciaPorId(Integer id) {
+        Query query = this.em.createNamedQuery("Album.ContarPorId", Album.class);
+        query.setParameter("id", id);
+        return (Long) query.getSingleResult();
+    }
+
+    @Override
+    public Long validarExistenciaAlbumDeArtista(String nombreAlbum, Integer idArtista) {
+        Query query = this.em.createNamedQuery("Album.ContarPorNombre");
+        query.setParameter(1, nombreAlbum);
+        query.setParameter(2, idArtista);
+        return (Long)query.getSingleResult();
     }
      
 }

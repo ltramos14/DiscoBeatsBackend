@@ -96,11 +96,11 @@ public class CancionServiceImpl implements ICancionService {
         
         // Validación de género musical
         if (cancionNueva.getGeneroMusical().getId() == null) {
-            throw new LogicBusinessException("El id del album es obligatorio");
+            throw new LogicBusinessException("El id del género musical es obligatorio");
         } 
         Long validarExistenciaGenero = generoRepo.validarExistenciaPorId(cancionNueva.getGeneroMusical().getId());
         if (validarExistenciaGenero < 0) {
-            throw new ResourceNotFoundException("El album no existe");
+            throw new ResourceNotFoundException("El género musical no existe");
         }
         
        Long contarExistenciaPorNombreAlbumDeArtista = localRepo.validarCancionDeAlbum(cancionNueva.getNombre(), cancionNueva.getAlbum().getId());

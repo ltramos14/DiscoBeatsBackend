@@ -1,5 +1,6 @@
 package co.edu.unicundi.discobeatsejb.service.impl;
 
+import co.edu.unicundi.discobeatsejb.dto.AlbumDto;
 import co.edu.unicundi.discobeatsejb.entity.Album;
 import co.edu.unicundi.discobeatsejb.entity.Artista;
 import co.edu.unicundi.discobeatsejb.entity.GeneroMusical;
@@ -7,6 +8,8 @@ import co.edu.unicundi.discobeatsejb.exception.ConflictException;
 import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
 import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
 import co.edu.unicundi.discobeatsejb.repository.IAlbumRepo;
+import co.edu.unicundi.discobeatsejb.repository.IArtistaRepo;
+import co.edu.unicundi.discobeatsejb.repository.IGeneroMusicalRepo;
 import co.edu.unicundi.discobeatsejb.service.IAlbumService;
 import java.util.List;
 import javax.ejb.EJB;
@@ -21,103 +24,151 @@ import javax.ejb.Stateless;
  * @since 1.0.0
  */
 @Stateless
-public class AlbumServiceImpl implements IAlbumService{
+public class AlbumServiceImpl implements IAlbumService {
 
     @EJB
-    private IAlbumRepo repo;
-    
+    private IAlbumRepo localRepo;
+
+    @EJB
+    private IArtistaRepo artistaRepo;
+
+    @EJB
+    private IGeneroMusicalRepo generoRepo;
+
     @Override
     public List<Album> listarAlbumes() {
-        if (!repo.listarTodos().isEmpty()) {
-            return repo.listarTodos();
-        } else {
-            return null;
+
+        List<Album> listaAlbumes = this.localRepo.listarTodos();
+        if (!listaAlbumes.isEmpty()) {
+            return listaAlbumes;
         }
+        return null;
     }
 
     @Override
     public Album listarAlbumPorId(Integer id) throws ResourceNotFoundException {
-        Long count = repo.validarExistenciaPorId(id);
 
+        Long count = this.localRepo.validarExistenciaPorId(id);
         if (count > 0) {
-            Album album = repo.listarPorId(id);
-            return album;
+            Album albumEntity = localRepo.listarPorId(id);
+            return albumEntity;
         } else {
             throw new ResourceNotFoundException("El album no fue encontrado");
         }
     }
-    
+
     @Override
-     public void guardarAlbum(Album albumNuevo) throws ConflictException {
-      
-//       Artista artista = new Artista();
-//       artista.setId(albumNuevo.getIdArtista());
-//       
-//       GeneroMusical genero = new GeneroMusical();
-//       genero.setId(albumNuevo.getIdGeneroMusical());
-//       
-//       Album album = new Album();
-//       
-//       album.setArtista(artista);
-//       album.setGeneroMusical(genero);
-//       album.setNombre(albumNuevo.getNombre());
-//       album.setDescripcion(albumNuevo.getDescripcion());
-//       album.setFechaLanzamiento(albumNuevo.getFechaLanzamiento());
-//       album.setImagen(albumNuevo.getImagen());
-//       album.setPrecio(albumNuevo.getPrecio());
-//
-//       Long contarExistenciaPorNombreAlbumDeArtista = repo.validarExistenciaAlbumDeArtista(albumNuevo.getIdArtista(), albumNuevo.getNombre());
-//       
-//       if(contarExistenciaPorNombreAlbumDeArtista == 0) {
-//           repo.guardar(album);
-//       } else {
-//           throw new ConflictException("El artista " + artista.getNombreArtistico() + "ya tiene un album llamado" + albumNuevo.getNombre());
-//       }   
+    public void guardarAlbum(AlbumDto albumNuevo) throws ResourceNotFoundException, LogicBusinessException, ConflictException {
+
+        if (albumNuevo.getId() != null) {
+            throw new LogicBusinessException("El id de la album es asignado automáticamente");
+        }
+
+        // Validación de Artista
+        if (albumNuevo.getArtista().getId() == null) {
+            throw new LogicBusinessException("El id del artista el obligatorio");
+        }
+
+        Long validarExistenciaArtista = artistaRepo.validarExistenciaPorId(albumNuevo.getArtista().getId());
+        if (validarExistenciaArtista < 0) {
+            throw new ResourceNotFoundException("El artista no existe");
+        }
+
+        // Validación de género musical
+        if (albumNuevo.getGeneroMusical().getId() == null) {
+            throw new LogicBusinessException("El id del género musical es obligatorio");
+        }
+        Long validarExistenciaGenero = generoRepo.validarExistenciaPorId(albumNuevo.getGeneroMusical().getId());
+        if (validarExistenciaGenero < 0) {
+            throw new ResourceNotFoundException("El género musical no existe");
+        }
+        
+        Artista artistaAlbum = artistaRepo.listarPorId(albumNuevo.getArtista().getId());
+        Long contarExistenciaPorNombreAlbumDeArtista = localRepo.validarExistenciaAlbumDeArtista(albumNuevo.getNombre(), albumNuevo.getArtista().getId());
+
+        if (contarExistenciaPorNombreAlbumDeArtista == 0) {
+            Album album = convertToEntity(albumNuevo);
+            localRepo.guardar(album);
+        } else {
+            throw new ConflictException("El artista " + artistaAlbum.getNombreArtistico() + " ya cuenta con un album denominado " + albumNuevo.getNombre());
+        }
+
     }
 
     @Override
-    public void editarAlbum(Album albumEditado) throws ResourceNotFoundException, LogicBusinessException, ConflictException {
-            
-//       Album album = listarAlbumPorId(albumEditado.getId());
-//       
-//       album.setNombre(albumEditado.getNombre());
-//       album.setDescripcion(albumEditado.getDescripcion());
-//       album.setFechaLanzamiento(albumEditado.getFechaLanzamiento());
-//       album.setImagen(albumEditado.getImagen());
-//       album.setPrecio(albumEditado.getPrecio());   
-//        
-//        if (albumEditado.getId() != null) {
-//            Long count = repo.validarExistenciaPorId(albumEditado.getId());
-//            if (count > 0) {
-//                Album albumDB = this.listarAlbumPorId(albumEditado.getId());
-//                AlbumDto albumDto = new AlbumDto();
-//                if (albumEditado.getId().equals(albumDB.getId())) {
-//                    count = repo.validarExistenciaAlbumDeArtista(albumDto.getIdArtista(), albumEditado.getNombre());
-//                    if (count == 0 || albumEditado.getNombre().equalsIgnoreCase(albumDB.getNombre())) {
-//                        this.repo.editar(album);
-//                    } else {
-//                        throw new ConflictException("El artista ya tiene un album llamado " + albumEditado.getNombre());
-//                    }
-//                } else {
-//                    throw new LogicBusinessException("El id enviado es diferente al id del album que va a editar");
-//                }
-//            } else {
-//                throw new ResourceNotFoundException("Album no encontrado");
-//            }
-//        } else {
-//            throw new LogicBusinessException("El id del album no puede ser nulo");
-//        }    
+    public void editarAlbum(AlbumDto albumEditado) throws ResourceNotFoundException, LogicBusinessException, ConflictException {
+
+        //Validacion del id
+        if (albumEditado.getId() == null) {
+            throw new LogicBusinessException("El id del album a editar es obligatorio");
+        }
+
+        // Validación de existencia del album en la de base de datos
+        Long validarExistenciaAlbum = localRepo.validarExistenciaPorId(albumEditado.getId());
+        if (validarExistenciaAlbum == 0) {
+            throw new ResourceNotFoundException("La album no existe");
+        }
+
+        if (albumEditado.getArtista() != null) {
+            throw new LogicBusinessException("No se puede cambiar el artista de ese album");
+        }
+
+        // Validación de género musical
+        if (albumEditado.getGeneroMusical().getId() == null) {
+            throw new LogicBusinessException("El id del genero musical es obligatorio");
+        }
+        Long validarExistenciaGenero = generoRepo.validarExistenciaPorId(albumEditado.getGeneroMusical().getId());
+        if (validarExistenciaGenero < 0) {
+            throw new ResourceNotFoundException("El genero musical no existe");
+        }
+        
+        Album album = this.localRepo.listarPorId(albumEditado.getId()); 
+        Long contarExistenciaPorNombreAlbumDeArtista = localRepo.validarExistenciaAlbumDeArtista(albumEditado.getNombre(), album.getArtista().getId());
+
+        if (contarExistenciaPorNombreAlbumDeArtista == 0) {
+            GeneroMusical genero = new GeneroMusical();
+            genero.setId(albumEditado.getGeneroMusical().getId());
+            album.setGeneroMusical(genero);
+            album.setNombre(albumEditado.getNombre());
+            album.setDescripcion(albumEditado.getDescripcion());
+            album.setFechaLanzamiento(albumEditado.getFechaLanzamiento());
+            album.setPrecio(albumEditado.getPrecio());
+            album.setImagen(albumEditado.getImagen());
+            localRepo.editar(album);
+        } else {
+            throw new ConflictException("El artista " + album.getArtista().getNombreArtistico() + " ya cuenta con un album denominado " + albumEditado.getNombre());
+        }
     }
 
     @Override
     public void eliminarAlbum(Integer id) throws ResourceNotFoundException {
-       Long count = repo.validarExistenciaPorId(id);
 
+        Long count = localRepo.validarExistenciaPorId(id);
         if (count > 0) {
-            repo.eliminar(id);
+            localRepo.eliminar(id);
         } else {
             throw new ResourceNotFoundException("Album no encontrado");
         }
     }
-    
+
+    private Album convertToEntity(AlbumDto albumDto) {
+
+        Artista artista = new Artista();
+        GeneroMusical genero = new GeneroMusical();
+
+        artista.setId(albumDto.getArtista().getId());
+        genero.setId(albumDto.getGeneroMusical().getId());
+
+        Album albumEntity = new Album();
+
+        albumEntity.setNombre(albumDto.getNombre());
+        albumEntity.setDescripcion(albumDto.getDescripcion());
+        albumEntity.setFechaLanzamiento(albumDto.getFechaLanzamiento());
+        albumEntity.setPrecio(albumDto.getPrecio());
+        albumEntity.setImagen(albumDto.getImagen());
+        albumEntity.setArtista(artista);
+        albumEntity.setGeneroMusical(genero);
+
+        return albumEntity;
+    }
 }

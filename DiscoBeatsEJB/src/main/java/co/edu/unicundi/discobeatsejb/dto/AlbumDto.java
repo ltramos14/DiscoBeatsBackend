@@ -8,6 +8,10 @@ package co.edu.unicundi.discobeatsejb.dto;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -21,16 +25,21 @@ public class AlbumDto implements Serializable {
     
     private GeneroMusicalDto generoMusical;
     
+    @NotNull(message = "El nombre del album es obligatorio")
+    @Size(min = 3, max = 20, message = "El nombre del album debe estar entre 3 y 25 caracteres")
     private String nombre;
     
+    @NotNull(message = "La descripcion es obligatoria")
+    @Size(min = 3, max = 250, message = "La descripcion debe estar entre 3 y 250 caracteres")
     private String descripcion;
     
     private Date fechaLanzamiento;
     
     private String imagen;
     
+    @NotNull(message = "El precio del album es obligatorio")
     private Integer precio;
-    
+        
     private List<CancionDto> listaCanciones;
     
     private List<CompraAlbumDto> listaCompras;

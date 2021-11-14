@@ -1,6 +1,7 @@
 package co.edu.unicundi.discobeatswar.controller;
 
 import co.edu.unicundi.discobeatsejb.dto.AlbumDto;
+import co.edu.unicundi.discobeatsejb.dto.CancionDto;
 import co.edu.unicundi.discobeatsejb.entity.Album;
 import co.edu.unicundi.discobeatsejb.exception.ConflictException;
 import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
@@ -56,17 +57,17 @@ public class AlbumController {
         return Response.status(Response.Status.OK).entity(album).build();
     }
     
-//    @POST
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public Response agregarAlbum(@Valid AlbumDto albumNuevo) throws ConflictException {
-//        this.albumService.guardarAlbum(albumNuevo);
-//        return Response.status(Response.Status.CREATED).build();
-//    }
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response agregarAlbum(@Valid AlbumDto albumNuevo) throws ResourceNotFoundException, LogicBusinessException, ConflictException  {
+        this.albumService.guardarAlbum(albumNuevo);
+        return Response.status(Response.Status.CREATED).build();
+    }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response editarAlbum(Album album) throws ResourceNotFoundException, ConflictException, LogicBusinessException {
+    public Response editarCancion(@Valid AlbumDto album) throws ResourceNotFoundException, ConflictException, LogicBusinessException {
         this.albumService.editarAlbum(album);
         return Response.status(Response.Status.OK).entity(album).build();
     }
@@ -74,7 +75,7 @@ public class AlbumController {
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response eliminarGeneroMusical(@PathParam("id") Integer id) throws ResourceNotFoundException {
+    public Response eliminarAlbum(@PathParam("id") Integer id) throws ResourceNotFoundException {
         this.albumService.eliminarAlbum(id);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
