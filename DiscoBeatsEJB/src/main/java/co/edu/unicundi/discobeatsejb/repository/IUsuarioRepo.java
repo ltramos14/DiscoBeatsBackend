@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.unicundi.discobeatsejb.repository;
 
 import co.edu.unicundi.discobeatsejb.entity.Usuario;
@@ -18,5 +13,11 @@ import javax.ejb.Local;
  */
 @Local
 public interface IUsuarioRepo extends ICrud<Usuario, Integer> {
+    
+    public Long validarExistenciaPorId(Integer id);
+    
+    public Long validarExistenciaCorreo(String correo);
+    
+    public Long validarExistenciaNombreUsuario(String nombreUsuario);
     
 }

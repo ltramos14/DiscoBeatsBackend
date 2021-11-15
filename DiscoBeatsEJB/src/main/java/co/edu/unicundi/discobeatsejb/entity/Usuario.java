@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -31,7 +33,14 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 @Table(name = "usuarios")
 @NamedQueries({
-    @NamedQuery(name = "Usuario.ListarTodos", query = "SELECT u FROM Usuario u")
+    @NamedQuery(name = "Usuario.ListarTodos", query = "SELECT u FROM Usuario u WHERE u.estado = true"),
+    @NamedQuery(name = "Usuario.ObtenerUsuario", query = "SELECT u FROM Usuario u WHERE u.id = :id"),
+    @NamedQuery(name = "Usuario.Inhabilitar", query = "UPDATE Usuario u SET u.estado = false WHERE u.id = :id"),
+    @NamedQuery(name = "Usuario.ContarPorId", query = "SELECT COUNT(u) FROM Usuario u WHERE u.id = :id")
+})
+@NamedNativeQueries({
+    @NamedNativeQuery(name = "Usuario.ValidarCorreo", query = "SELECT COUNT(*) FROM usuarios WHERE UPPER(correo) = UPPER(?)"),
+    @NamedNativeQuery(name = "Usuario.ValidarNombreUsuario", query = "SELECT COUNT(*) FROM usuarios WHERe UPPER(nombre_usuario) = UPPER(?)")
 })
 public class Usuario implements Serializable {
     
@@ -59,6 +68,9 @@ public class Usuario implements Serializable {
     @Column(name = "contrasena", nullable = false, length = 25)
     private String contrasena;
     
+    @Column(name = "estado", nullable = false)
+    private Boolean estado;
+    
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CompraAlbum> listaComprasAlbumes;
     
@@ -68,11 +80,12 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(Rol rol, String nombreUsuario, String correo, String contrasena, List<CompraAlbum> listaComprasAlbumes, List<CompraCancion> listaComprasCanciones) {
+    public Usuario(Rol rol, String nombreUsuario, String correo, String contrasena, Boolean estado, List<CompraAlbum> listaComprasAlbumes, List<CompraCancion> listaComprasCanciones) {
         this.rol = rol;
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
         this.contrasena = contrasena;
+        this.estado = estado;
         this.listaComprasAlbumes = listaComprasAlbumes;
         this.listaComprasCanciones = listaComprasCanciones;
     }
@@ -127,6 +140,14 @@ public class Usuario implements Serializable {
         this.listaComprasAlbumes = listaComprasAlbumes;
     }
 
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+    
     public List<CompraCancion> getListaComprasCanciones() {
         return listaComprasCanciones;
     }

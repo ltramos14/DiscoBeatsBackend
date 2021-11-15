@@ -27,7 +27,8 @@ import javax.persistence.OneToMany;
 @Entity
 @Table(name = "roles")
 @NamedQueries({
-    @NamedQuery(name = "Rol.ListarRoles", query = "SELECT r FROM Rol r")
+   @NamedQuery(name = "Rol.ListarRoles", query = "SELECT r FROM Rol r"),
+   @NamedQuery(name = "Rol.ValidarRol", query = "SELECT COUNT(r) FROM Rol r WHERE r.id = :id")
 })
 public class Rol implements Serializable {
     

@@ -6,6 +6,8 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -23,27 +25,53 @@ public class UsuarioRepoImpl implements IUsuarioRepo {
     
     @Override
     public List<Usuario> listarTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TypedQuery<Usuario> query = this.em.createNamedQuery("Usuario.ListarTodos", Usuario.class);
+        return query.getResultList();
     }
 
     @Override
     public Usuario listarPorId(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TypedQuery<Usuario> query = this.em.createNamedQuery("Usuario.ObtenerUsuario", Usuario.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
 
     @Override
     public void guardar(Usuario obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.em.persist(obj);
     }
 
     @Override
     public void editar(Usuario obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.em.merge(obj);
     }
 
     @Override
     public void eliminar(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query query = this.em.createNamedQuery("Usuario.Inhabilitar");
+        query.setParameter(1, id);
+        query.executeUpdate();
+    }
+
+    @Override
+    public Long validarExistenciaPorId(Integer id) {
+        Query query = this.em.createNamedQuery("Usuario.ContarPorId");
+        query.setParameter("id", id);
+        return (Long) query.getSingleResult();
+    }
+
+    @Override
+    public Long validarExistenciaCorreo(String correo) {
+        Query query = this.em.createNamedQuery("Usuario.ValidarCorreo");
+        query.setParameter(1, correo);
+        return (Long) query.getSingleResult();
+    }
+
+    @Override
+    public Long validarExistenciaNombreUsuario(String nombreUsuario) {
+        Query query = this.em.createNamedQuery("Usuario.ValidarNombreUsuario");
+        query.setParameter(1, nombreUsuario);
+        return (Long) query.getSingleResult();    
     }
     
 }
