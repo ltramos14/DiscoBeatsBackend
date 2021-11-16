@@ -1,5 +1,4 @@
 package co.edu.unicundi.discobeatsejb.service.impl;
-import co.edu.unicundi.discobeatsejb.entity.Artista;
 import co.edu.unicundi.discobeatsejb.entity.GeneroMusical;
 import co.edu.unicundi.discobeatsejb.exception.ConflictException;
 import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
@@ -58,24 +57,27 @@ public class GeneroMusicalServiceImpl implements IGeneroMusicalService {
 
     @Override
     public void editarGeneroMusical(GeneroMusical generoMusicalEditado) throws ResourceNotFoundException, LogicBusinessException, ConflictException {
-         //Validacion del id
+        
+        //Validacion del id
         if(generoMusicalEditado.getId() == null) {
             throw new LogicBusinessException("El id del género musical a editar es obligatorio");
         }
+        
         //Validación de existencia de género musical por id
         Long validarExistenciaGenero = this.repo.validarExistenciaPorId(generoMusicalEditado.getId());
-        if (validarExistenciaGenero < 0) {
+        if (validarExistenciaGenero == 0) {
             throw new ResourceNotFoundException("El genero musical no existe");
         }
+        
         //Validación de existencia de género musical por nombre
         Long count = this.repo.validarExistenciaPorNombre(generoMusicalEditado.getNombreGeneroMusical());
         if(count == 0) {
             GeneroMusical genero = this.repo.listarPorId(generoMusicalEditado.getId());
             genero.setNombreGeneroMusical(generoMusicalEditado.getNombreGeneroMusical());
             this.repo.editar(genero);
-       } else {
-           throw new ConflictException("La el género musical " + generoMusicalEditado.getNombreGeneroMusical() + "ya existe en DiscoBeats");
-       }  
+        } else {
+           throw new ConflictException("El género musical " + generoMusicalEditado.getNombreGeneroMusical() + "ya existe en DiscoBeats");
+        }  
     }
 
     @Override

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.unicundi.discobeatsejb.service.impl;
 
 import co.edu.unicundi.discobeatsejb.dto.CancionDto;
@@ -77,39 +72,41 @@ public class CancionServiceImpl implements ICancionService {
         }
 
         // Validación de artista
-        if (cancionNueva.getArtista().getId() == null) {
+        if (cancionNueva.getIdArtista() == null) {
             throw new LogicBusinessException("El id del artista el obligatorio");
         } 
-        Long validarExistenciaArtista = artistaRepo.validarExistenciaPorId(cancionNueva.getArtista().getId());
-        if (validarExistenciaArtista < 0) {
+        
+        Long validarExistenciaArtista = artistaRepo.validarExistenciaPorId(cancionNueva.getIdArtista());
+        if (validarExistenciaArtista == 0) {
             throw new ResourceNotFoundException("El artista no existe");
         }
         
         // Validación de álbum
-        if (cancionNueva.getAlbum().getId() == null) {
+        if (cancionNueva.getIdAlbum() == null) {
             throw new LogicBusinessException("El id del album es obligatorio");
         } 
-        Long validarExistenciaAlbum = albumRepo.validarExistenciaPorId(cancionNueva.getAlbum().getId());
-        if (validarExistenciaAlbum < 0) {
+        
+        Long validarExistenciaAlbum = albumRepo.validarExistenciaPorId(cancionNueva.getIdAlbum());
+        if (validarExistenciaAlbum == 0) {
             throw new ResourceNotFoundException("El album no existe");
         }
         
         // Validación de género musical
-        if (cancionNueva.getGeneroMusical().getId() == null) {
+        if (cancionNueva.getIdGeneroMusical() == null) {
             throw new LogicBusinessException("El id del género musical es obligatorio");
         } 
-        Long validarExistenciaGenero = generoRepo.validarExistenciaPorId(cancionNueva.getGeneroMusical().getId());
-        if (validarExistenciaGenero < 0) {
+        Long validarExistenciaGenero = generoRepo.validarExistenciaPorId(cancionNueva.getIdGeneroMusical());
+        if (validarExistenciaGenero == 0) {
             throw new ResourceNotFoundException("El género musical no existe");
         }
         
-       Long contarExistenciaPorNombreAlbumDeArtista = localRepo.validarCancionDeAlbum(cancionNueva.getNombre(), cancionNueva.getAlbum().getId());
+       Long contarExistenciaPorNombreAlbumDeArtista = localRepo.validarCancionDeAlbum(cancionNueva.getNombre(), cancionNueva.getIdAlbum());
         
        if(contarExistenciaPorNombreAlbumDeArtista == 0) {
            Cancion cancion = convertToEntity(cancionNueva);
            localRepo.guardar(cancion);
        } else {
-           throw new ConflictException("La canción " + cancionNueva.getNombre() + " ya existe en el album con id " + cancionNueva.getAlbum().getId());
+           throw new ConflictException("La canción " + cancionNueva.getNombre() + " ya existe en el album con id " + cancionNueva.getIdAlbum());
        }  
        
     }
@@ -128,27 +125,28 @@ public class CancionServiceImpl implements ICancionService {
             throw new ResourceNotFoundException("La cancion no existe");
         }
         
-        if(cancionEditada.getArtista() != null) {
+        if(cancionEditada.getIdArtista() != null) {
             throw new LogicBusinessException("No se puede cambiar el artista de esta canción");
         }
         
-        if(cancionEditada.getAlbum()!= null) {
+        if(cancionEditada.getIdAlbum()!= null) {
             throw new LogicBusinessException("No se puede cambiar el album de esta canción");
         }
         
         // Validación de género musical
-        if (cancionEditada.getGeneroMusical().getId() == null) {
+        if (cancionEditada.getIdGeneroMusical() == null) {
             throw new LogicBusinessException("El id del genero es obligatorio");
         } 
-        Long validarExistenciaGenero = generoRepo.validarExistenciaPorId(cancionEditada.getGeneroMusical().getId());
-        if (validarExistenciaGenero < 0) {
+        Long validarExistenciaGenero = generoRepo.validarExistenciaPorId(cancionEditada.getIdGeneroMusical());
+        if (validarExistenciaGenero == 0) {
             throw new ResourceNotFoundException("El genero musical no existe");
         }
+       
         Cancion cancion = this.localRepo.listarPorId(cancionEditada.getId());
         Long contarExistenciaPorNombreAlbumDeArtista = localRepo.validarCancionDeAlbum(cancionEditada.getNombre(), cancion.getAlbum().getId());
-        if(contarExistenciaPorNombreAlbumDeArtista == 0) {
+        if(contarExistenciaPorNombreAlbumDeArtista == 0 || cancionEditada.getNombre().equalsIgnoreCase(cancion.getNombre())) {
             GeneroMusical genero = new GeneroMusical();
-            genero.setId(cancionEditada.getGeneroMusical().getId());
+            genero.setId(cancionEditada.getIdGeneroMusical());
             cancion.setGeneroMusical(genero);
             cancion.setNombre(cancionEditada.getNombre());
             cancion.setDuracion(cancionEditada.getDuracion());
@@ -206,9 +204,9 @@ public class CancionServiceImpl implements ICancionService {
         Album album = new Album();
         GeneroMusical genero = new GeneroMusical();
         
-        artiste.setId(cancionDto.getArtista().getId());
-        album.setId(cancionDto.getAlbum().getId());
-        genero.setId(cancionDto.getGeneroMusical().getId());
+        artiste.setId(cancionDto.getIdArtista());
+        album.setId(cancionDto.getIdAlbum());
+        genero.setId(cancionDto.getIdGeneroMusical());
         
         Cancion cancionEntity = new Cancion();
         cancionEntity.setNombre(cancionDto.getNombre());

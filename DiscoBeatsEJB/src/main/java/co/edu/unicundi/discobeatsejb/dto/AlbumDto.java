@@ -1,29 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.unicundi.discobeatsejb.dto;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
  *
- * @author nicon
+ * @author Tatiana Ramos Villanueva
+ * @author Nicolás Nieto Cárdenas
+ * @author Camilo Preciado Rojas
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class AlbumDto implements Serializable {
     
     private Integer id;
 
-    private ArtistaDto artista;
+    private Integer idArtista;
     
-    private GeneroMusicalDto generoMusical;
+    private Integer idGeneroMusical;
     
     @NotNull(message = "El nombre del album es obligatorio")
     @Size(min = 3, max = 20, message = "El nombre del album debe estar entre 3 y 25 caracteres")
@@ -47,10 +44,10 @@ public class AlbumDto implements Serializable {
     public AlbumDto() {
     }
 
-    public AlbumDto(Integer id, ArtistaDto artista, GeneroMusicalDto generoMusical, String nombre, String descripcion, Date fechaLanzamiento, String imagen, Integer precio, List<CancionDto> listaCanciones, List<CompraAlbumDto> listaCompras) {
+    public AlbumDto(Integer id, Integer idArtista, Integer idGeneroMusical, String nombre, String descripcion, Date fechaLanzamiento, String imagen, Integer precio, List<CancionDto> listaCanciones, List<CompraAlbumDto> listaCompras) {
         this.id = id;
-        this.artista = artista;
-        this.generoMusical = generoMusical;
+        this.idArtista = idArtista;
+        this.idGeneroMusical = idGeneroMusical;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaLanzamiento = fechaLanzamiento;
@@ -68,20 +65,20 @@ public class AlbumDto implements Serializable {
         this.id = id;
     }
 
-    public ArtistaDto getArtista() {
-        return artista;
+    public Integer getIdArtista() {
+        return idArtista;
     }
 
-    public void setArtista(ArtistaDto artista) {
-        this.artista = artista;
+    public void setIdArtista(Integer idArtista) {
+        this.idArtista = idArtista;
     }
 
-    public GeneroMusicalDto getGeneroMusical() {
-        return generoMusical;
+    public Integer getIdGeneroMusical() {
+        return idGeneroMusical;
     }
 
-    public void setGeneroMusical(GeneroMusicalDto generoMusical) {
-        this.generoMusical = generoMusical;
+    public void setIdGeneroMusical(Integer idGeneroMusical) {
+        this.idGeneroMusical = idGeneroMusical;
     }
 
     public String getNombre() {
@@ -139,5 +136,5 @@ public class AlbumDto implements Serializable {
     public void setListaCompras(List<CompraAlbumDto> listaCompras) {
         this.listaCompras = listaCompras;
     }
-    
+   
 }

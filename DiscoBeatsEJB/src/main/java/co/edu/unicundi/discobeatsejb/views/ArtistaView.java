@@ -1,6 +1,5 @@
 package co.edu.unicundi.discobeatsejb.views;
 
-import co.edu.unicundi.discobeatsejb.entity.Cancion;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;

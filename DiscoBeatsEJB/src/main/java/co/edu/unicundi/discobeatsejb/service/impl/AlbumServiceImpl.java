@@ -65,26 +65,26 @@ public class AlbumServiceImpl implements IAlbumService {
         }
 
         // Validación de Artista
-        if (albumNuevo.getArtista().getId() == null) {
+        if (albumNuevo.getIdArtista() == null) {
             throw new LogicBusinessException("El id del artista el obligatorio");
         }
 
-        Long validarExistenciaArtista = artistaRepo.validarExistenciaPorId(albumNuevo.getArtista().getId());
-        if (validarExistenciaArtista < 0) {
+        Long validarExistenciaArtista = artistaRepo.validarExistenciaPorId(albumNuevo.getIdArtista());
+        if (validarExistenciaArtista == 0) {
             throw new ResourceNotFoundException("El artista no existe");
         }
 
         // Validación de género musical
-        if (albumNuevo.getGeneroMusical().getId() == null) {
+        if (albumNuevo.getIdGeneroMusical() == null) {
             throw new LogicBusinessException("El id del género musical es obligatorio");
         }
-        Long validarExistenciaGenero = generoRepo.validarExistenciaPorId(albumNuevo.getGeneroMusical().getId());
-        if (validarExistenciaGenero < 0) {
+        Long validarExistenciaGenero = generoRepo.validarExistenciaPorId(albumNuevo.getIdGeneroMusical());
+        if (validarExistenciaGenero == 0) {
             throw new ResourceNotFoundException("El género musical no existe");
         }
         
-        Artista artistaAlbum = artistaRepo.listarPorId(albumNuevo.getArtista().getId());
-        Long contarExistenciaPorNombreAlbumDeArtista = localRepo.validarExistenciaAlbumDeArtista(albumNuevo.getNombre(), albumNuevo.getArtista().getId());
+        Artista artistaAlbum = artistaRepo.listarPorId(albumNuevo.getIdArtista());
+        Long contarExistenciaPorNombreAlbumDeArtista = localRepo.validarExistenciaAlbumDeArtista(albumNuevo.getNombre(), albumNuevo.getIdArtista());
 
         if (contarExistenciaPorNombreAlbumDeArtista == 0) {
             Album album = convertToEntity(albumNuevo);
@@ -106,28 +106,30 @@ public class AlbumServiceImpl implements IAlbumService {
         // Validación de existencia del album en la de base de datos
         Long validarExistenciaAlbum = localRepo.validarExistenciaPorId(albumEditado.getId());
         if (validarExistenciaAlbum == 0) {
-            throw new ResourceNotFoundException("La album no existe");
+            throw new ResourceNotFoundException("El album no existe");
         }
 
-        if (albumEditado.getArtista() != null) {
+        if (albumEditado.getIdArtista() != null) {
             throw new LogicBusinessException("No se puede cambiar el artista de ese album");
         }
 
         // Validación de género musical
-        if (albumEditado.getGeneroMusical().getId() == null) {
+        if (albumEditado.getIdGeneroMusical() == null) {
             throw new LogicBusinessException("El id del genero musical es obligatorio");
         }
-        Long validarExistenciaGenero = generoRepo.validarExistenciaPorId(albumEditado.getGeneroMusical().getId());
-        if (validarExistenciaGenero < 0) {
+       
+        Long validarExistenciaGenero = generoRepo.validarExistenciaPorId(albumEditado.getIdGeneroMusical());
+        
+        if (validarExistenciaGenero == 0) {
             throw new ResourceNotFoundException("El genero musical no existe");
         }
         
         Album album = this.localRepo.listarPorId(albumEditado.getId()); 
         Long contarExistenciaPorNombreAlbumDeArtista = localRepo.validarExistenciaAlbumDeArtista(albumEditado.getNombre(), album.getArtista().getId());
 
-        if (contarExistenciaPorNombreAlbumDeArtista == 0) {
+        if (contarExistenciaPorNombreAlbumDeArtista == 0 || albumEditado.getNombre().equalsIgnoreCase(album.getNombre())) {
             GeneroMusical genero = new GeneroMusical();
-            genero.setId(albumEditado.getGeneroMusical().getId());
+            genero.setId(albumEditado.getIdGeneroMusical());
             album.setGeneroMusical(genero);
             album.setNombre(albumEditado.getNombre());
             album.setDescripcion(albumEditado.getDescripcion());
@@ -156,8 +158,8 @@ public class AlbumServiceImpl implements IAlbumService {
         Artista artista = new Artista();
         GeneroMusical genero = new GeneroMusical();
 
-        artista.setId(albumDto.getArtista().getId());
-        genero.setId(albumDto.getGeneroMusical().getId());
+        artista.setId(albumDto.getIdArtista());
+        genero.setId(albumDto.getIdGeneroMusical());
 
         Album albumEntity = new Album();
 

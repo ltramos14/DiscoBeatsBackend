@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.unicundi.discobeatsejb.dto;
 
 import java.io.Serializable;
@@ -12,14 +7,18 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author nicon
+ * @author Tatiana Ramos Villanueva
+ * @author Nicolás Nieto Cárdenas
+ * @author Camilo Preciado Rojas
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class UsuarioDto implements Serializable {
 
     private Integer id;
     
     @NotNull(message = "El tipo de usuario es obligatorio")
-    private RolDto rol;
+    private Integer idRol;
     
     @NotNull(message = "El nombre de usuario es obligatorio")
     @Size(min = 3, max = 15, message = "El nombre de usuario debe estar entre 3 y 15 caracteres")
@@ -42,9 +41,9 @@ public class UsuarioDto implements Serializable {
     public UsuarioDto() {
     }
 
-    public UsuarioDto(Integer id, RolDto rol, String nombreUsuario, String correo, String contrasena, Boolean estado, List<CompraAlbumDto> listaComprasAlbumes, List<CompraCancionDto> listaComprasCanciones) {
+    public UsuarioDto(Integer id, Integer idRol, String nombreUsuario, String correo, String contrasena, Boolean estado, List<CompraAlbumDto> listaComprasAlbumes, List<CompraCancionDto> listaComprasCanciones) {
         this.id = id;
-        this.rol = rol;
+        this.idRol = idRol;
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
         this.contrasena = contrasena;
@@ -61,12 +60,12 @@ public class UsuarioDto implements Serializable {
         this.id = id;
     }
 
-    public RolDto getRol() {
-        return rol;
+    public Integer getIdRol() {
+        return idRol;
     }
 
-    public void setRol(RolDto rol) {
-        this.rol = rol;
+    public void setIdRol(Integer idRol) {
+        this.idRol = idRol;
     }
 
     public String getNombreUsuario() {
@@ -116,5 +115,4 @@ public class UsuarioDto implements Serializable {
     public void setListaComprasCanciones(List<CompraCancionDto> listaComprasCanciones) {
         this.listaComprasCanciones = listaComprasCanciones;
     }
-    
 }

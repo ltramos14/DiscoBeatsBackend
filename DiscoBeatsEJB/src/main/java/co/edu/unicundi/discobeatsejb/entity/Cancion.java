@@ -37,7 +37,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 @Table(name = "canciones")
 @NamedQueries({
-    @NamedQuery(name = "Cancion.ListarTodas", query = "SELECT c.id, c.nombre, c.duracion, c.reproducciones, c.precio, c.imagen FROM Cancion c"),
+    @NamedQuery(name = "Cancion.ListarTodas", query = "SELECT c.id as id, c.nombre, c.duracion, c.reproducciones, c.precio, c.imagen FROM Cancion c"),
     @NamedQuery(name = "Cancion.ContarPorId", query = "SELECT COUNT(c) FROM Cancion c WHERE c.id = :id"),
     @NamedQuery(name = "Cancion.EliminarPorId", query = "DELETE FROM Cancion c WHERE c.id = :id"),
 })

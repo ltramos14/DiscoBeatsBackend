@@ -41,7 +41,7 @@ public class GeneroMusicalRepoImpl implements IGeneroMusicalRepo {
 
     @Override
     public void editar(GeneroMusical obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      this.em.merge(obj);
     }
 
     @Override

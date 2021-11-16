@@ -67,10 +67,10 @@ public class UsuarioServiceImpl implements IUsuarioService {
         }
 
         // Validación del rol
-        if (usuario.getRol().getId() == null) {
+        if (usuario.getIdRol() == null) {
             throw new LogicBusinessException("El id del rol de usuario es obligatorio");
         } 
-        Long validarExistenciaRol = rolRepo.validarExistenciaRol(usuario.getRol().getId());
+        Long validarExistenciaRol = rolRepo.validarExistenciaRol(usuario.getIdRol());
         if (validarExistenciaRol == 0) {
             throw new ConflictException("El rol de usuario no existe");
         }
@@ -113,17 +113,13 @@ public class UsuarioServiceImpl implements IUsuarioService {
         Usuario usuario = new Usuario();
         Rol rol = new Rol();
        
-        rol.setId(usuarioDto.getRol().getId());
+        rol.setId(usuarioDto.getIdRol());
         usuario.setRol(rol);
         usuario.setNombreUsuario(usuarioDto.getNombreUsuario());
         usuario.setCorreo(usuarioDto.getCorreo());
         usuario.setContrasena(usuarioDto.getContrasena());
         usuario.setEstado(true);
         
-        return usuario;
-        
+        return usuario;       
     }
-
-    
-    
 }

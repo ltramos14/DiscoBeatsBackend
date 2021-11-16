@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.unicundi.discobeatsejb.dto;
 
 import java.io.Serializable;
@@ -14,18 +9,22 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author nicon
+ * @author Tatiana Ramos Villanueva
+ * @author Nicolás Nieto Cárdenas
+ * @author Camilo Preciado Rojas
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class CancionDto implements Serializable {
 
     private Integer id;
 
-    private ArtistaDto artista;
+    private Integer idArtista;
 
     @NotNull(message = "El genero musical de la canción es obligatorio")
-    private GeneroMusicalDto generoMusical;
+    private Integer idGeneroMusical;
     
-    private AlbumDto album;
+    private Integer idAlbum;
        
     @NotNull(message = "El nombre de la cancion es obligatorio")
     @Size(min = 3, max = 25, message = "El nombre de la cancion debe estar entre 3 y 25 caracteres")
@@ -48,11 +47,11 @@ public class CancionDto implements Serializable {
     public CancionDto() {
     }
 
-    public CancionDto(Integer id, ArtistaDto artista, GeneroMusicalDto generoMusical, AlbumDto album, String nombre, Time duracion, Integer reproducciones, Date fechaLanzamiento, Integer precio, String imagen, List<CompraCancionDto> listaCompras) {
+    public CancionDto(Integer id, Integer idArtista, Integer idGeneroMusical, Integer idAlbum, String nombre, Time duracion, Integer reproducciones, Date fechaLanzamiento, Integer precio, String imagen, List<CompraCancionDto> listaCompras) {
         this.id = id;
-        this.artista = artista;
-        this.generoMusical = generoMusical;
-        this.album = album;
+        this.idArtista = idArtista;
+        this.idGeneroMusical = idGeneroMusical;
+        this.idAlbum = idAlbum;
         this.nombre = nombre;
         this.duracion = duracion;
         this.reproducciones = reproducciones;
@@ -70,28 +69,28 @@ public class CancionDto implements Serializable {
         this.id = id;
     }
 
-    public ArtistaDto getArtista() {
-        return artista;
+    public Integer getIdArtista() {
+        return idArtista;
     }
 
-    public void setArtista(ArtistaDto artista) {
-        this.artista = artista;
+    public void setIdArtista(Integer idArtista) {
+        this.idArtista = idArtista;
     }
 
-    public GeneroMusicalDto getGeneroMusical() {
-        return generoMusical;
+    public Integer getIdGeneroMusical() {
+        return idGeneroMusical;
     }
 
-    public void setGeneroMusical(GeneroMusicalDto generoMusical) {
-        this.generoMusical = generoMusical;
+    public void setIdGeneroMusical(Integer idGeneroMusical) {
+        this.idGeneroMusical = idGeneroMusical;
     }
 
-    public AlbumDto getAlbum() {
-        return album;
+    public Integer getIdAlbum() {
+        return idAlbum;
     }
 
-    public void setAlbum(AlbumDto album) {
-        this.album = album;
+    public void setIdAlbum(Integer idAlbum) {
+        this.idAlbum = idAlbum;
     }
 
     public String getNombre() {
@@ -150,5 +149,4 @@ public class CancionDto implements Serializable {
         this.listaCompras = listaCompras;
     }
 
-    
 }
