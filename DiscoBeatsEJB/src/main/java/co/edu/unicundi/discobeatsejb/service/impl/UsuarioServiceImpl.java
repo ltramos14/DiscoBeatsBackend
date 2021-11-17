@@ -1,5 +1,6 @@
 package co.edu.unicundi.discobeatsejb.service.impl;
 
+import co.edu.unicundi.discobeatsejb.dto.AuthDto;
 import co.edu.unicundi.discobeatsejb.dto.UsuarioDto;
 import co.edu.unicundi.discobeatsejb.entity.Rol;
 import co.edu.unicundi.discobeatsejb.entity.Usuario;
@@ -9,7 +10,12 @@ import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
 import co.edu.unicundi.discobeatsejb.repository.IRolRepo;
 import co.edu.unicundi.discobeatsejb.repository.IUsuarioRepo;
 import co.edu.unicundi.discobeatsejb.service.IUsuarioService;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -121,5 +127,42 @@ public class UsuarioServiceImpl implements IUsuarioService {
         usuario.setEstado(true);
         
         return usuario;       
+    }
+
+    @Override
+    public AuthDto login(AuthDto login) throws ResourceNotFoundException, LogicBusinessException {
+         
+        // Validación de correo
+        Long validarExistenciaCorreo = localRepo.validarExistenciaCorreo(login.getCorreo());
+        if (validarExistenciaCorreo == 0) {
+            throw new ResourceNotFoundException("El correo electrónico ingresado no existe");
+        }
+        
+        Usuario usuario = localRepo.login(login.getCorreo(), login.getContrasena());
+        if (usuario == null) {
+            throw new LogicBusinessException("Correo electrónico o contrasena incorrectos");
+        }
+    
+        String key = "gcn0%I46jY^Njx0gEacNa9";              
+        Long tiempo = System.currentTimeMillis();       
+        Map<String, Object> permisos = new HashMap<>();        
+        Rol rol = rolRepo.obtenerRol(usuario.getRol().getId());
+    
+        permisos.put(rol.getId().toString(), rol.getRol());
+    
+        String jwt = Jwts.builder()
+                .signWith(SignatureAlgorithm.HS512, key)
+                .setSubject(login.getCorreo())
+                .setIssuedAt(new Date(tiempo))
+                .setExpiration(new Date(tiempo + 1000000))
+                .claim("permisos", permisos)
+                .compact();
+          
+        AuthDto token = new AuthDto();
+        token.setToken(jwt);
+        
+        localRepo.actualizarToken(token.getToken(), usuario.getId());
+        
+        return token;
     }
 }

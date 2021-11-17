@@ -19,4 +19,6 @@ public interface IRolRepo {
     
     public Long validarExistenciaRol(Integer id);
     
+    public Rol obtenerRol(Integer idRol);
+    
 }

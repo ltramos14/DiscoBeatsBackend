@@ -35,5 +35,13 @@ public class RolRepoImpl implements IRolRepo {
         TypedQuery<Rol> query = this.em.createNamedQuery("Rol.ListarRoles", Rol.class);
         return query.getResultList();
     }
-    
+
+    @Override
+    public Rol obtenerRol(Integer idRol) {
+        TypedQuery<Rol> query = this.em.createNamedQuery("Rol.ObtenerRol", Rol.class);
+        query.setParameter("id", idRol);
+        
+        return query.getSingleResult();
+    }
+
 }

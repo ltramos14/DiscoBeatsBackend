@@ -73,5 +73,22 @@ public class UsuarioRepoImpl implements IUsuarioRepo {
         query.setParameter(1, nombreUsuario);
         return (Long) query.getSingleResult();    
     }
-    
+
+    @Override
+    public Usuario login(String correo, String contrasena) {
+        
+        TypedQuery<Usuario> query = this.em.createNamedQuery("Usuario.Login", Usuario.class);
+        query.setParameter("correo", correo);
+        query.setParameter("contrasena", contrasena);
+        return query.getSingleResult();
+    }
+
+    @Override
+    public void actualizarToken(String token, Integer id) {
+        Query query = this.em.createNamedQuery("Usuario.ActualizarToken", Usuario.class);
+        query.setParameter(1, token);
+        query.setParameter(2, id);
+        query.executeUpdate();
+    }
+   
 }

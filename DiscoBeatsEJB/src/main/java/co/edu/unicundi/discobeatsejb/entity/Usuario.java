@@ -36,7 +36,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Usuario.ListarTodos", query = "SELECT u FROM Usuario u WHERE u.estado = true"),
     @NamedQuery(name = "Usuario.ObtenerUsuario", query = "SELECT u FROM Usuario u WHERE u.id = :id"),
     @NamedQuery(name = "Usuario.Inhabilitar", query = "UPDATE Usuario u SET u.estado = false WHERE u.id = :id"),
-    @NamedQuery(name = "Usuario.ContarPorId", query = "SELECT COUNT(u) FROM Usuario u WHERE u.id = :id")
+    @NamedQuery(name = "Usuario.ContarPorId", query = "SELECT COUNT(u) FROM Usuario u WHERE u.id = :id"),
+    @NamedQuery(name = "Usuario.Login", query = "SELECT u FROM Usuario u WHERE u.correo = :correo AND u.contrasena = :contrasena"),
+    @NamedQuery(name = "Usuario.ActualizarToken", query = "UPDATE Usuario u SET u.token = ?1 WHERE u.id = ?2"),
 })
 @NamedNativeQueries({
     @NamedNativeQuery(name = "Usuario.ValidarCorreo", query = "SELECT COUNT(*) FROM usuarios WHERE UPPER(correo) = UPPER(?)"),
@@ -71,6 +73,9 @@ public class Usuario implements Serializable {
     @Column(name = "estado", nullable = false)
     private Boolean estado;
     
+    @Column(name = "token", nullable = true, columnDefinition = "text")
+    private String token;
+    
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CompraAlbum> listaComprasAlbumes;
     
@@ -80,12 +85,14 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(Rol rol, String nombreUsuario, String correo, String contrasena, Boolean estado, List<CompraAlbum> listaComprasAlbumes, List<CompraCancion> listaComprasCanciones) {
+    public Usuario(Integer id, Rol rol, String nombreUsuario, String correo, String contrasena, Boolean estado, String token, List<CompraAlbum> listaComprasAlbumes, List<CompraCancion> listaComprasCanciones) {
+        this.id = id;
         this.rol = rol;
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
         this.contrasena = contrasena;
         this.estado = estado;
+        this.token = token;
         this.listaComprasAlbumes = listaComprasAlbumes;
         this.listaComprasCanciones = listaComprasCanciones;
     }
@@ -147,6 +154,14 @@ public class Usuario implements Serializable {
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
     
     public List<CompraCancion> getListaComprasCanciones() {
         return listaComprasCanciones;
@@ -155,5 +170,5 @@ public class Usuario implements Serializable {
     public void setListaComprasCanciones(List<CompraCancion> listaComprasCanciones) {
         this.listaComprasCanciones = listaComprasCanciones;
     }
-
 }
+

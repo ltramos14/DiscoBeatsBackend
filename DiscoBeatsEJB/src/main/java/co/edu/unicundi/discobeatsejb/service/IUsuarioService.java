@@ -1,5 +1,6 @@
 package co.edu.unicundi.discobeatsejb.service;
 
+import co.edu.unicundi.discobeatsejb.dto.AuthDto;
 import co.edu.unicundi.discobeatsejb.dto.UsuarioDto;
 import co.edu.unicundi.discobeatsejb.entity.Rol;
 import co.edu.unicundi.discobeatsejb.entity.Usuario;
@@ -19,6 +20,8 @@ import javax.ejb.Local;
  */
 @Local
 public interface IUsuarioService {
+    
+    public AuthDto login(AuthDto login) throws ResourceNotFoundException, LogicBusinessException; 
     
     public List<Usuario> listarUsuarios();
     
