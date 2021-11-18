@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
@@ -37,8 +35,6 @@ public class Rol implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @NotNull(message = "El rol es obligatorio")
-    @Size(min = 3, max = 15, message = "El tipo de rol de usuario debe estar entre 3 y 15 caracteres")
     @Column(name = "rol", nullable = false, length = 15)
     private String rol;
     

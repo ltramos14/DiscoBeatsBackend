@@ -12,6 +12,7 @@ import javax.ejb.Stateless;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -32,10 +33,22 @@ public class AuthController {
     IUsuarioService authService;
     
     @POST
+    @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response login(@Valid AuthDto auth) throws ResourceNotFoundException, LogicBusinessException {
 
         AuthDto token = this.authService.login(auth);
         return Response.status(Response.Status.OK).entity(token).build();
     }
+    
+    
+    @PUT
+    @Path("/logout")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response logout(@Valid AuthDto auth) throws ResourceNotFoundException {
+
+        this.authService.logout(auth.getCorreo());
+        return Response.status(Response.Status.NO_CONTENT).build();
+    }
+    
 }

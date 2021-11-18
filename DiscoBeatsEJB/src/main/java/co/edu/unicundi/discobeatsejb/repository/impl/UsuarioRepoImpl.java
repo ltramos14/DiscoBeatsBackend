@@ -73,6 +73,14 @@ public class UsuarioRepoImpl implements IUsuarioRepo {
         query.setParameter(1, nombreUsuario);
         return (Long) query.getSingleResult();    
     }
+    
+    
+    @Override
+    public String validarContrasena(String correo) {
+        Query query = this.em.createNamedQuery("Usuario.ValidarContrasena", Usuario.class);
+        query.setParameter("correo", correo);
+        return (String) query.getSingleResult();
+    }
 
     @Override
     public Usuario login(String correo, String contrasena) {
@@ -82,6 +90,14 @@ public class UsuarioRepoImpl implements IUsuarioRepo {
         query.setParameter("contrasena", contrasena);
         return query.getSingleResult();
     }
+    
+    
+    @Override
+    public void logout(String correo) {
+        Query query = this.em.createNamedQuery("Usuario.Logout", Usuario.class);
+        query.setParameter(1, correo);
+        query.executeUpdate();
+    }
 
     @Override
     public void actualizarToken(String token, Integer id) {
@@ -90,5 +106,5 @@ public class UsuarioRepoImpl implements IUsuarioRepo {
         query.setParameter(2, id);
         query.executeUpdate();
     }
-   
+
 }

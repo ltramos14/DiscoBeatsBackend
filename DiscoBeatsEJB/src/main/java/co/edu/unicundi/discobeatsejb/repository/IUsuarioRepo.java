@@ -20,7 +20,11 @@ public interface IUsuarioRepo extends ICrud<Usuario, Integer> {
     
     public Long validarExistenciaNombreUsuario(String nombreUsuario);
     
+    public String validarContrasena(String correo);
+    
     public Usuario login(String correo, String contrasena);
+    
+    public void logout(String correo);
     
     public void actualizarToken(String token, Integer id);
     

@@ -20,19 +20,20 @@ import javax.ejb.Local;
  */
 @Local
 public interface IUsuarioService {
-    
-    public AuthDto login(AuthDto login) throws ResourceNotFoundException, LogicBusinessException; 
-    
+
     public List<Usuario> listarUsuarios();
-    
+
     public Usuario obtenerUsuarioPorId(Integer id) throws ResourceNotFoundException;
-    
+
     public List<Rol> obtenerRoles();
-    
+
+    public AuthDto login(AuthDto login) throws ResourceNotFoundException, LogicBusinessException;
+
+    public void logout(String correo) throws ResourceNotFoundException;
+
     public void registrarUsuario(UsuarioDto usuario) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
-    
+
     public void editarUsuario(UsuarioDto usuario) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
-    
+
     public void eliminarUsuario(Integer id) throws ResourceNotFoundException;
-    
 }

@@ -17,8 +17,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -38,47 +36,42 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Usuario.Inhabilitar", query = "UPDATE Usuario u SET u.estado = false WHERE u.id = :id"),
     @NamedQuery(name = "Usuario.ContarPorId", query = "SELECT COUNT(u) FROM Usuario u WHERE u.id = :id"),
     @NamedQuery(name = "Usuario.Login", query = "SELECT u FROM Usuario u WHERE u.correo = :correo AND u.contrasena = :contrasena"),
+    @NamedQuery(name = "Usuario.Logout", query = "UPDATE Usuario u SET u.token = null WHERE u.correo = ?1 "),
     @NamedQuery(name = "Usuario.ActualizarToken", query = "UPDATE Usuario u SET u.token = ?1 WHERE u.id = ?2"),
+    @NamedQuery(name = "Usuario.ValidarContrasena", query = "SELECT u.contrasena FROM Usuario u WHERE u.correo = :correo")
 })
 @NamedNativeQueries({
     @NamedNativeQuery(name = "Usuario.ValidarCorreo", query = "SELECT COUNT(*) FROM usuarios WHERE UPPER(correo) = UPPER(?)"),
-    @NamedNativeQuery(name = "Usuario.ValidarNombreUsuario", query = "SELECT COUNT(*) FROM usuarios WHERe UPPER(nombre_usuario) = UPPER(?)")
+    @NamedNativeQuery(name = "Usuario.ValidarNombreUsuario", query = "SELECT COUNT(*) FROM usuarios WHERE UPPER(nombre_usuario) = UPPER(?)")
 })
 public class Usuario implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @NotNull(message = "El tipo de usuario es obligatorio")
+
     @ManyToOne
     @JoinColumn(name = "id_rol", nullable = false)
     private Rol rol;
-    
-    @NotNull(message = "El nombre de usuario es obligatorio")
-    @Size(min = 3, max = 15, message = "El nombre de usuario debe estar entre 3 y 15 caracteres")
+
     @Column(name = "nombre_usuario", nullable = false, length = 15, unique = true)
     private String nombreUsuario;
-    
-    @NotNull(message = "El correo es obligatorio")
-    @Size(min = 5, max = 30, message = "El correo debe estar entre 3 y 25 caracteres")
+
     @Column(name = "correo", nullable = false, length = 30, unique = true)
-    private String correo; 
-    
-    @NotNull(message = "El contraseña es obligatoria")
-    @Size(min = 3, max = 25, message = "La contraseña debe tener entre 3 y 25 caracteres")
+    private String correo;
+
     @Column(name = "contrasena", nullable = false, length = 25)
     private String contrasena;
-    
+
     @Column(name = "estado", nullable = false)
     private Boolean estado;
-    
+
     @Column(name = "token", nullable = true, columnDefinition = "text")
     private String token;
-    
+
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CompraAlbum> listaComprasAlbumes;
-    
+
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CompraCancion> listaComprasCanciones;
 
@@ -162,7 +155,7 @@ public class Usuario implements Serializable {
     public void setToken(String token) {
         this.token = token;
     }
-    
+
     public List<CompraCancion> getListaComprasCanciones() {
         return listaComprasCanciones;
     }
@@ -171,4 +164,3 @@ public class Usuario implements Serializable {
         this.listaComprasCanciones = listaComprasCanciones;
     }
 }
-

@@ -1,6 +1,7 @@
 package co.edu.unicundi.discobeatsejb.dto;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -13,11 +14,11 @@ import javax.validation.constraints.Size;
  */
 public class AuthDto {
 
-    @NotNull(message = "El correo electrónico es obligatorio")    
+    @NotNull(message = "El correo electrónico es obligatorio")
+    @Pattern(regexp = "\\w+@\\w+\\.\\w+(,\\s*\\w+@\\w+\\.\\w+)*", message = "Ingrese un correo electronico valido")
     @Size(min = 10, message = "El correo debe tener mínimo 10 caracteres")
     private String correo;
     
-    @NotNull(message = "El contraseña es obligatoria")
     @Size(min = 5, max = 25, message = "La contraseña debe tener entre 5 y 25 caracteres")
     private String contrasena;
     

@@ -3,6 +3,7 @@ package co.edu.unicundi.discobeatsejb.dto;
 import java.io.Serializable;
 import java.util.List;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -25,11 +26,12 @@ public class UsuarioDto implements Serializable {
     private String nombreUsuario;
     
     @NotNull(message = "El correo es obligatorio")
-    @Size(min = 5, max = 30, message = "El correo debe estar entre 3 y 25 caracteres")
+    @Pattern(regexp = "\\w+@\\w+\\.\\w+(,\\s*\\w+@\\w+\\.\\w+)*", message = "Ingrese un correo electronico valido")
+    @Size(min = 10, max = 30, message = "El correo debe estar entre 10 y 30 caracteres")
     private String correo; 
     
     @NotNull(message = "El contraseña es obligatoria")
-    @Size(min = 3, max = 25, message = "La contraseña debe tener entre 3 y 25 caracteres")
+    @Size(min = 6, max = 25, message = "La contraseña debe tener entre 6 y 25 caracteres")
     private String contrasena;
     
     private Boolean estado;

@@ -2,8 +2,8 @@
 package co.edu.unicundi.discobeatsejb.entity;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Time;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,9 +20,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -37,8 +34,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 @Table(name = "canciones")
 @NamedQueries({
-    @NamedQuery(name = "Cancion.ListarTodas", query = "SELECT c.id as id, c.nombre, c.duracion, c.reproducciones, c.precio, c.imagen FROM Cancion c"),
+    @NamedQuery(name = "Cancion.ListarTodas", query = "SELECT c.id as id, c.nombre, c.duracion, c.reproducciones, c.precio, c.imagen, c.artista.nombreArtistico, c.album.nombre FROM Cancion c"),
     @NamedQuery(name = "Cancion.ContarPorId", query = "SELECT COUNT(c) FROM Cancion c WHERE c.id = :id"),
+    @NamedQuery(name = "Cancion.ObtenerCancionPorId", query = "SELECT c FROM Cancion c JOIN c.album alb JOIN c.artista art WHERE c.id = :id"),
     @NamedQuery(name = "Cancion.EliminarPorId", query = "DELETE FROM Cancion c WHERE c.id = :id"),
 })
 @NamedNativeQueries({
@@ -54,7 +52,6 @@ public class Cancion implements Serializable{
     @JoinColumn(name = "id_artista", nullable = false )
     private Artista artista;
     
-    @NotNull(message = "El genero musical de la canción es obligatorio")
     @ManyToOne
     @JoinColumn(name = "id_genero", nullable = false)
     private GeneroMusical generoMusical;
@@ -63,24 +60,18 @@ public class Cancion implements Serializable{
     @JoinColumn(name = "id_album", nullable = false)
     private Album album;
        
-    @NotNull(message = "El nombre de la cancion es obligatorio")
-    @Size(min = 3, max = 25, message = "El nombre de la cancion debe estar entre 3 y 25 caracteres")
     @Column(name = "nombre", nullable = false, length = 25)
     private String nombre;
     
-    //@NotNull(message = "La duracion es obligatoria")
-    @Column(name = "duracion", nullable = true)
+    @Column(name = "duracion", nullable = false)
     private Time duracion;
     
-    @NotNull(message = "El numero de reproducciones es obligatoria")
     @Column(name = "reproducciones", nullable = false)
     private Integer reproducciones;
     
-    @Column(name = "fecha_lanzamiento", nullable = true)
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "fecha_lanzamiento", nullable = false)
     private Date fechaLanzamiento;
     
-    @NotNull(message = "El precio de la cancion es obligatorio")
     @Column(name = "precio", nullable = false)
     private Integer precio;
     

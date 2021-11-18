@@ -1,7 +1,7 @@
 package co.edu.unicundi.discobeatsejb.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,9 +18,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -48,34 +45,26 @@ public class Album implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @NotNull(message = "El id del album es obligatorio")
     @ManyToOne
     @JoinColumn(name = "id_artista", nullable = false )
     private Artista artista;
 
-    @NotNull(message = "El id del genero musical es obligatorio")
     @ManyToOne
     @JoinColumn(name = "id_genero", nullable = false )
     private GeneroMusical generoMusical;
     
-    @NotNull(message = "El nombre del album es obligatorio")
-    @Size(min = 3, max = 20, message = "El nombre del album debe estar entre 3 y 25 caracteres")
     @Column(name = "nombre", nullable = false, length = 20)
     private String nombre;
     
-    @NotNull(message = "La descripcion es obligatoria")
-    @Size(min = 3, max = 250, message = "La descripcion debe estar entre 3 y 250 caracteres")
     @Column(name = "descripcion", nullable = false, columnDefinition = "text")
     private String descripcion;
     
     @Column(name = "fecha_lanzamiento", nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaLanzamiento;
     
     @Column(name = "imagen", nullable = true, columnDefinition = "text")
     private String imagen;
     
-    @NotNull(message = "El precio del album es obligatorio")
     @Column(name = "precio", nullable = false)
     private Integer precio;
         

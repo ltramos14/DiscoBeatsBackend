@@ -1,10 +1,11 @@
 package co.edu.unicundi.discobeatsejb.dto;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Time;
-import java.util.Date;
 import java.util.List;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 /**
@@ -20,21 +21,24 @@ public class CancionDto implements Serializable {
     private Integer id;
 
     private Integer idArtista;
-
-    @NotNull(message = "El genero musical de la canción es obligatorio")
-    private Integer idGeneroMusical;
     
     private Integer idAlbum;
+    
+    @NotNull(message = "El genero musical de la canción es obligatorio")
+    private Integer idGeneroMusical;
        
     @NotNull(message = "El nombre de la cancion es obligatorio")
     @Size(min = 3, max = 25, message = "El nombre de la cancion debe estar entre 3 y 25 caracteres")
     private String nombre;
 
+    @NotNull(message = "La duracion de la cancion es obligatoria")
     private Time duracion;
     
-    @NotNull(message = "El numero de reproducciones es obligatoria")
+    @NotNull(message = "El numero de reproducciones de la canción es obligatorio")
     private Integer reproducciones;
 
+    @NotNull(message = "La fecha de lanzamiento de la cancion es obligatoria")
+    @Past(message = "La fecha de lanzamiento no puede ser una fecha futura al dia de hoy")
     private Date fechaLanzamiento;
 
     @NotNull(message = "El precio de la cancion es obligatorio")

@@ -31,31 +31,30 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "GeneroMusical.ListarTodos", query = "SELECT g FROM GeneroMusical g"),
     @NamedQuery(name = "GeneroMusical.EliminarGenero", query = "DELETE FROM GeneroMusical g WHERE g.id=:id"),
-    @NamedQuery(name = "GeneroMusical.ContarPorId", query = "SELECT COUNT(g) FROM GeneroMusical g WHERE g.id=:id"),
-})
+    @NamedQuery(name = "GeneroMusical.ContarPorId", query = "SELECT COUNT(g) FROM GeneroMusical g WHERE g.id=:id"),})
 @NamedNativeQueries({
     @NamedNativeQuery(name = "GeneroMusical.ContarPorNombre", query = "SELECT COUNT(*) FROM generos_musicales WHERE UPPER(nombre_genero_musical) = UPPER(?)")
 })
 public class GeneroMusical implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @NotNull(message = "El tipo de genero es obligatorio")
+
+    @NotNull(message = "El tipo de genero musical es obligatorio")
     @Size(min = 3, max = 15, message = "El nombre del genero musical debe estar entre 3 y 15 caracteres")
     @Column(name = "nombre_genero_musical", nullable = false, length = 15)
     private String nombreGeneroMusical;
 
     @OneToMany(mappedBy = "generoMusical", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Artista> listaArtistas;
-    
+
     @OneToMany(mappedBy = "generoMusical", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Cancion> listaCanciones;
-    
+
     @OneToMany(mappedBy = "generoMusical", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Album> listaAlbumes;
-            
+
     public GeneroMusical() {
     }
 
@@ -65,7 +64,7 @@ public class GeneroMusical implements Serializable {
         this.listaCanciones = listaCanciones;
         this.listaAlbumes = listaAlbumes;
     }
-    
+
     public Integer getId() {
         return id;
     }

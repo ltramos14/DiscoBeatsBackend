@@ -31,7 +31,9 @@ public class CancionRepoImpl implements ICancionRepo{
 
     @Override
     public Cancion listarPorId(Integer id) {
-        return this.em.find(Cancion.class, id);
+        TypedQuery<Cancion> query = this.em.createNamedQuery("Cancion.ObtenerCancionPorId", Cancion.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
 
     @Override
