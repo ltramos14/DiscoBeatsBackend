@@ -5,9 +5,15 @@
  */
 package co.edu.unicundi.discobeatsejb.dto;
 
+import co.edu.unicundi.discobeatsejb.entity.Cancion;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
+
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -16,36 +22,54 @@ import java.util.List;
 public class ArtistaDto implements Serializable {
     
     private Integer id;
+    
+    private Integer idGeneroMusical;
+    
+    private Integer idOcupacion;
 
-    private OcupacionDto ocupacion;
-    
-    private GeneroMusicalDto generoMusical;
-    
+    @NotNull(message = "El nombre artistico es obligatorio")
+    @Size(min = 3, max = 25, message = "El nombre artistico debe estar entre 3 y 25 caracteres")
+    @Column(name = "nombre_artistico", nullable = false, length = 25, unique = true)
     private String nombreArtistico;
 
     private Date fechaNacimiento;
-    
+
+    @NotNull(message = "La nacionalidad es obligatoria")
+    @Size(min = 5, max = 20, message = "La nacionalidad debe estar entre 5 y 20 caracteres")
+    @Column(name = "nacionalidad", nullable = false, length = 20)
     private String nacionalidad;
-    
+
     private String imagen;
-    
+
+    @NotNull(message = "La descripcion es obligatoria")
+    @Size(min = 15, max = 255, message = "La descripcion debe estar entre 15 y 255 caracteres")
+    @Column(name = "descripcion", columnDefinition = "text", nullable = false)
     private String descripcion;
     
-    private List<CancionDto> canciones;
+    private List<Cancion> canciones;
+
 
     public ArtistaDto() {
     }
 
-    public ArtistaDto(Integer id, OcupacionDto ocupacion, GeneroMusicalDto generoMusical, String nombreArtistico, Date fechaNacimiento, String nacionalidad, String imagen, String descripcion, List<CancionDto> canciones) {
+    public ArtistaDto(Integer id, Integer idGeneroMusical, Integer idOcupacion, String nombreArtistico, Date fechaNacimiento, String nacionalidad, String imagen, String descripcion, List<Cancion> canciones) {
         this.id = id;
-        this.ocupacion = ocupacion;
-        this.generoMusical = generoMusical;
+        this.idGeneroMusical = idGeneroMusical;
+        this.idOcupacion = idOcupacion;
         this.nombreArtistico = nombreArtistico;
         this.fechaNacimiento = fechaNacimiento;
         this.nacionalidad = nacionalidad;
         this.imagen = imagen;
         this.descripcion = descripcion;
         this.canciones = canciones;
+    }
+
+    public Integer getIdOcupacion() {
+        return idOcupacion;
+    }
+
+    public void setIdOcupacion(Integer idOcupacion) {
+        this.idOcupacion = idOcupacion;
     }
 
     public Integer getId() {
@@ -56,20 +80,12 @@ public class ArtistaDto implements Serializable {
         this.id = id;
     }
 
-    public OcupacionDto getOcupacion() {
-        return ocupacion;
+    public Integer getIdGeneroMusical() {
+        return idGeneroMusical;
     }
 
-    public void setOcupacion(OcupacionDto ocupacion) {
-        this.ocupacion = ocupacion;
-    }
-
-    public GeneroMusicalDto getGeneroMusical() {
-        return generoMusical;
-    }
-
-    public void setGeneroMusical(GeneroMusicalDto generoMusical) {
-        this.generoMusical = generoMusical;
+    public void setIdGeneroMusical(Integer idGeneroMusical) {
+        this.idGeneroMusical = idGeneroMusical;
     }
 
     public String getNombreArtistico() {
@@ -112,12 +128,14 @@ public class ArtistaDto implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public List<CancionDto> getCanciones() {
+    public List<Cancion> getCanciones() {
         return canciones;
     }
 
-    public void setCanciones(List<CancionDto> canciones) {
+    public void setCanciones(List<Cancion> canciones) {
         this.canciones = canciones;
     }
+
     
+       
 }

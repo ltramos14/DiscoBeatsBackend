@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
@@ -25,6 +27,11 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @Entity
 @Table(name = "compras_canciones")
+@NamedQueries({
+    @NamedQuery(name = "CompraCancion.ListarTodos", query = "SELECT a FROM CompraCancion a"),
+    @NamedQuery(name = "CompraCancion.ContarPorId", query = "SELECT COUNT(t) FROM CompraCancion t WHERE t.id=:id"),
+    @NamedQuery(name = "CompraCancion.ContarPorUsuario", query = "SELECT COUNT(u) FROM CompraCancion u WHERE u.usuarioCancion.id=:idUsuario AND u.cancionCompra.id=:idCancion")
+})
 public class CompraCancion implements Serializable {
     
     @Id
@@ -34,12 +41,12 @@ public class CompraCancion implements Serializable {
     @NotNull(message = "La compra debe tener una canción obligatoriamente")
     @ManyToOne
     @JoinColumn(name = "id_cancion", nullable = false )
-    private Cancion cancion;
+    private Cancion cancionCompra;
     
     @NotNull(message = "La compra debe pertenecer a un usuario obligatoriamente")
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false )
-    private Usuario usuario;
+    private Usuario usuarioCancion;
      
     @Column(name = "fecha_compra", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -52,9 +59,9 @@ public class CompraCancion implements Serializable {
     public CompraCancion() {
     }
 
-    public CompraCancion(Cancion cancion, Usuario usuario, Date fechaCompra, Integer precioTotal) {
-        this.cancion = cancion;
-        this.usuario = usuario;
+    public CompraCancion(Cancion cancionCompra, Usuario usuarioCancion, Date fechaCompra, Integer precioTotal) {
+        this.cancionCompra = cancionCompra;
+        this.usuarioCancion = usuarioCancion;
         this.fechaCompra = fechaCompra;
         this.precioTotal = precioTotal;
     }
@@ -70,21 +77,21 @@ public class CompraCancion implements Serializable {
     @JsonIgnore
     @XmlTransient
     public Cancion getCancion() {
-        return cancion;
+        return cancionCompra;
     }
 
-    public void setCancion(Cancion cancion) {
-        this.cancion = cancion;
+    public void setCancion(Cancion cancionCompra) {
+        this.cancionCompra = cancionCompra;
     }
 
     @JsonIgnore
     @XmlTransient
     public Usuario getUsuario() {
-        return usuario;
+        return usuarioCancion;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario(Usuario usuarioCancion) {
+        this.usuarioCancion = usuarioCancion;
     }
 
     public Date getFechaCompra() {

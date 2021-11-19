@@ -1,5 +1,6 @@
 package co.edu.unicundi.discobeatswar.controller;
 
+import co.edu.unicundi.discobeatsejb.dto.ArtistaDto;
 import co.edu.unicundi.discobeatsejb.entity.Artista;
 import co.edu.unicundi.discobeatsejb.exception.ConflictException;
 import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
@@ -74,7 +75,7 @@ public class ArtistaController {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response agregarArtista(@Valid Artista artistaNuevo) throws ConflictException {
+    public Response agregarArtista(@Valid ArtistaDto artistaNuevo) throws ConflictException, ResourceNotFoundException, LogicBusinessException {
 
         this.artistaService.guardarArtista(artistaNuevo);
 
@@ -84,7 +85,7 @@ public class ArtistaController {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response editarArtista(Artista artista) throws ResourceNotFoundException, ConflictException, LogicBusinessException {
+    public Response editarArtista(ArtistaDto artista) throws ResourceNotFoundException, ConflictException, LogicBusinessException {
         this.artistaService.editarArtista(artista);
         return Response.status(Response.Status.OK).entity(artista).build();
 

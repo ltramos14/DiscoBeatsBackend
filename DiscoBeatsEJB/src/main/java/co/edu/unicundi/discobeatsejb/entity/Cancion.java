@@ -78,7 +78,7 @@ public class Cancion implements Serializable{
     @Column(name = "imagen", nullable = true, columnDefinition = "text")
     private String imagen;
     
-    @OneToMany(mappedBy = "cancion", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cancionCompra", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CompraCancion> listaCompras;
     
     public Cancion() {

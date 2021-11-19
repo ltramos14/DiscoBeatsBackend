@@ -5,6 +5,12 @@
  */
 package co.edu.unicundi.discobeatsejb.service;
 
+import co.edu.unicundi.discobeatsejb.dto.CompraAlbumDto;
+import co.edu.unicundi.discobeatsejb.entity.CompraAlbum;
+import co.edu.unicundi.discobeatsejb.exception.ConflictException;
+import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
+import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -18,4 +24,9 @@ import javax.ejb.Local;
 @Local
 public interface ICompraAlbumService {
     
+    public List<CompraAlbum> listarComprasAlbum();
+    
+    public CompraAlbum listarComprasAlbumPorId(Integer id) throws ResourceNotFoundException;
+    
+    public void guardarCompraAlbum(CompraAlbumDto compraNueva) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
 }

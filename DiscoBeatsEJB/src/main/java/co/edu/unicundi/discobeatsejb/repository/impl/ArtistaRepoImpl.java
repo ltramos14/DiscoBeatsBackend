@@ -1,7 +1,9 @@
 package co.edu.unicundi.discobeatsejb.repository.impl;
 
 import co.edu.unicundi.discobeatsejb.entity.Artista;
+import co.edu.unicundi.discobeatsejb.entity.Ocupacion;
 import co.edu.unicundi.discobeatsejb.repository.IArtistaRepo;
+import co.edu.unicundi.discobeatsejb.repository.IOcupacionRepo;
 import co.edu.unicundi.discobeatsejb.views.ArtistaView;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -41,8 +43,8 @@ public class ArtistaRepoImpl implements IArtistaRepo{
     }
 
     @Override
-    public void editar(Artista obj) {
-        this.em.merge(obj);
+    public void editar(Artista objArtista) {
+        this.em.merge(objArtista);
     }
 
     @Override
@@ -62,7 +64,7 @@ public class ArtistaRepoImpl implements IArtistaRepo{
     @Override
     public Long validarExistenciaPorNombre(String nombre) {
         Query query = this.em.createNamedQuery("Artista.ContarPorNombre", Artista.class);
-        query.setParameter("nombre", nombre);
+        query.setParameter(1, nombre);
         return (Long) query.getSingleResult();
     }
 
@@ -70,6 +72,6 @@ public class ArtistaRepoImpl implements IArtistaRepo{
     public List<ArtistaView> listarArtistasConCanciones() {
         TypedQuery<ArtistaView> query = this.em.createNamedQuery("ArtistaView.ArtistasConCanciones", ArtistaView.class);
         return query.getResultList();
-    }
+    } 
 
 }

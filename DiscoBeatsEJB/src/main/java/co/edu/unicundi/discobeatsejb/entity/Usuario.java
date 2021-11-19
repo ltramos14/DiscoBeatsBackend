@@ -69,10 +69,10 @@ public class Usuario implements Serializable {
     @Column(name = "token", nullable = true, columnDefinition = "text")
     private String token;
 
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "usuarioAlbum", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CompraAlbum> listaComprasAlbumes;
 
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "usuarioCancion", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CompraCancion> listaComprasCanciones;
 
     public Usuario() {

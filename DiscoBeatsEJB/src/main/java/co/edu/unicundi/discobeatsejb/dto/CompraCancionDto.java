@@ -16,22 +16,19 @@ public class CompraCancionDto implements Serializable {
     
     private Integer id;
     
-    private CancionDto cancion;
+    private Integer idCancion;
     
-    private UsuarioDto usuario;
-     
-    private Date fechaCompra;
+    private Integer idUsuario;
 
     private Integer precioTotal;
 
     public CompraCancionDto() {
     }
 
-    public CompraCancionDto(Integer id, CancionDto cancion, UsuarioDto usuario, Date fechaCompra, Integer precioTotal) {
+    public CompraCancionDto(Integer id, Integer idCancion, Integer idUsuario, Integer precioTotal) {
         this.id = id;
-        this.cancion = cancion;
-        this.usuario = usuario;
-        this.fechaCompra = fechaCompra;
+        this.idCancion = idCancion;
+        this.idUsuario = idUsuario;
         this.precioTotal = precioTotal;
     }
 
@@ -43,28 +40,20 @@ public class CompraCancionDto implements Serializable {
         this.id = id;
     }
 
-    public CancionDto getCancion() {
-        return cancion;
+    public Integer getIdCancion() {
+        return idCancion;
     }
 
-    public void setCancion(CancionDto cancion) {
-        this.cancion = cancion;
+    public void setIdCancion(Integer idCancion) {
+        this.idCancion = idCancion;
     }
 
-    public UsuarioDto getUsuario() {
-        return usuario;
+    public Integer getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setUsuario(UsuarioDto usuario) {
-        this.usuario = usuario;
-    }
-
-    public Date getFechaCompra() {
-        return fechaCompra;
-    }
-
-    public void setFechaCompra(Date fechaCompra) {
-        this.fechaCompra = fechaCompra;
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public Integer getPrecioTotal() {
@@ -74,5 +63,6 @@ public class CompraCancionDto implements Serializable {
     public void setPrecioTotal(Integer precioTotal) {
         this.precioTotal = precioTotal;
     }
+
     
 }
