@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -36,9 +38,12 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @NamedQueries({
     @NamedQuery(name = "Artista.ListarTodos", query = "SELECT a FROM Artista a"),
     @NamedQuery(name = "Artista.ContarPorId", query = "SELECT COUNT(t) FROM Artista t WHERE t.id=:id"),
-    @NamedQuery(name = "Artista.ContarPorNombre", query = "SELECT COUNT(t) FROM Artista t WHERE t.nombreArtistico=:nombre"),
     @NamedQuery(name = "Artista.EliminarArtista", query = "DELETE FROM Artista a WHERE a.id=:id")
 })
+@NamedNativeQueries({
+    @NamedNativeQuery(name = "Artista.ContarPorNombre", query = "SELECT COUNT(*) FROM artistas WHERE UPPER(nombre_artistico) = UPPER(?)")
+})
+
 public class Artista implements Serializable {
 
     @Id

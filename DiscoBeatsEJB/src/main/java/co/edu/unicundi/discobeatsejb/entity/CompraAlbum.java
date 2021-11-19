@@ -1,7 +1,8 @@
 package co.edu.unicundi.discobeatsejb.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
@@ -25,37 +30,38 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @Entity
 @Table(name = "compras_albumes")
+@NamedQueries({
+    @NamedQuery(name = "CompraAlbum.ListarTodos", query = "SELECT a FROM CompraAlbum a"),
+    @NamedQuery(name = "CompraAlbum.ContarPorId", query = "SELECT COUNT(t) FROM CompraAlbum t WHERE t.id=:id"),
+    @NamedQuery(name = "CompraAlbum.ContarPorUsuario", query = "SELECT COUNT(u) FROM CompraAlbum u WHERE u.usuarioAlbum.id=:idUsuario AND u.albumCompra.id=:idAlbum")
+})
+
 public class CompraAlbum implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id;    
     
-    @NotNull(message = "La compra debe tener un album obligatoriamente")
     @ManyToOne
     @JoinColumn(name = "id_album", nullable = false )
-    private Album album;
+    private Album albumCompra;    
     
-    @NotNull(message = "La compra debe pertenecer a un usuario obligatoriamente")
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false )
-    private Usuario usuario;
-     
+    private Usuario usuarioAlbum;     
     
-    @Column(name = "fecha_compra", nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "fecha_compra", nullable = true)
     private Date fechaCompra;
     
-    @NotNull(message = "El precio total es obligatorio")
     @Column(name = "precio_total", nullable = false, length = 25)
     private Integer precioTotal;
 
     public CompraAlbum() {
     }
 
-    public CompraAlbum(Album album, Usuario usuario, Date fechaCompra, Integer precioTotal) {
-        this.album = album;
-        this.usuario = usuario;
+    public CompraAlbum(Album albumCompra, Usuario usuarioAlbum, Date fechaCompra, Integer precioTotal) {
+        this.albumCompra = albumCompra;
+        this.usuarioAlbum = usuarioAlbum;
         this.fechaCompra = fechaCompra;
         this.precioTotal = precioTotal;
     }
@@ -71,21 +77,21 @@ public class CompraAlbum implements Serializable {
     @JsonIgnore
     @XmlTransient
     public Album getAlbum() {
-        return album;
+        return albumCompra;
     }
 
-    public void setAlbum(Album album) {
-        this.album = album;
+    public void setAlbum(Album albumCompra) {
+        this.albumCompra = albumCompra;
     }
 
     @JsonIgnore
     @XmlTransient
     public Usuario getUsuario() {
-        return usuario;
+        return usuarioAlbum;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario(Usuario usuarioAlbum) {
+        this.usuarioAlbum = usuarioAlbum;
     }
 
     public Date getFechaCompra() {

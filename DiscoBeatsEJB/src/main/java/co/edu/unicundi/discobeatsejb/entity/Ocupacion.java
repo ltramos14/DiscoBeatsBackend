@@ -27,7 +27,8 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "ocupaciones")
 @NamedQueries({
-    @NamedQuery(name = "Ocupacion.ListarTodas", query = "SELECT o FROM Ocupacion o")
+    @NamedQuery(name = "Ocupacion.ListarTodas", query = "SELECT o FROM Ocupacion o"),
+    @NamedQuery(name = "Ocupacion.ContarPorId", query = "SELECT COUNT(t) FROM Ocupacion t WHERE t.id=:id"),
 })
 public class Ocupacion implements Serializable {
     

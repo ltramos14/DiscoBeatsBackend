@@ -1,5 +1,7 @@
 package co.edu.unicundi.discobeatsejb.repository;
 
+import co.edu.unicundi.discobeatsejb.entity.CompraAlbum;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -12,5 +14,15 @@ import javax.ejb.Local;
  */
 @Local
 public interface ICompraAlbumRepo {
+    
+    public Long validarExistenciaPorId(Integer id);
+    
+    public Long validarExistenciaCompra(Integer idAlbum, Integer idUsuario);
+    
+    public List<CompraAlbum> listarTodos();
+    
+    public CompraAlbum listarPorId(Integer id);
+    
+    public void guardar(CompraAlbum obj);
     
 }

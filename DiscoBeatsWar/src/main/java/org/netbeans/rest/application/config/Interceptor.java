@@ -101,9 +101,9 @@ public class Interceptor implements ContainerRequestFilter {
                     return;
                 } else if (url.contains("/auth/logout") && (mapClaims.get("rol").equalsIgnoreCase("Administrador") || mapClaims.get("rol").equalsIgnoreCase("Usuario"))) {
                     return;
-                } /*else if (url.contains("/compras") && (mapClaims.get("rol").equalsIgnoreCase("Administrador") || mapClaims.get("rol").equalsIgnoreCase("Usuario"))) {
-                    return;
                 } else if (url.contains("/compras") && (mapClaims.get("rol").equalsIgnoreCase("Administrador") || mapClaims.get("rol").equalsIgnoreCase("Usuario"))) {
+                    return;
+                } /*eelse if (url.contains("/compras") && (mapClaims.get("rol").equalsIgnoreCase("Administrador") || mapClaims.get("rol").equalsIgnoreCase("Usuario"))) {
                     return;
                 } */ else {
                     msg = new ExceptionWrapper(Response.Status.UNAUTHORIZED.getStatusCode(), Response.Status.UNAUTHORIZED, "No tiene permisos para hacer esta operación", url);
