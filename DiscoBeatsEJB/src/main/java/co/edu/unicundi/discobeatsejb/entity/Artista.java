@@ -1,7 +1,7 @@
 package co.edu.unicundi.discobeatsejb.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,8 +18,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
@@ -50,36 +48,26 @@ public class Artista implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
    
-    @NotNull(message = "La ocupación del artista es obligatoria")
     @ManyToOne
     @JoinColumn(name = "id_ocupacion", nullable = false)
     private Ocupacion ocupacion;
     
-    @NotNull(message = "El genero musical del artista es obligatorio")
     @ManyToOne
     @JoinColumn(name = "id_genero", nullable = false)
     private GeneroMusical generoMusical;
     
-    @NotNull(message = "El nombre artistico es obligatorio")
-    @Size(min = 3, max = 25, message = "El nombre artistico debe estar entre 3 y 25 caracteres")
     @Column(name = "nombre_artistico", nullable = false, length = 25, unique = true)
     private String nombreArtistico;
 
-    // @NotNull(message = "La fecha de nacimiento es obligatoria")
-    @Column(name = "fecha_nacimiento", nullable = true)
-    @Temporal(TemporalType.DATE)
+    @Column(name = "fecha_nacimiento", nullable = false)
     private Date fechaNacimiento;
-
-    @NotNull(message = "La nacionalidad es obligatoria")
-    @Size(min = 5, max = 20, message = "La nacionalidad debe estar entre 5 y 20 caracteres")
+  
     @Column(name = "nacionalidad", nullable = false, length = 20)
     private String nacionalidad;
 
     @Column(name = "imagen", columnDefinition = "text", nullable = true)
     private String imagen;
 
-    @NotNull(message = "La descripcion es obligatoria")
-    @Size(min = 15, max = 255, message = "La descripcion debe estar entre 15 y 255 caracteres")
     @Column(name = "descripcion", columnDefinition = "text", nullable = false)
     private String descripcion;
     

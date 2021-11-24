@@ -12,6 +12,7 @@ import co.edu.unicundi.discobeatsejb.repository.IGeneroMusicalRepo;
 import co.edu.unicundi.discobeatsejb.repository.IOcupacionRepo;
 import co.edu.unicundi.discobeatsejb.service.IArtistaService;
 import co.edu.unicundi.discobeatsejb.views.ArtistaView;
+import java.sql.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -66,16 +67,25 @@ public class ArtistaServiceImpl implements IArtistaService {
             throw new LogicBusinessException("El id del artista es asignado automáticamente");
         }
         
-         
+       //Ocupacion
        Long validarExistenciaOcupacion = ocupacionrepo.validarExistenciaOcupacionPorId(artistaNuevo.getIdOcupacion());
         if (validarExistenciaOcupacion == 0) {
             throw new ResourceNotFoundException("La ocupacion no existe");
         } 
        
+        if (artistaNuevo.getIdOcupacion()== null) {
+            throw new LogicBusinessException("El id de la ocupacion es obligatoria");
+        }
+       
+        //Genero
+        Long validarExistenciaGenero = generorepo.validarExistenciaPorId(artistaNuevo.getIdGeneroMusical());
+        if (validarExistenciaGenero == 0) {
+            throw new ResourceNotFoundException("El genero musical no existe");
+        } 
+       
         if (artistaNuevo.getIdGeneroMusical() == null) {
             throw new LogicBusinessException("El id del género musical es obligatorio");
         }
-        
         
         Long contarexistenciaArtista = repo.validarExistenciaPorNombre(artistaNuevo.getNombreArtistico());
         if (contarexistenciaArtista == 0) {
@@ -93,15 +103,24 @@ public class ArtistaServiceImpl implements IArtistaService {
          throw new LogicBusinessException("El id del artista a editar es obligatorio");
         }
         
-        if (artistaEditado.getIdGeneroMusical() == null) {
-            throw new LogicBusinessException("El id del genero musical es obligatorio");
-        }
+        Long validarExistenciaOcupacion = ocupacionrepo.validarExistenciaOcupacionPorId(artistaEditado.getIdOcupacion());
+        if (validarExistenciaOcupacion == 0) {
+            throw new ResourceNotFoundException("La ocupacion no existe");
+        } 
+       
+        if (artistaEditado.getIdOcupacion()== null) {
+            throw new LogicBusinessException("El id de la ocupacion es obligatoria");
+        }        
         
         Long validarExistenciaGenero = generorepo.validarExistenciaPorId(artistaEditado.getIdGeneroMusical());
         if (validarExistenciaGenero == 0) {
             throw new ResourceNotFoundException("El genero musical no existe");
         }
-
+        
+        if (artistaEditado.getIdGeneroMusical() == null) {
+            throw new LogicBusinessException("El id del genero musical es obligatorio");
+        }      
+        
         Artista artista = this.repo.listarPorId(artistaEditado.getId());
         Long count = repo.validarExistenciaPorId(artistaEditado.getId());
         if (count > 0) {

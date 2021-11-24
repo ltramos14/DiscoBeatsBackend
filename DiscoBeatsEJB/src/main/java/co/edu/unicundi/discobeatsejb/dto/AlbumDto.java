@@ -25,7 +25,7 @@ public class AlbumDto implements Serializable {
     private Integer idGeneroMusical;
     
     @NotNull(message = "El nombre del album es obligatorio")
-    @Size(min = 3, max = 20, message = "El nombre del album debe estar entre 3 y 25 caracteres")
+    @Size(min = 3, max = 40, message = "El nombre del album debe estar entre 3 y 40 caracteres")
     private String nombre;
     
     @NotNull(message = "La descripcion del album es obligatoria")

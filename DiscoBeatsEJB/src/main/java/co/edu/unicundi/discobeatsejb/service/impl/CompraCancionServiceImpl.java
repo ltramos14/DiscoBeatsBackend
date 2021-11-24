@@ -54,7 +54,7 @@ public class CompraCancionServiceImpl implements ICompraCancionService{
             CompraCancion compra = repo.listarPorId(id);
             return compra;
         } else {
-           throw new ResourceNotFoundException("Compra de album no encontrado");
+           throw new ResourceNotFoundException("Compra de cancion no encontrado");
         }
     }
 

@@ -7,7 +7,8 @@ package co.edu.unicundi.discobeatsejb.dto;
 
 import co.edu.unicundi.discobeatsejb.entity.Cancion;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
+
 import java.util.List;
 import javax.persistence.Column;
 
@@ -29,21 +30,19 @@ public class ArtistaDto implements Serializable {
 
     @NotNull(message = "El nombre artistico es obligatorio")
     @Size(min = 3, max = 25, message = "El nombre artistico debe estar entre 3 y 25 caracteres")
-    @Column(name = "nombre_artistico", nullable = false, length = 25, unique = true)
     private String nombreArtistico;
 
+    @NotNull(message = "La fecha de nacimiento es obligatoria")
     private Date fechaNacimiento;
 
     @NotNull(message = "La nacionalidad es obligatoria")
     @Size(min = 5, max = 20, message = "La nacionalidad debe estar entre 5 y 20 caracteres")
-    @Column(name = "nacionalidad", nullable = false, length = 20)
     private String nacionalidad;
 
     private String imagen;
 
     @NotNull(message = "La descripcion es obligatoria")
     @Size(min = 15, max = 255, message = "La descripcion debe estar entre 15 y 255 caracteres")
-    @Column(name = "descripcion", columnDefinition = "text", nullable = false)
     private String descripcion;
     
     private List<Cancion> canciones;
@@ -102,7 +101,7 @@ public class ArtistaDto implements Serializable {
 
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
-    }
+    }   
 
     public String getNacionalidad() {
         return nacionalidad;
