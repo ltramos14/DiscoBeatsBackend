@@ -21,7 +21,7 @@ public interface IArtistaService {
     
     public List<Artista> listarArtistas();
     
-    public Artista listarArtistaPorId(Integer id) throws ResourceNotFoundException;
+    public List<Artista> listarArtistaPorId(Integer id) throws ResourceNotFoundException;
     
     public void guardarArtista(ArtistaDto artistaNuevo) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
     

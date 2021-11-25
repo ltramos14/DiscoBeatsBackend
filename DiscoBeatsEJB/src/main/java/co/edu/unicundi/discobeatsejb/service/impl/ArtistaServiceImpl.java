@@ -11,7 +11,6 @@ import co.edu.unicundi.discobeatsejb.repository.IArtistaRepo;
 import co.edu.unicundi.discobeatsejb.repository.IGeneroMusicalRepo;
 import co.edu.unicundi.discobeatsejb.repository.IOcupacionRepo;
 import co.edu.unicundi.discobeatsejb.service.IArtistaService;
-import java.sql.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -47,12 +46,12 @@ public class ArtistaServiceImpl implements IArtistaService {
     }
 
     @Override
-    public Artista listarArtistaPorId(Integer id) throws ResourceNotFoundException {
+    public List<Artista> listarArtistaPorId(Integer id) throws ResourceNotFoundException {
 
         Long count = repo.validarExistenciaPorId(id);
 
         if (count > 0) {
-            Artista artista = repo.listarPorId(id);
+            List<Artista> artista = repo.obtenerPorId(id);
             return artista;
         } else {
             throw new ResourceNotFoundException("Artista no encontrado");
@@ -141,7 +140,6 @@ public class ArtistaServiceImpl implements IArtistaService {
                     artista.setNacionalidad(artistaEditado.getNacionalidad());
                     artista.setImagen(artistaEditado.getImagen());
                     artista.setDescripcion(artistaEditado.getDescripcion());
-                    artista.setCanciones(artistaEditado.getCanciones());
                     artista.setGeneroMusical(genero);
                     artista.setOcupacion(ocupacion);
                     

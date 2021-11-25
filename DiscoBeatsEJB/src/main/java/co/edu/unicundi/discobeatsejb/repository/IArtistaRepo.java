@@ -19,4 +19,6 @@ public interface IArtistaRepo extends ICrud<Artista, Integer> {
     
     public Long validarExistenciaPorNombre(String nombre);
     
+    public List<Artista> obtenerPorId(Integer id);
+    
 }

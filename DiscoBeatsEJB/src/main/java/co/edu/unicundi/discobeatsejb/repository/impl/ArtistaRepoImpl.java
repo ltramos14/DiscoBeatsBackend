@@ -1,7 +1,6 @@
 package co.edu.unicundi.discobeatsejb.repository.impl;
 
 import co.edu.unicundi.discobeatsejb.entity.Artista;
-import co.edu.unicundi.discobeatsejb.entity.Ocupacion;
 import co.edu.unicundi.discobeatsejb.repository.IArtistaRepo;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -64,6 +63,13 @@ public class ArtistaRepoImpl implements IArtistaRepo{
         Query query = this.em.createNamedQuery("Artista.ContarPorNombre", Artista.class);
         query.setParameter(1, nombre);
         return (Long) query.getSingleResult();
+    }
+
+    @Override
+    public List<Artista> obtenerPorId(Integer id) {
+        TypedQuery<Artista> query = this.em.createNamedQuery("Artista.ObtenerPorId", Artista.class);
+        query.setParameter("id", id);
+        return query.getResultList();
     }
 
 }

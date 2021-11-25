@@ -68,7 +68,7 @@ public class ArtistaController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response obtenerArtistaPorId(@PathParam("id") Integer id) throws ResourceNotFoundException {
 
-        Artista artista = this.artistaService.listarArtistaPorId(id);
+        List<Artista> artista = this.artistaService.listarArtistaPorId(id);
 
         return Response.status(Response.Status.OK).entity(artista).build();
     }

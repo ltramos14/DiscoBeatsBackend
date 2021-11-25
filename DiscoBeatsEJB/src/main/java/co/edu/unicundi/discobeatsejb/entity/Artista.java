@@ -34,7 +34,10 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 @Table(name = "artistas")
 @NamedQueries({
-    @NamedQuery(name = "Artista.ListarTodos", query = "SELECT a FROM Artista a"),
+    @NamedQuery(name = "Artista.ListarTodos", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.ArtistaDto" 
+            + "(a.id, a.generoMusical.id, a.ocupacion.id, a.nombreArtistico, a.fechaNacimiento, a.nacionalidad, a.descripcion, a.imagen ) FROM Artista a ORDER BY a.id"),
+    @NamedQuery(name = "Artista.ObtenerPorId", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.ArtistaDto" 
+            + "(a.id, a.generoMusical.id, a.ocupacion.id, a.nombreArtistico, a.fechaNacimiento, a.nacionalidad, a.descripcion, a.imagen ) FROM Artista a WHERE a.id = :id"),
     @NamedQuery(name = "Artista.ContarPorId", query = "SELECT COUNT(t) FROM Artista t WHERE t.id=:id"),
     @NamedQuery(name = "Artista.EliminarArtista", query = "DELETE FROM Artista a WHERE a.id=:id")
 })

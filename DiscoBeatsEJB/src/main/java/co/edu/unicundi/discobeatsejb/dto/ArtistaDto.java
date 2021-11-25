@@ -5,14 +5,9 @@
  */
 package co.edu.unicundi.discobeatsejb.dto;
 
-import co.edu.unicundi.discobeatsejb.entity.Cancion;
 import java.io.Serializable;
 import java.sql.Date;
-
 import java.util.List;
-import javax.persistence.Column;
-
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -44,23 +39,19 @@ public class ArtistaDto implements Serializable {
     @NotNull(message = "La descripcion es obligatoria")
     @Size(min = 15, max = 255, message = "La descripcion debe estar entre 15 y 255 caracteres")
     private String descripcion;
-    
-    private List<Cancion> canciones;
-
 
     public ArtistaDto() {
     }
 
-    public ArtistaDto(Integer id, Integer idGeneroMusical, Integer idOcupacion, String nombreArtistico, Date fechaNacimiento, String nacionalidad, String imagen, String descripcion, List<Cancion> canciones) {
+    public ArtistaDto(Integer id, Integer idGeneroMusical, Integer idOcupacion, String nombreArtistico, Date fechaNacimiento, String nacionalidad, String descripcion, String imagen) {
         this.id = id;
         this.idGeneroMusical = idGeneroMusical;
         this.idOcupacion = idOcupacion;
         this.nombreArtistico = nombreArtistico;
         this.fechaNacimiento = fechaNacimiento;
         this.nacionalidad = nacionalidad;
-        this.imagen = imagen;
         this.descripcion = descripcion;
-        this.canciones = canciones;
+        this.imagen = imagen;
     }
 
     public Integer getIdOcupacion() {
@@ -126,15 +117,5 @@ public class ArtistaDto implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
-    public List<Cancion> getCanciones() {
-        return canciones;
-    }
-
-    public void setCanciones(List<Cancion> canciones) {
-        this.canciones = canciones;
-    }
-
-    
-       
+      
 }
