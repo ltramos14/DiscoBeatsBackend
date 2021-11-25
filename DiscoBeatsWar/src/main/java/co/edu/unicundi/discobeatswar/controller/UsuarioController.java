@@ -39,7 +39,7 @@ public class UsuarioController {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response obtenerGenerosMusicales() throws Exception {
+    public Response obtenerUsuarios() throws Exception {
 
         List<Usuario> listaUsuarios = this.usuarioService.listarUsuarios();
         if (listaUsuarios == null) {
@@ -51,7 +51,7 @@ public class UsuarioController {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response obtenerGeneroMusicalPorId(@PathParam("id") Integer id) throws ResourceNotFoundException {
+    public Response obtenerUsuariosPorId(@PathParam("id") Integer id) throws ResourceNotFoundException {
         Usuario usuario = this.usuarioService.obtenerUsuarioPorId(id);
         return Response.status(Response.Status.OK).entity(usuario).build();
     }
@@ -69,7 +69,7 @@ public class UsuarioController {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response agregarGeneroMusical(@Valid UsuarioDto usuarioNuevo) throws ResourceNotFoundException, LogicBusinessException, ConflictException {
+    public Response agregarUsuario(@Valid UsuarioDto usuarioNuevo) throws ResourceNotFoundException, LogicBusinessException, ConflictException {
         this.usuarioService.registrarUsuario(usuarioNuevo);
         return Response.status(Response.Status.CREATED).build();
     }
@@ -77,7 +77,7 @@ public class UsuarioController {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response editarGeneroMusical(@Valid UsuarioDto usuario) throws ResourceNotFoundException, ConflictException, LogicBusinessException {
+    public Response editarUsuario(@Valid UsuarioDto usuario) throws ResourceNotFoundException, ConflictException, LogicBusinessException {
         this.usuarioService.editarUsuario(usuario);
         return Response.status(Response.Status.OK).entity(usuario).build();
     }
@@ -85,7 +85,7 @@ public class UsuarioController {
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response eliminarGeneroMusical(@PathParam("id") Integer id) throws ResourceNotFoundException {
+    public Response eliminarUsuario(@PathParam("id") Integer id) throws ResourceNotFoundException {
         this.usuarioService.eliminarUsuario(id);
         return Response.status(Response.Status.NO_CONTENT).build();
     }

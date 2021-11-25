@@ -11,7 +11,6 @@ import co.edu.unicundi.discobeatsejb.repository.IArtistaRepo;
 import co.edu.unicundi.discobeatsejb.repository.IGeneroMusicalRepo;
 import co.edu.unicundi.discobeatsejb.repository.IOcupacionRepo;
 import co.edu.unicundi.discobeatsejb.service.IArtistaService;
-import co.edu.unicundi.discobeatsejb.views.ArtistaView;
 import java.sql.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -99,6 +98,11 @@ public class ArtistaServiceImpl implements IArtistaService {
     @Override
     public void editarArtista(ArtistaDto artistaEditado) throws ResourceNotFoundException, LogicBusinessException, ConflictException {
 
+        Long contId = repo.validarExistenciaPorId(artistaEditado.getId());
+        if(contId == 0){
+            throw new ResourceNotFoundException("EL id del artista no existe");
+        }
+        
         if (artistaEditado.getId() == null) {
          throw new LogicBusinessException("El id del artista a editar es obligatorio");
         }
@@ -183,15 +187,6 @@ public class ArtistaServiceImpl implements IArtistaService {
         artistaEntity.setOcupacion(ocupacion);
         
         return artistaEntity;
-    }
-    
-    @Override
-    public List<ArtistaView> listarArtistasConCaciones() {
-        if (!repo.listarArtistasConCanciones().isEmpty()) {
-            return repo.listarArtistasConCanciones();
-        } else {
-            return null;
-        }
     }
 
 }

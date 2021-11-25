@@ -5,6 +5,7 @@ import co.edu.unicundi.discobeatsejb.entity.Album;
 import co.edu.unicundi.discobeatsejb.exception.ConflictException;
 import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
 import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
+import co.edu.unicundi.discobeatsejb.views.AlbumView;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -20,6 +21,8 @@ import javax.ejb.Local;
 public interface IAlbumService {
     
     public List<Album> listarAlbumes();
+    
+    public List<AlbumView> listarAlbumesPorVentas();
     
     public Album listarAlbumPorId(Integer id) throws ResourceNotFoundException;
     

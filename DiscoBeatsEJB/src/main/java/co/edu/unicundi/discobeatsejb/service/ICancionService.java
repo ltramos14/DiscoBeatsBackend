@@ -10,6 +10,7 @@ import co.edu.unicundi.discobeatsejb.entity.Cancion;
 import co.edu.unicundi.discobeatsejb.exception.ConflictException;
 import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
 import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
+import co.edu.unicundi.discobeatsejb.views.CancionView;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -25,6 +26,8 @@ import javax.ejb.Local;
 public interface ICancionService {
     
     public List<Cancion> listarCanciones();
+    
+    public List<CancionView> listarCancionesPorVentas();
     
     public Cancion listarCancionPorId(Integer id) throws ResourceNotFoundException;
     

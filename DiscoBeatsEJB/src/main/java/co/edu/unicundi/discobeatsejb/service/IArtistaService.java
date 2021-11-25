@@ -5,7 +5,6 @@ import co.edu.unicundi.discobeatsejb.entity.Artista;
 import co.edu.unicundi.discobeatsejb.exception.ConflictException;
 import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
 import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
-import co.edu.unicundi.discobeatsejb.views.ArtistaView;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -21,8 +20,6 @@ import javax.ejb.Local;
 public interface IArtistaService {
     
     public List<Artista> listarArtistas();
-    
-    public List<ArtistaView> listarArtistasConCaciones();
     
     public Artista listarArtistaPorId(Integer id) throws ResourceNotFoundException;
     

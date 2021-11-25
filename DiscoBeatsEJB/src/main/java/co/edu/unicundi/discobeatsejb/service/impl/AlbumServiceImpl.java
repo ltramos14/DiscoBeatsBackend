@@ -11,6 +11,7 @@ import co.edu.unicundi.discobeatsejb.repository.IAlbumRepo;
 import co.edu.unicundi.discobeatsejb.repository.IArtistaRepo;
 import co.edu.unicundi.discobeatsejb.repository.IGeneroMusicalRepo;
 import co.edu.unicundi.discobeatsejb.service.IAlbumService;
+import co.edu.unicundi.discobeatsejb.views.AlbumView;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -172,5 +173,14 @@ public class AlbumServiceImpl implements IAlbumService {
         albumEntity.setGeneroMusical(genero);
 
         return albumEntity;
+    }
+    
+    @Override
+    public List<AlbumView> listarAlbumesPorVentas(){
+        if (!localRepo.listarAlbumesPorVentas().isEmpty()) {
+            return localRepo.listarAlbumesPorVentas();
+        } else {
+            return null;
+        }
     }
 }

@@ -6,6 +6,7 @@ import co.edu.unicundi.discobeatsejb.exception.ConflictException;
 import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
 import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
 import co.edu.unicundi.discobeatsejb.service.ICancionService;
+import co.edu.unicundi.discobeatsejb.views.CancionView;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -52,6 +53,20 @@ public class CancionController {
     public Response obtenerArtistaPorId(@PathParam("id") Integer id) throws ResourceNotFoundException {
         Cancion cancion = this.cancionService.listarCancionPorId(id);
         return Response.status(Response.Status.OK).entity(cancion).build();
+    }
+    
+    @GET
+    @Path("/vista")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listarVentasCanciones() throws Exception {
+
+        List<CancionView> listaVentasCanciones = this.cancionService.listarCancionesPorVentas();
+
+        if (listaVentasCanciones == null) {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+
+        return Response.status(Response.Status.OK).entity(listaVentasCanciones).build();
     }
     
     @POST

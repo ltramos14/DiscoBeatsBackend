@@ -6,6 +6,7 @@ import co.edu.unicundi.discobeatsejb.exception.ConflictException;
 import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
 import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
 import co.edu.unicundi.discobeatsejb.service.IAlbumService;
+import co.edu.unicundi.discobeatsejb.views.AlbumView;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -54,6 +55,20 @@ public class AlbumController {
         
         Album album = this.albumService.listarAlbumPorId(id);    
         return Response.status(Response.Status.OK).entity(album).build();
+    }
+    
+    @GET
+    @Path("/vista")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listarVentasCanciones() throws Exception {
+
+        List<AlbumView> listaVentasAlbumes = this.albumService.listarAlbumesPorVentas();
+
+        if (listaVentasAlbumes == null) {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+
+        return Response.status(Response.Status.OK).entity(listaVentasAlbumes).build();
     }
     
     @POST

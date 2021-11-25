@@ -98,8 +98,48 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
-    public void editarUsuario(UsuarioDto usuario) throws ResourceNotFoundException, LogicBusinessException, ConflictException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void editarUsuario(UsuarioDto usuarioEditado) throws ResourceNotFoundException, LogicBusinessException, ConflictException {
+        
+        Long contId = localRepo.validarExistenciaPorId(usuarioEditado.getId());
+        if(contId == 0){
+            throw new ResourceNotFoundException("EL id del usuario no existe");
+        }
+        
+        if (usuarioEditado.getId() == null) {
+         throw new LogicBusinessException("El id del usuario a editar es obligatorio");
+        }
+        
+        
+        if(usuarioEditado.getNombreUsuario() == null){
+            throw new LogicBusinessException("El nombre de usuario no puede ser nulo");
+        }
+        
+        Long countC = localRepo.validarExistenciaCorreo(usuarioEditado.getCorreo());
+        
+        if(countC >0){
+            throw new ConflictException("Este correo ya existe");
+        }
+        
+        Usuario usuario = new Usuario();
+        Long count = localRepo.validarExistenciaPorId(usuario.getId());
+
+        if(count>0){
+            throw new ConflictException("Este usuario ya existe");
+        }
+        
+        Rol rol = new Rol();
+        
+        rol.setId(usuarioEditado.getIdRol());
+        usuario.setId(usuarioEditado.getId());
+        usuario.setRol(rol);
+        usuario.setNombreUsuario(usuarioEditado.getNombreUsuario());
+        usuario.setCorreo(usuarioEditado.getCorreo());
+        usuario.setContrasena(usuarioEditado.getContrasena());
+        usuario.setEstado(true);       
+
+        localRepo.editar(usuario);
+             
+        
     }
 
     @Override
@@ -149,6 +189,10 @@ public class UsuarioServiceImpl implements IUsuarioService {
         }
 
         Usuario usuario = localRepo.login(login.getCorreo(), login.getContrasena());
+        
+        if(!usuario.getEstado()){
+            throw new LogicBusinessException("Este usuario se encuentra inactivo");
+        }
 
         String key = "gcn0%I46jY^Njx0gEacNa9";
         Long tiempo = System.currentTimeMillis();

@@ -2,6 +2,7 @@ package co.edu.unicundi.discobeatsejb.repository.impl;
 
 import co.edu.unicundi.discobeatsejb.entity.Cancion;
 import co.edu.unicundi.discobeatsejb.repository.ICancionRepo;
+import co.edu.unicundi.discobeatsejb.views.CancionView;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -66,6 +67,12 @@ public class CancionRepoImpl implements ICancionRepo{
         Query query = this.em.createNamedQuery("Cancion.ContarPorId", Cancion.class);
         query.setParameter("id", id);
         return (Long) query.getSingleResult();
+    }
+
+    @Override
+    public List<CancionView> listarCancionesPorVentas() {
+        TypedQuery<CancionView> query = this.em.createNamedQuery("CancionView.VentasCanciones", CancionView.class);
+        return query.getResultList();
     }
     
 }

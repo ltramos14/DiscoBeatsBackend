@@ -13,6 +13,7 @@ import co.edu.unicundi.discobeatsejb.repository.IArtistaRepo;
 import co.edu.unicundi.discobeatsejb.repository.ICancionRepo;
 import co.edu.unicundi.discobeatsejb.repository.IGeneroMusicalRepo;
 import co.edu.unicundi.discobeatsejb.service.ICancionService;
+import co.edu.unicundi.discobeatsejb.views.CancionView;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -220,6 +221,15 @@ public class CancionServiceImpl implements ICancionService {
         cancionEntity.setGeneroMusical(genero);
         
         return cancionEntity;
+    }
+
+    @Override
+    public List<CancionView> listarCancionesPorVentas() {
+        if (!localRepo.listarCancionesPorVentas().isEmpty()) {
+            return localRepo.listarCancionesPorVentas();
+        } else {
+            return null;
+        }
     }
     
 }

@@ -2,6 +2,7 @@ package co.edu.unicundi.discobeatsejb.repository.impl;
 
 import co.edu.unicundi.discobeatsejb.entity.Album;
 import co.edu.unicundi.discobeatsejb.repository.IAlbumRepo;
+import co.edu.unicundi.discobeatsejb.views.AlbumView;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -63,6 +64,12 @@ public class AlbumRepoImpl implements IAlbumRepo {
         query.setParameter(1, nombreAlbum);
         query.setParameter(2, idArtista);
         return (Long)query.getSingleResult();
+    }
+
+    @Override
+    public List<AlbumView> listarAlbumesPorVentas() {
+        TypedQuery<AlbumView> query = this.em.createNamedQuery("AlbumView.VentasAlbumes", AlbumView.class);
+        return query.getResultList();
     }
      
 }
