@@ -16,6 +16,12 @@ import javax.ejb.Local;
 @Local
 public interface ICancionRepo extends ICrud<Cancion, Integer>{
     
+    public List<Cancion> obtenerPorId(Integer id);
+    
+    public List<Cancion> obtenerCancionesArtista(Integer id);
+    
+    public List<Cancion> obtenerCancionesAlbum(Integer id);
+    
     public Long validarCancionDeAlbum(String nombreCancion, Integer idAlbum);
     
     public Long validarExistenciaPorId(Integer id);

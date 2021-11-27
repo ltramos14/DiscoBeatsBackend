@@ -29,7 +29,11 @@ public interface ICancionService {
     
     public List<CancionView> listarCancionesPorVentas();
     
-    public Cancion listarCancionPorId(Integer id) throws ResourceNotFoundException;
+    public List<Cancion> listarCancionPorId(Integer id) throws ResourceNotFoundException;
+    
+    public List<Cancion> obtenerCancionesArtista(Integer id) throws ResourceNotFoundException;
+    
+    public List<Cancion> obtenerCancionesAlbum(Integer id) throws ResourceNotFoundException;   
     
     public void guardarCancion(CancionDto cancionNueva) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
     

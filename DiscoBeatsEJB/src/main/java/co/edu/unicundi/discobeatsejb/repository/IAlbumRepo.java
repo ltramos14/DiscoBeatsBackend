@@ -21,4 +21,8 @@ public interface IAlbumRepo extends ICrud<Album, Integer> {
     public Long validarExistenciaAlbumDeArtista(String nombreAlbum, Integer idArtista);
     
     public List<AlbumView> listarAlbumesPorVentas();
+    
+    public List<Album> obtenerPorId(Integer id);
+    
+    public List<Album> obtenerAlbumesArtista(Integer id);
 }

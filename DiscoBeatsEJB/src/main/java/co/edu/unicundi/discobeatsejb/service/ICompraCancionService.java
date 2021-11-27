@@ -23,9 +23,12 @@ import javax.ejb.Local;
  */
 @Local
 public interface ICompraCancionService {
+    
     public List<CompraCancion> listarComprasCancion();
     
     public CompraCancion listarComprasCancionPorId(Integer id)throws ResourceNotFoundException;
     
     public void guardarCompraCanion(CompraCancionDto compraNueva) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
+    
+    public List<CompraCancion> obtenerComprasUsuario(Integer id) throws ResourceNotFoundException;
 }

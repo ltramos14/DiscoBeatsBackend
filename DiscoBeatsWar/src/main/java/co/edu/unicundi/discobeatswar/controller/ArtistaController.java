@@ -2,6 +2,7 @@ package co.edu.unicundi.discobeatswar.controller;
 
 import co.edu.unicundi.discobeatsejb.dto.ArtistaDto;
 import co.edu.unicundi.discobeatsejb.entity.Artista;
+import co.edu.unicundi.discobeatsejb.entity.Ocupacion;
 import co.edu.unicundi.discobeatsejb.exception.ConflictException;
 import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
 import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
@@ -49,19 +50,6 @@ public class ArtistaController {
         return Response.status(Response.Status.OK).entity(listaArtistas).build();
     }
     
-//    @GET
-//    @Path("/vista")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response obtenerArtistasConCanciones() throws Exception {
-//
-//        List<ArtistaView> listaArtistas = this.artistaService.listarArtistasConCaciones();
-//
-//        if (listaArtistas == null) {
-//            return Response.status(Response.Status.NO_CONTENT).build();
-//        }
-//
-//        return Response.status(Response.Status.OK).entity(listaArtistas).build();
-//    }
 
     @GET
     @Path("/{id}")
@@ -71,6 +59,35 @@ public class ArtistaController {
         List<Artista> artista = this.artistaService.listarArtistaPorId(id);
 
         return Response.status(Response.Status.OK).entity(artista).build();
+    }
+    
+    
+    @GET
+    @Path("/ocupaciones")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerOcupaciones() throws Exception {
+
+        List<Ocupacion> listaOcupaciones = this.artistaService.listarOcupaciones();
+
+        if (listaOcupaciones == null) {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+
+        return Response.status(Response.Status.OK).entity(listaOcupaciones).build();
+    }
+    
+    @GET
+    @Path("/ocupaciones/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerOcupaciones(@PathParam("id") Integer id) throws Exception {
+
+        Ocupacion ocupacion = this.artistaService.obtenerOcupacionPorId(id);
+
+        if (ocupacion == null) {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+
+        return Response.status(Response.Status.OK).entity(ocupacion).build();
     }
 
     @POST

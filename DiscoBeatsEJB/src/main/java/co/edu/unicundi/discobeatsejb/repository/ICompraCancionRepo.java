@@ -24,4 +24,6 @@ public interface ICompraCancionRepo {
     public CompraCancion listarPorId(Integer id);
     
     public void guardar(CompraCancion obj);
+    
+    public List<CompraCancion> obtenerComprasUsuario(Integer id);
 }

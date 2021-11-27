@@ -29,4 +29,6 @@ public interface ICompraAlbumService {
     public CompraAlbum listarComprasAlbumPorId(Integer id) throws ResourceNotFoundException;
     
     public void guardarCompraAlbum(CompraAlbumDto compraNueva) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
+    
+    public List<CompraAlbum> obtenerComprasUsuario(Integer id) throws ResourceNotFoundException;
 }

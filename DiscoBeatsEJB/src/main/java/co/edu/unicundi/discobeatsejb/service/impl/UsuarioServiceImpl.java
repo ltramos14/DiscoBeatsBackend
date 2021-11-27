@@ -43,14 +43,18 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
-    public Usuario obtenerUsuarioPorId(Integer id) throws ResourceNotFoundException {
-
-        Long count = this.localRepo.validarExistenciaPorId(id);
-        if (count == 0) {
+    public List<Usuario> obtenerUsuarioPorId(Integer id) throws ResourceNotFoundException {
+        Long validarUsuario = localRepo.validarExistenciaPorId(id);
+        
+        if(validarUsuario==0){
             throw new ResourceNotFoundException("Usuario no encontrado");
         }
-
-        return this.localRepo.listarPorId(id);
+        
+        List<Usuario> usuario = this.localRepo.obtenerPorId(id);
+        if (!usuario.isEmpty()) {
+            return usuario;
+        }
+        return null;
     }
 
     @Override
@@ -65,10 +69,6 @@ public class UsuarioServiceImpl implements IUsuarioService {
         // Validación de que no se ingrese un id al usuario
         if (usuario.getId() != null) {
             throw new LogicBusinessException("El id del usuario se asigna automáticamente");
-        }
-
-        if (usuario.getListaComprasAlbumes() != null && usuario.getListaComprasCanciones() != null) {
-            throw new LogicBusinessException("No se pueden enviar listas de compras en esta operación");
         }
 
         // Validación del rol
@@ -98,7 +98,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
-    public void editarUsuario(UsuarioDto usuarioEditado) throws ResourceNotFoundException, LogicBusinessException, ConflictException {
+    public AuthDto editarUsuario(UsuarioDto usuarioEditado) throws ResourceNotFoundException, LogicBusinessException, ConflictException {
         
         Long contId = localRepo.validarExistenciaPorId(usuarioEditado.getId());
         if(contId == 0){
@@ -114,31 +114,36 @@ public class UsuarioServiceImpl implements IUsuarioService {
             throw new LogicBusinessException("El nombre de usuario no puede ser nulo");
         }
         
-        Long countC = localRepo.validarExistenciaCorreo(usuarioEditado.getCorreo());
         
-        if(countC >0){
-            throw new ConflictException("Este correo ya existe");
-        }
+        Long countC = localRepo.validarExistenciaCorreo(usuarioEditado.getCorreo());
         
         Usuario usuario = new Usuario();
         Long count = localRepo.validarExistenciaPorId(usuario.getId());
-
-        if(count>0){
-            throw new ConflictException("Este usuario ya existe");
-        }
-        
+   
         Rol rol = new Rol();
         
-        rol.setId(usuarioEditado.getIdRol());
-        usuario.setId(usuarioEditado.getId());
-        usuario.setRol(rol);
-        usuario.setNombreUsuario(usuarioEditado.getNombreUsuario());
-        usuario.setCorreo(usuarioEditado.getCorreo());
-        usuario.setContrasena(usuarioEditado.getContrasena());
-        usuario.setEstado(true);       
+        if (countC == 0 || usuarioEditado.getCorreo().equalsIgnoreCase(usuario.getCorreo()) 
+            || count == 0 || usuarioEditado.getNombreUsuario().equalsIgnoreCase(usuario.getNombreUsuario())) {
+            rol.setId(usuarioEditado.getIdRol());       
+            usuario.setId(usuarioEditado.getId());
+            usuario.setRol(rol);
+            usuario.setNombreUsuario(usuarioEditado.getNombreUsuario());
+            usuario.setCorreo(usuarioEditado.getCorreo());
+            usuario.setContrasena(usuarioEditado.getContrasena());
+            usuario.setEstado(true);       
 
-        localRepo.editar(usuario);
-             
+            localRepo.editar(usuario);
+            
+            AuthDto relogin = new AuthDto();
+            relogin.setCorreo(usuario.getCorreo());
+            relogin.setContrasena(usuario.getContrasena());
+            
+            return login(relogin);
+            
+            
+        }else{
+            throw new ConflictException("El usuario o el correo ya existe");
+        }
         
     }
 
@@ -228,5 +233,14 @@ public class UsuarioServiceImpl implements IUsuarioService {
             localRepo.logout(correo);
         }
 
+    }
+
+    @Override
+    public Usuario obtenerUsuarioToken(Integer id) throws ResourceNotFoundException {
+        Long count = this.localRepo.validarExistenciaPorId(id);
+            if (count == 0) {
+                throw new ResourceNotFoundException("Usuario no encontrado");
+            }
+            return this.localRepo.listarPorId(id);
     }
 }

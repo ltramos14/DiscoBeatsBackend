@@ -5,6 +5,7 @@
  */
 package co.edu.unicundi.discobeatsejb.repository.impl;
 
+import co.edu.unicundi.discobeatsejb.entity.Album;
 import co.edu.unicundi.discobeatsejb.entity.Artista;
 import co.edu.unicundi.discobeatsejb.entity.CompraAlbum;
 import co.edu.unicundi.discobeatsejb.repository.ICompraAlbumRepo;
@@ -50,6 +51,13 @@ public class CompraAlbumRepoImpl implements ICompraAlbumRepo{
         query.setParameter("idUsuario", idUsuario);
         query.setParameter("idAlbum", idAlbum);
         return (Long) query.getSingleResult();
+    }
+
+    @Override
+    public List<CompraAlbum> obtenerComprasUsuario(Integer id) {
+        TypedQuery<CompraAlbum> query = this.em.createNamedQuery("CompraAlbum.ObtenerComprasUsuario", CompraAlbum.class);
+        query.setParameter("idusuario", id);
+        return query.getResultList();
     }
  
 }

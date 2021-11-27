@@ -1,6 +1,7 @@
 package co.edu.unicundi.discobeatsejb.repository;
 
 import co.edu.unicundi.discobeatsejb.entity.Usuario;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -13,6 +14,8 @@ import javax.ejb.Local;
  */
 @Local
 public interface IUsuarioRepo extends ICrud<Usuario, Integer> {
+    
+    public List<Usuario> obtenerPorId(Integer id);
     
     public Long validarExistenciaPorId(Integer id);
     

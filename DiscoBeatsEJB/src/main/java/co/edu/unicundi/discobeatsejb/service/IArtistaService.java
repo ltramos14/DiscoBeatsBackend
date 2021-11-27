@@ -2,6 +2,7 @@ package co.edu.unicundi.discobeatsejb.service;
 
 import co.edu.unicundi.discobeatsejb.dto.ArtistaDto;
 import co.edu.unicundi.discobeatsejb.entity.Artista;
+import co.edu.unicundi.discobeatsejb.entity.Ocupacion;
 import co.edu.unicundi.discobeatsejb.exception.ConflictException;
 import co.edu.unicundi.discobeatsejb.exception.LogicBusinessException;
 import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
@@ -28,6 +29,10 @@ public interface IArtistaService {
     public void editarArtista(ArtistaDto artistaEditado) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
     
     public void eliminarArtista(Integer id) throws ResourceNotFoundException;
+    
+    public List<Ocupacion> listarOcupaciones();
+    
+    public Ocupacion obtenerOcupacionPorId(Integer id) throws ResourceNotFoundException;
        
 }
 

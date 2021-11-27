@@ -34,7 +34,14 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 @Table(name = "canciones")
 @NamedQueries({
-    @NamedQuery(name = "Cancion.ListarTodas", query = "SELECT c.id as id, c.nombre, c.duracion, c.reproducciones, c.precio, c.imagen, c.artista.nombreArtistico, c.album.nombre FROM Cancion c"),
+    @NamedQuery(name = "Cancion.ListarTodos", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.CancionDto" 
+            + "(a.id, a.artista.id,  a.generoMusical.id, a.album.id, a.nombre, a.duracion, a.reproducciones, a.fechaLanzamiento, a.precio, a.imagen) FROM Cancion a ORDER BY a.id"),
+    @NamedQuery(name = "Cancion.ObtenerPorId", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.CancionDto" 
+            + "(a.id, a.artista.id,  a.generoMusical.id, a.album.id, a.nombre, a.duracion, a.reproducciones, a.fechaLanzamiento, a.precio, a.imagen) FROM Cancion a WHERE a.id = :id"),
+    @NamedQuery(name = "Cancion.ObtenerCancionesArtista", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.CancionDto" 
+            + "(a.id, a.artista.id,  a.generoMusical.id, a.album.id, a.nombre, a.duracion, a.reproducciones, a.fechaLanzamiento, a.precio, a.imagen) FROM Cancion a WHERE a.artista.id = :idartista"),
+    @NamedQuery(name = "Cancion.ObtenerCancionesAlbum", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.CancionDto" 
+            + "(a.id, a.artista.id,  a.generoMusical.id, a.album.id, a.nombre, a.duracion, a.reproducciones, a.fechaLanzamiento, a.precio, a.imagen) FROM Cancion a WHERE a.album.id = :idalbum"),
     @NamedQuery(name = "Cancion.ContarPorId", query = "SELECT COUNT(c) FROM Cancion c WHERE c.id = :id"),
     @NamedQuery(name = "Cancion.ObtenerCancionPorId", query = "SELECT c FROM Cancion c JOIN c.album alb JOIN c.artista art WHERE c.id = :id"),
     @NamedQuery(name = "Cancion.EliminarPorId", query = "DELETE FROM Cancion c WHERE c.id = :id"),

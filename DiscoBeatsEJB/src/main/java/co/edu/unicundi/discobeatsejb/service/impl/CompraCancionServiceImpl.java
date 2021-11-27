@@ -109,5 +109,18 @@ public class CompraCancionServiceImpl implements ICompraCancionService{
         
         return compraCEntity;
     }
+
+    @Override
+    public List<CompraCancion> obtenerComprasUsuario(Integer idUsuario) throws ResourceNotFoundException {
+        Long validarUsuario = usuariorepo.validarExistenciaPorId(idUsuario);
+        if(validarUsuario==0){
+            throw new ResourceNotFoundException("Usuario no encontrado");
+        }
+        List<CompraCancion> comprasUsuario = this.repo.obtenerComprasUsuario(idUsuario);
+        if (!comprasUsuario.isEmpty()) {
+            return comprasUsuario;
+        }
+        return null;
+    }
     
 }

@@ -36,22 +36,16 @@ public class UsuarioDto implements Serializable {
     
     private Boolean estado;
 
-    private List<CompraAlbumDto> listaComprasAlbumes;
-
-    private List<CompraCancionDto> listaComprasCanciones;
-
     public UsuarioDto() {
     }
 
-    public UsuarioDto(Integer id, Integer idRol, String nombreUsuario, String correo, String contrasena, Boolean estado, List<CompraAlbumDto> listaComprasAlbumes, List<CompraCancionDto> listaComprasCanciones) {
+    public UsuarioDto(Integer id, Integer idRol, String nombreUsuario, String correo, String contrasena, Boolean estado) {
         this.id = id;
         this.idRol = idRol;
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
         this.contrasena = contrasena;
         this.estado = estado;
-        this.listaComprasAlbumes = listaComprasAlbumes;
-        this.listaComprasCanciones = listaComprasCanciones;
     }
 
     public Integer getId() {
@@ -100,21 +94,5 @@ public class UsuarioDto implements Serializable {
 
     public void setEstado(Boolean estado) {
         this.estado = estado;
-    }
-
-    public List<CompraAlbumDto> getListaComprasAlbumes() {
-        return listaComprasAlbumes;
-    }
-
-    public void setListaComprasAlbumes(List<CompraAlbumDto> listaComprasAlbumes) {
-        this.listaComprasAlbumes = listaComprasAlbumes;
-    }
-
-    public List<CompraCancionDto> getListaComprasCanciones() {
-        return listaComprasCanciones;
-    }
-
-    public void setListaComprasCanciones(List<CompraCancionDto> listaComprasCanciones) {
-        this.listaComprasCanciones = listaComprasCanciones;
     }
 }

@@ -58,6 +58,18 @@ public class CompraCancionController {
         return Response.status(Response.Status.OK).entity(compraA).build();
     }
     
+    @GET
+    @Path("/usuarios/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerComprasUsuario(@PathParam("id") Integer id) throws Exception {
+
+        List<CompraCancion> listaComprasUsuarios = this.compraCancionService.obtenerComprasUsuario(id);
+        if (listaComprasUsuarios == null) {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+        return Response.status(Response.Status.OK).entity(listaComprasUsuarios).build();
+    }
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response agregarCompra(CompraCancionDto compraANuevo) throws ResourceNotFoundException, LogicBusinessException, ConflictException {

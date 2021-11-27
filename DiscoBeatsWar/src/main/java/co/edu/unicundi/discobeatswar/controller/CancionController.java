@@ -51,8 +51,32 @@ public class CancionController {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response obtenerArtistaPorId(@PathParam("id") Integer id) throws ResourceNotFoundException {
-        Cancion cancion = this.cancionService.listarCancionPorId(id);
+        List<Cancion> cancion = this.cancionService.listarCancionPorId(id);
         return Response.status(Response.Status.OK).entity(cancion).build();
+    }
+    
+    @GET
+    @Path("/artista/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerCancionesArtista(@PathParam("id") Integer id) throws Exception {
+
+        List<Cancion> listaCancionesArtista = this.cancionService.obtenerCancionesArtista(id);
+        if (listaCancionesArtista == null) {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+        return Response.status(Response.Status.OK).entity(listaCancionesArtista).build();
+    }
+    
+    @GET
+    @Path("/album/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerCancionesAlbum(@PathParam("id") Integer id) throws Exception {
+
+        List<Cancion> listaCancionesAlbum = this.cancionService.obtenerCancionesAlbum(id);
+        if (listaCancionesAlbum == null) {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+        return Response.status(Response.Status.OK).entity(listaCancionesAlbum).build();
     }
     
     @GET

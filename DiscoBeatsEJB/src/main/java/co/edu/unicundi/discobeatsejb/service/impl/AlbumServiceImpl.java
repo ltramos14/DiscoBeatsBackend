@@ -183,4 +183,32 @@ public class AlbumServiceImpl implements IAlbumService {
             return null;
         }
     }
+
+    @Override
+    public List<Album> obtenerPorId(Integer id) throws ResourceNotFoundException{
+        Long validarAlbum = localRepo.validarExistenciaPorId(id);
+        
+        if(validarAlbum==0){
+            throw new ResourceNotFoundException("Album no encontrado");
+        }
+        
+        List<Album> album = this.localRepo.obtenerPorId(id);
+        if (!album.isEmpty()) {
+            return album;
+        }
+        return null;
+    }
+
+    @Override
+    public List<Album> obtenerAlbumesArtista(Integer idArtista) throws ResourceNotFoundException{
+        Long validarArtista = artistaRepo.validarExistenciaPorId(idArtista);
+        if(validarArtista==0){
+            throw new ResourceNotFoundException("Artista no encontrado");
+        }
+        List<Album> albumesArtista = this.localRepo.obtenerAlbumesArtista(idArtista);
+        if (!albumesArtista.isEmpty()) {
+            return albumesArtista;
+        }
+        return null;
+    }
 }

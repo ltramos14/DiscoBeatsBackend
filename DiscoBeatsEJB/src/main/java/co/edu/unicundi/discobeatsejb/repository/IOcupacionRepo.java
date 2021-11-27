@@ -5,6 +5,8 @@
  */
 package co.edu.unicundi.discobeatsejb.repository;
 
+import co.edu.unicundi.discobeatsejb.entity.Ocupacion;
+import java.util.List;
 import javax.ejb.Local;
 
 
@@ -15,4 +17,8 @@ import javax.ejb.Local;
 @Local
 public interface IOcupacionRepo{    
     public Long validarExistenciaOcupacionPorId(Integer id);
+    
+    public List<Ocupacion> obtenerOcupaciones();
+    
+    public Ocupacion obtenerPorId(Integer id);
 }

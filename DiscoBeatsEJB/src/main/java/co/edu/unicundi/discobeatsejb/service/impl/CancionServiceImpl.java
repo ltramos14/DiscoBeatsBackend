@@ -53,15 +53,19 @@ public class CancionServiceImpl implements ICancionService {
     }
 
     @Override
-    public Cancion listarCancionPorId(Integer id) throws ResourceNotFoundException {
+    public List<Cancion> listarCancionPorId(Integer id) throws ResourceNotFoundException {
         
-        Long count = this.localRepo.validarExistenciaPorId(id);
-        if (count > 0) {
-            Cancion cancionEntity = localRepo.listarPorId(id);
-            return cancionEntity;
-        } else {
-            throw new ResourceNotFoundException("La canción no fue encontrada");
+       Long validarCancion = localRepo.validarExistenciaPorId(id);
+        
+        if(validarCancion==0){
+            throw new ResourceNotFoundException("Cancion no encontrada");
         }
+        
+        List<Cancion> cancion = this.localRepo.obtenerPorId(id);
+        if (!cancion.isEmpty()) {
+            return cancion;
+        }
+        return null;
         
     }
 
@@ -230,6 +234,32 @@ public class CancionServiceImpl implements ICancionService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public List<Cancion> obtenerCancionesArtista(Integer idArtista) throws ResourceNotFoundException {
+        Long validarArtista = artistaRepo.validarExistenciaPorId(idArtista);
+        if(validarArtista==0){
+            throw new ResourceNotFoundException("Artista no encontrado");
+        }
+        List<Cancion> cancionesArtista = this.localRepo.obtenerCancionesArtista(idArtista);
+        if (!cancionesArtista.isEmpty()) {
+            return cancionesArtista;
+        }
+        return null;
+    }
+
+    @Override
+    public List<Cancion> obtenerCancionesAlbum(Integer idAlbum) throws ResourceNotFoundException {
+        Long validarAlbum = albumRepo.validarExistenciaPorId(idAlbum);
+        if(validarAlbum==0){
+            throw new ResourceNotFoundException("Album no encontrado");
+        }
+        List<Cancion> cancionesAlbum = this.localRepo.obtenerCancionesAlbum(idAlbum);
+        if (!cancionesAlbum.isEmpty()) {
+            return cancionesAlbum;
+        }
+        return null;
     }
     
 }

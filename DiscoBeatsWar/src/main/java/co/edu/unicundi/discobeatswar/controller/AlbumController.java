@@ -53,9 +53,22 @@ public class AlbumController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response obtenerAlbumPorId(@PathParam("id") Integer id) throws ResourceNotFoundException {
         
-        Album album = this.albumService.listarAlbumPorId(id);    
+        List<Album> album  = this.albumService.obtenerPorId(id);    
         return Response.status(Response.Status.OK).entity(album).build();
     }
+    
+    @GET
+    @Path("/artista/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerAlbumesArtista(@PathParam("id") Integer id) throws Exception {
+
+        List<Album> listaAlbumesArtista = this.albumService.obtenerAlbumesArtista(id);
+        if (listaAlbumesArtista == null) {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+        return Response.status(Response.Status.OK).entity(listaAlbumesArtista).build();
+    }
+    
     
     @GET
     @Path("/vista")

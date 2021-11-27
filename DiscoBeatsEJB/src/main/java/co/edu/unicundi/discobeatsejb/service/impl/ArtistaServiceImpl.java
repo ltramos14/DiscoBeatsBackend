@@ -187,4 +187,25 @@ public class ArtistaServiceImpl implements IArtistaService {
         return artistaEntity;
     }
 
+    @Override
+    public List<Ocupacion> listarOcupaciones() {
+        if (!ocupacionrepo.obtenerOcupaciones().isEmpty()) {
+            return ocupacionrepo.obtenerOcupaciones();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Ocupacion obtenerOcupacionPorId(Integer id) throws ResourceNotFoundException {
+        Long count = ocupacionrepo.validarExistenciaOcupacionPorId(id);
+
+        if (count > 0) {
+            Ocupacion ocupacion = ocupacionrepo.obtenerPorId(id);
+            return ocupacion;
+        } else {
+            throw new ResourceNotFoundException("Ocupacion no encontrado");
+        }
+    }
+
 }

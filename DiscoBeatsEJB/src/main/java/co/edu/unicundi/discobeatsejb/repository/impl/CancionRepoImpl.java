@@ -26,13 +26,13 @@ public class CancionRepoImpl implements ICancionRepo{
     
     @Override
     public List<Cancion> listarTodos() {
-        TypedQuery<Cancion> query = this.em.createNamedQuery("Cancion.ListarTodas", Cancion.class);
+        TypedQuery<Cancion> query = this.em.createNamedQuery("Cancion.ListarTodos", Cancion.class);
         return query.getResultList();
     }
 
     @Override
     public Cancion listarPorId(Integer id) {
-        TypedQuery<Cancion> query = this.em.createNamedQuery("Cancion.ObtenerCancionPorId", Cancion.class);
+        TypedQuery<Cancion> query = this.em.createNamedQuery("Cancion.ObtenerPorId", Cancion.class);
         query.setParameter("id", id);
         return query.getSingleResult();
     }
@@ -72,6 +72,27 @@ public class CancionRepoImpl implements ICancionRepo{
     @Override
     public List<CancionView> listarCancionesPorVentas() {
         TypedQuery<CancionView> query = this.em.createNamedQuery("CancionView.VentasCanciones", CancionView.class);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Cancion> obtenerPorId(Integer id) {
+        TypedQuery<Cancion> query = this.em.createNamedQuery("Cancion.ObtenerPorId", Cancion.class);
+        query.setParameter("id", id);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Cancion> obtenerCancionesArtista(Integer id) {
+        TypedQuery<Cancion> query = this.em.createNamedQuery("Cancion.ObtenerCancionesArtista", Cancion.class);
+        query.setParameter("idartista", id);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Cancion> obtenerCancionesAlbum(Integer id) {
+        TypedQuery<Cancion> query = this.em.createNamedQuery("Cancion.ObtenerCancionesAlbum", Cancion.class);
+        query.setParameter("idalbum", id);
         return query.getResultList();
     }
     

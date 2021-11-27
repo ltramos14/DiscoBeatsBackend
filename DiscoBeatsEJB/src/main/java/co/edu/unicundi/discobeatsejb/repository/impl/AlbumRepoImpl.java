@@ -71,5 +71,19 @@ public class AlbumRepoImpl implements IAlbumRepo {
         TypedQuery<AlbumView> query = this.em.createNamedQuery("AlbumView.VentasAlbumes", AlbumView.class);
         return query.getResultList();
     }
+
+    @Override
+    public List<Album> obtenerPorId(Integer id) {
+        TypedQuery<Album> query = this.em.createNamedQuery("Album.ObtenerPorId", Album.class);
+        query.setParameter("id", id);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Album> obtenerAlbumesArtista(Integer id) {
+        TypedQuery<Album> query = this.em.createNamedQuery("Album.ObtenerAlbumesArtista", Album.class);
+        query.setParameter("idartista", id);
+        return query.getResultList();
+    }
      
 }

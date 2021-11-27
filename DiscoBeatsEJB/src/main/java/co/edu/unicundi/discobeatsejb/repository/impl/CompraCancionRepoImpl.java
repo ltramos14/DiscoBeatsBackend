@@ -52,5 +52,12 @@ public class CompraCancionRepoImpl implements ICompraCancionRepo{
         query.setParameter("idCancion", idCancion);
         return (Long) query.getSingleResult();
     }
+
+    @Override
+    public List<CompraCancion> obtenerComprasUsuario(Integer id) {
+        TypedQuery<CompraCancion> query = this.em.createNamedQuery("CompraCancion.ObtenerComprasUsuario", CompraCancion.class);
+        query.setParameter("idusuario", id);
+        return query.getResultList();
+    }
     
 }

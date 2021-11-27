@@ -8,6 +8,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -72,7 +73,7 @@ public class Interceptor implements ContainerRequestFilter {
                 
                 // Se valida el token en base de datos
                 Usuario usuario;
-                usuario = usuarioService.obtenerUsuarioPorId(Integer.parseInt(mapClaims.get("sub")));
+                usuario = usuarioService.obtenerUsuarioToken(Integer.parseInt(mapClaims.get("sub")));
 
                 if (usuario.getToken() == null || !usuario.getToken().equals(token.trim())) {
                     

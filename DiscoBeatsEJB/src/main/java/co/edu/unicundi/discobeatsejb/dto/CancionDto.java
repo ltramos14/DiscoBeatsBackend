@@ -46,12 +46,11 @@ public class CancionDto implements Serializable {
 
     private String imagen;
     
-    private List<CompraCancionDto> listaCompras;
 
     public CancionDto() {
     }
 
-    public CancionDto(Integer id, Integer idArtista, Integer idGeneroMusical, Integer idAlbum, String nombre, Time duracion, Integer reproducciones, Date fechaLanzamiento, Integer precio, String imagen, List<CompraCancionDto> listaCompras) {
+    public CancionDto(Integer id, Integer idArtista, Integer idGeneroMusical, Integer idAlbum, String nombre, Time duracion, Integer reproducciones, Date fechaLanzamiento, Integer precio, String imagen) {
         this.id = id;
         this.idArtista = idArtista;
         this.idGeneroMusical = idGeneroMusical;
@@ -62,7 +61,7 @@ public class CancionDto implements Serializable {
         this.fechaLanzamiento = fechaLanzamiento;
         this.precio = precio;
         this.imagen = imagen;
-        this.listaCompras = listaCompras;
+
     }
 
     public Integer getId() {
@@ -143,14 +142,6 @@ public class CancionDto implements Serializable {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
-    }
-
-    public List<CompraCancionDto> getListaCompras() {
-        return listaCompras;
-    }
-
-    public void setListaCompras(List<CompraCancionDto> listaCompras) {
-        this.listaCompras = listaCompras;
     }
 
 }

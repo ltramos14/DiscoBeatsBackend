@@ -28,7 +28,10 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 @Table(name = "compras_canciones")
 @NamedQueries({
-    @NamedQuery(name = "CompraCancion.ListarTodos", query = "SELECT a FROM CompraCancion a"),
+    @NamedQuery(name = "CompraCancion.ListarTodos", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.CompraCancionDto" 
+            + "(a.id, a.cancionCompra.id, a.usuarioCancion.id, a.precioTotal) FROM CompraCancion a ORDER BY a.id"),
+    @NamedQuery(name = "CompraCancion.ObtenerComprasUsuario", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.CompraCancionDto" 
+            + "(a.id, a.cancionCompra.id, a.usuarioCancion.id, a.precioTotal) FROM CompraCancion a WHERE a.usuarioCancion.id = :idusuario"),
     @NamedQuery(name = "CompraCancion.ContarPorId", query = "SELECT COUNT(t) FROM CompraCancion t WHERE t.id=:id"),
     @NamedQuery(name = "CompraCancion.ContarPorUsuario", query = "SELECT COUNT(u) FROM CompraCancion u WHERE u.usuarioCancion.id=:idUsuario AND u.cancionCompra.id=:idCancion")
 })

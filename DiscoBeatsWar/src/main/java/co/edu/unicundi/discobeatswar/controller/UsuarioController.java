@@ -1,5 +1,6 @@
 package co.edu.unicundi.discobeatswar.controller;
 
+import co.edu.unicundi.discobeatsejb.dto.AuthDto;
 import co.edu.unicundi.discobeatsejb.dto.UsuarioDto;
 import co.edu.unicundi.discobeatsejb.entity.Rol;
 import co.edu.unicundi.discobeatsejb.entity.Usuario;
@@ -52,7 +53,7 @@ public class UsuarioController {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response obtenerUsuariosPorId(@PathParam("id") Integer id) throws ResourceNotFoundException {
-        Usuario usuario = this.usuarioService.obtenerUsuarioPorId(id);
+        List<Usuario> usuario = this.usuarioService.obtenerUsuarioPorId(id);
         return Response.status(Response.Status.OK).entity(usuario).build();
     }
     
@@ -78,8 +79,9 @@ public class UsuarioController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response editarUsuario(@Valid UsuarioDto usuario) throws ResourceNotFoundException, ConflictException, LogicBusinessException {
-        this.usuarioService.editarUsuario(usuario);
-        return Response.status(Response.Status.OK).entity(usuario).build();
+        AuthDto relogin = this.usuarioService.editarUsuario(usuario);
+        
+        return Response.status(Response.Status.OK).entity(relogin).build();
     }
 
     @DELETE

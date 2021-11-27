@@ -23,7 +23,7 @@ public interface IUsuarioService {
 
     public List<Usuario> listarUsuarios();
 
-    public Usuario obtenerUsuarioPorId(Integer id) throws ResourceNotFoundException;
+    public List<Usuario> obtenerUsuarioPorId(Integer id) throws ResourceNotFoundException;
 
     public List<Rol> obtenerRoles();
 
@@ -33,7 +33,9 @@ public interface IUsuarioService {
 
     public void registrarUsuario(UsuarioDto usuario) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
 
-    public void editarUsuario(UsuarioDto usuario) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
+    public AuthDto editarUsuario(UsuarioDto usuario) throws ResourceNotFoundException, LogicBusinessException, ConflictException;
 
     public void eliminarUsuario(Integer id) throws ResourceNotFoundException;
+    
+    public Usuario obtenerUsuarioToken(Integer id) throws ResourceNotFoundException;
 }

@@ -31,9 +31,7 @@ public class UsuarioRepoImpl implements IUsuarioRepo {
 
     @Override
     public Usuario listarPorId(Integer id) {
-        TypedQuery<Usuario> query = this.em.createNamedQuery("Usuario.ObtenerUsuario", Usuario.class);
-        query.setParameter("id", id);
-        return query.getSingleResult();
+        return this.em.find(Usuario.class, id);
     }
 
     @Override
@@ -49,7 +47,7 @@ public class UsuarioRepoImpl implements IUsuarioRepo {
     @Override
     public void eliminar(Integer id) {
         Query query = this.em.createNamedQuery("Usuario.Inhabilitar");
-        query.setParameter(1, id);
+        query.setParameter("id", id);
         query.executeUpdate();
     }
 
@@ -105,6 +103,13 @@ public class UsuarioRepoImpl implements IUsuarioRepo {
         query.setParameter(1, token);
         query.setParameter(2, id);
         query.executeUpdate();
+    }
+
+    @Override
+    public List<Usuario> obtenerPorId(Integer id) {
+        TypedQuery<Usuario> query = this.em.createNamedQuery("Usuario.ObtenerUsuario", Usuario.class);
+        query.setParameter("id", id);
+        return query.getResultList();
     }
 
 }
