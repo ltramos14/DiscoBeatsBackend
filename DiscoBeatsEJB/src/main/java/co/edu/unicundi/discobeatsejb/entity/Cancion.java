@@ -35,7 +35,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Table(name = "canciones")
 @NamedQueries({
     @NamedQuery(name = "Cancion.ListarTodos", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.CancionDto" 
-            + "(a.id, a.artista.id,  a.generoMusical.id, a.album.id, a.nombre, a.duracion, a.reproducciones, a.fechaLanzamiento, a.precio, a.imagen) FROM Cancion a ORDER BY a.id"),
+            + "(a.id, a.artista.id,  a.generoMusical.id, a.album.id, a.artista.nombreArtistico, a.album.nombre, a.nombre, a.duracion, a.reproducciones, a.fechaLanzamiento, a.precio, a.imagen) FROM Cancion a ORDER BY a.id"),
     @NamedQuery(name = "Cancion.ObtenerPorId", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.CancionDto" 
             + "(a.id, a.artista.id,  a.generoMusical.id, a.album.id, a.nombre, a.duracion, a.reproducciones, a.fechaLanzamiento, a.precio, a.imagen) FROM Cancion a WHERE a.id = :id"),
     @NamedQuery(name = "Cancion.ObtenerCancionesArtista", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.CancionDto" 

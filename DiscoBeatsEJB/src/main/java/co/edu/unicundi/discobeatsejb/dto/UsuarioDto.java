@@ -36,15 +36,25 @@ public class UsuarioDto implements Serializable {
     
     private Boolean estado;
 
+    private String nomnbreRol;
+    
     public UsuarioDto() {
     }
 
-    public UsuarioDto(Integer id, Integer idRol, String nombreUsuario, String correo, String contrasena, Boolean estado) {
+    public UsuarioDto(Integer id, Integer idRol, String nombreUsuario, String correo, Boolean estado) {
         this.id = id;
         this.idRol = idRol;
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
-        this.contrasena = contrasena;
+        this.estado = estado;
+    }
+    
+    public UsuarioDto(Integer id, Integer idRol, String rol, String nombreUsuario, String correo, Boolean estado) {
+        this.id = id;
+        this.idRol = idRol;
+        nomnbreRol = rol;
+        this.nombreUsuario = nombreUsuario;
+        this.correo = correo;
         this.estado = estado;
     }
 
@@ -95,4 +105,13 @@ public class UsuarioDto implements Serializable {
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
+
+    public String getNomnbreRol() {
+        return nomnbreRol;
+    }
+
+    public void setNomnbreRol(String nomnbreRol) {
+        this.nomnbreRol = nomnbreRol;
+    }
+    
 }

@@ -16,6 +16,7 @@ import co.edu.unicundi.discobeatsejb.service.ICompraCancionService;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -72,7 +73,7 @@ public class CompraCancionController {
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response agregarCompra(CompraCancionDto compraANuevo) throws ResourceNotFoundException, LogicBusinessException, ConflictException {
+    public Response agregarCompra(@Valid CompraCancionDto compraANuevo) throws ResourceNotFoundException, LogicBusinessException, ConflictException {
 
         this.compraCancionService.guardarCompraCanion(compraANuevo);
 

@@ -32,9 +32,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Table(name = "compras_albumes")
 @NamedQueries({
     @NamedQuery(name = "CompraAlbum.ListarTodos", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.CompraAlbumDto" 
-            + "(a.id, a.albumCompra.id, a.usuarioAlbum.id, a.precioTotal) FROM CompraAlbum a ORDER BY a.id"),
+            + "(a.id, a.albumCompra.id, a.usuarioAlbum.id, a.albumCompra.nombre, a.usuarioAlbum.nombreUsuario, a.precioTotal, a.fechaCompra) FROM CompraAlbum a ORDER BY a.id"),
     @NamedQuery(name = "CompraAlbum.ObtenerComprasUsuario", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.CompraAlbumDto" 
-            + "(a.id, a.albumCompra.id, a.usuarioAlbum.id, a.precioTotal) FROM CompraAlbum a WHERE a.usuarioAlbum.id = :idusuario"),
+            + "(a.id, a.albumCompra.id, a.usuarioAlbum.id, a.precioTotal, a.fechaCompra) FROM CompraAlbum a WHERE a.usuarioAlbum.id = :idusuario"),
     @NamedQuery(name = "CompraAlbum.ContarPorId", query = "SELECT COUNT(t) FROM CompraAlbum t WHERE t.id=:id"),
     @NamedQuery(name = "CompraAlbum.ContarPorUsuario", query = "SELECT COUNT(u) FROM CompraAlbum u WHERE u.usuarioAlbum.id=:idUsuario AND u.albumCompra.id=:idAlbum")
 })

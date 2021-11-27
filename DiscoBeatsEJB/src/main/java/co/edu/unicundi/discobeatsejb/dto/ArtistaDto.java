@@ -7,7 +7,6 @@ package co.edu.unicundi.discobeatsejb.dto;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -40,6 +39,8 @@ public class ArtistaDto implements Serializable {
     @Size(min = 15, max = 255, message = "La descripcion debe estar entre 15 y 255 caracteres")
     private String descripcion;
 
+    private String nombreOcupacion;
+
     public ArtistaDto() {
     }
 
@@ -47,6 +48,18 @@ public class ArtistaDto implements Serializable {
         this.id = id;
         this.idGeneroMusical = idGeneroMusical;
         this.idOcupacion = idOcupacion;
+        this.nombreArtistico = nombreArtistico;
+        this.fechaNacimiento = fechaNacimiento;
+        this.nacionalidad = nacionalidad;
+        this.descripcion = descripcion;
+        this.imagen = imagen;
+    }
+    
+    public ArtistaDto(Integer id, Integer idGeneroMusical, Integer idOcupacion, String nombreOcupacion, String nombreArtistico, Date fechaNacimiento, String nacionalidad, String descripcion, String imagen) {
+        this.id = id;
+        this.idGeneroMusical = idGeneroMusical;
+        this.idOcupacion = idOcupacion;
+        this.nombreOcupacion = nombreOcupacion;
         this.nombreArtistico = nombreArtistico;
         this.fechaNacimiento = fechaNacimiento;
         this.nacionalidad = nacionalidad;
@@ -116,6 +129,14 @@ public class ArtistaDto implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getNombreOcupacion() {
+        return nombreOcupacion;
+    }
+
+    public void setNombreOcupacion(String nombreOcupacion) {
+        this.nombreOcupacion = nombreOcupacion;
     }
       
 }

@@ -18,8 +18,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -35,7 +33,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Table(name = "artistas")
 @NamedQueries({
     @NamedQuery(name = "Artista.ListarTodos", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.ArtistaDto" 
-            + "(a.id, a.generoMusical.id, a.ocupacion.id, a.nombreArtistico, a.fechaNacimiento, a.nacionalidad, a.descripcion, a.imagen ) FROM Artista a ORDER BY a.id"),
+            + "(a.id, a.generoMusical.id, a.ocupacion.id, a.ocupacion.nombreOcupacion, a.nombreArtistico, a.fechaNacimiento, a.nacionalidad, a.descripcion, a.imagen ) FROM Artista a ORDER BY a.id"),
     @NamedQuery(name = "Artista.ObtenerPorId", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.ArtistaDto" 
             + "(a.id, a.generoMusical.id, a.ocupacion.id, a.nombreArtistico, a.fechaNacimiento, a.nacionalidad, a.descripcion, a.imagen ) FROM Artista a WHERE a.id = :id"),
     @NamedQuery(name = "Artista.ContarPorId", query = "SELECT COUNT(t) FROM Artista t WHERE t.id=:id"),

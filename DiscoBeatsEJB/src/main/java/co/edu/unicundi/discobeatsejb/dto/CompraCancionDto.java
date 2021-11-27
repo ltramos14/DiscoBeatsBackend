@@ -6,7 +6,7 @@
 package co.edu.unicundi.discobeatsejb.dto;
 
 import java.io.Serializable;
-import java.util.Date;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -16,12 +16,19 @@ public class CompraCancionDto implements Serializable {
     
     private Integer id;
     
+    @NotNull(message = "La canción no es obligatoria")
     private Integer idCancion;
     
+    @NotNull(message = "El usuario el obligatorio")
     private Integer idUsuario;
 
+    @NotNull(message = "El precio total de la compra es obligatorio")
     private Integer precioTotal;
 
+    private String cancion;
+   
+    private String usuario;
+    
     public CompraCancionDto() {
     }
 
@@ -29,6 +36,15 @@ public class CompraCancionDto implements Serializable {
         this.id = id;
         this.idCancion = idCancion;
         this.idUsuario = idUsuario;
+        this.precioTotal = precioTotal;
+    }
+    
+    public CompraCancionDto(Integer id, Integer idCancion, String cancion, String usuario,  Integer idUsuario, Integer precioTotal) {
+        this.id = id;
+        this.idCancion = idCancion;
+        this.idUsuario = idUsuario;
+        this.cancion = cancion;
+        this.usuario = usuario;
         this.precioTotal = precioTotal;
     }
 
@@ -64,5 +80,20 @@ public class CompraCancionDto implements Serializable {
         this.precioTotal = precioTotal;
     }
 
-    
+    public String getCancion() {
+        return cancion;
+    }
+
+    public void setCancion(String cancion) {
+        this.cancion = cancion;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
 }

@@ -73,7 +73,7 @@ public class CompraAlbumController {
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response agregarCompra(CompraAlbumDto compraANuevo) throws ResourceNotFoundException, LogicBusinessException, ConflictException {
+    public Response agregarCompra(@Valid CompraAlbumDto compraANuevo) throws ResourceNotFoundException, LogicBusinessException, ConflictException {
 
         this.compraAlbumService.guardarCompraAlbum(compraANuevo);
 

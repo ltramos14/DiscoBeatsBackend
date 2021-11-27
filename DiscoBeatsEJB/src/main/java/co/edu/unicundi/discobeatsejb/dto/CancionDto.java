@@ -3,7 +3,6 @@ package co.edu.unicundi.discobeatsejb.dto;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
-import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
@@ -46,7 +45,10 @@ public class CancionDto implements Serializable {
 
     private String imagen;
     
-
+    private String nombreArtistico;
+    
+    private String nombreAlbum;
+    
     public CancionDto() {
     }
 
@@ -61,8 +63,23 @@ public class CancionDto implements Serializable {
         this.fechaLanzamiento = fechaLanzamiento;
         this.precio = precio;
         this.imagen = imagen;
-
     }
+    
+    public CancionDto(Integer id, Integer idArtista, Integer idGeneroMusical, Integer idAlbum, String nombreArtistico, String nombreAlbum, String nombre, Time duracion, Integer reproducciones, Date fechaLanzamiento, Integer precio, String imagen) {
+        this.id = id;
+        this.idArtista = idArtista;
+        this.idGeneroMusical = idGeneroMusical;
+        this.nombreArtistico = nombreArtistico;
+        this.nombreAlbum = nombreAlbum;
+        this.idAlbum = idAlbum;
+        this.nombre = nombre;
+        this.duracion = duracion;
+        this.reproducciones = reproducciones;
+        this.fechaLanzamiento = fechaLanzamiento;
+        this.precio = precio;
+        this.imagen = imagen;
+    }
+    
 
     public Integer getId() {
         return id;
@@ -142,6 +159,22 @@ public class CancionDto implements Serializable {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public String getNombreArtistico() {
+        return nombreArtistico;
+    }
+
+    public void setNombreArtistico(String nombreArtistico) {
+        this.nombreArtistico = nombreArtistico;
+    }
+
+    public String getNombreAlbum() {
+        return nombreAlbum;
+    }
+
+    public void setNombreAlbum(String nombreAlbum) {
+        this.nombreAlbum = nombreAlbum;
     }
 
 }

@@ -41,7 +41,10 @@ public class AlbumDto implements Serializable {
     @NotNull(message = "El precio del album es obligatorio")
     private Integer precio;
 
-        
+    private String nombreArtistico;
+    
+    private String nombreGeneroMusical;
+      
     public AlbumDto() {
     }
 
@@ -49,6 +52,19 @@ public class AlbumDto implements Serializable {
         this.id = id;
         this.idArtista = idArtista;
         this.idGeneroMusical = idGeneroMusical;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.fechaLanzamiento = fechaLanzamiento;
+        this.imagen = imagen;
+        this.precio = precio;
+    }
+    
+     public AlbumDto(Integer id, Integer idArtista, Integer idGeneroMusical, String nombreArtistico, String nombreGeneroMusical, String nombre, String descripcion, Date fechaLanzamiento, String imagen, Integer precio) {
+        this.id = id;
+        this.idArtista = idArtista;
+        this.idGeneroMusical = idGeneroMusical;
+        this.nombreArtistico = nombreArtistico;
+        this.nombreGeneroMusical = nombreGeneroMusical;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaLanzamiento = fechaLanzamiento;
@@ -119,5 +135,23 @@ public class AlbumDto implements Serializable {
     public void setPrecio(Integer precio) {
         this.precio = precio;
     }
+
+    public String getNombreArtistico() {
+        return nombreArtistico;
+    }
+
+    public void setNombreArtistico(String nombreArtistico) {
+        this.nombreArtistico = nombreArtistico;
+    }
+
+    public String getNombreGeneroMusical() {
+        return nombreGeneroMusical;
+    }
+
+    public void setNombreGeneroMusical(String nombreGeneroMusical) {
+        this.nombreGeneroMusical = nombreGeneroMusical;
+    }
    
+    
+    
 }
