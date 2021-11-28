@@ -52,10 +52,20 @@ public class UsuarioDto implements Serializable {
     public UsuarioDto(Integer id, Integer idRol, String rol, String nombreUsuario, String correo, Boolean estado) {
         this.id = id;
         this.idRol = idRol;
-        nomnbreRol = rol;
+        this.nomnbreRol = rol;
         this.nombreUsuario = nombreUsuario;
         this.correo = correo;
         this.estado = estado;
+    }
+    
+    public UsuarioDto(Integer id, Integer idRol, String rol, String nombreUsuario, String correo, Boolean estado, String contrasena) {
+        this.id = id;
+        this.idRol = idRol;
+        this.nomnbreRol = rol;
+        this.nombreUsuario = nombreUsuario;
+        this.correo = correo;
+        this.estado = estado;
+        this.contrasena = contrasena;
     }
 
     public Integer getId() {

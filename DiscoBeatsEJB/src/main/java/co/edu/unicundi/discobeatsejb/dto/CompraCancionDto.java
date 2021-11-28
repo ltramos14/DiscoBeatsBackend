@@ -6,6 +6,7 @@
 package co.edu.unicundi.discobeatsejb.dto;
 
 import java.io.Serializable;
+import java.sql.Date;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -24,6 +25,8 @@ public class CompraCancionDto implements Serializable {
 
     @NotNull(message = "El precio total de la compra es obligatorio")
     private Integer precioTotal;
+    
+    private Date fechaCompra;
 
     private String cancion;
    
@@ -39,13 +42,14 @@ public class CompraCancionDto implements Serializable {
         this.precioTotal = precioTotal;
     }
     
-    public CompraCancionDto(Integer id, Integer idCancion, String cancion, String usuario,  Integer idUsuario, Integer precioTotal) {
+    public CompraCancionDto(Integer id, Integer idCancion, Integer idUsuario, String cancion, String usuario, Integer precioTotal, Date fechaCompra) {
         this.id = id;
         this.idCancion = idCancion;
         this.idUsuario = idUsuario;
         this.cancion = cancion;
         this.usuario = usuario;
         this.precioTotal = precioTotal;
+        this.fechaCompra = fechaCompra;
     }
 
     public Integer getId() {
@@ -76,6 +80,14 @@ public class CompraCancionDto implements Serializable {
         return precioTotal;
     }
 
+    public Date getFechaCompra() {
+        return fechaCompra;
+    }
+
+    public void setFechaCompra(Date fechaCompra) {
+        this.fechaCompra = fechaCompra;
+    }
+    
     public void setPrecioTotal(Integer precioTotal) {
         this.precioTotal = precioTotal;
     }

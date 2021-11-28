@@ -34,7 +34,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Usuario.ListarTodos", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.UsuarioDto" 
             + "(a.id, a.rol.id, a.rol.rol, a.nombreUsuario, a.correo, a.estado) FROM Usuario a WHERE a.estado = true"),
     @NamedQuery(name = "Usuario.ObtenerUsuario", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.UsuarioDto" 
-            + "(a.id, a.rol.id,  a.nombreUsuario, a.correo, a.contrasena, a.estado) FROM Usuario a WHERE a.id = :id"),    
+            + "(a.id, a.rol.id, a.rol.rol, a.nombreUsuario, a.correo, a.estado, a.contrasena) FROM Usuario a WHERE a.id = :id"),    
     @NamedQuery(name = "Usuario.Inhabilitar", query = "UPDATE Usuario u SET u.estado = false WHERE u.id = :id"),
     @NamedQuery(name = "Usuario.ContarPorId", query = "SELECT COUNT(u) FROM Usuario u WHERE u.id = :id"),
     @NamedQuery(name = "Usuario.Login", query = "SELECT u FROM Usuario u WHERE u.correo = :correo AND u.contrasena = :contrasena"),
