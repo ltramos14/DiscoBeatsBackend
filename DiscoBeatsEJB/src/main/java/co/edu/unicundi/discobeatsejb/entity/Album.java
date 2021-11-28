@@ -35,7 +35,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Album.ListarTodos", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.AlbumDto" 
             + "(a.id, a.artista.id, a.generoMusical.id, a.artista.nombreArtistico, a.generoMusical.nombreGeneroMusical, a.nombre, a.descripcion, a.fechaLanzamiento, a.imagen, a.precio) FROM Album a ORDER BY a.id"),
     @NamedQuery(name = "Album.ObtenerPorId", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.AlbumDto" 
-            + "(a.id, a.generoMusical.id, a.artista.id, a.nombre, a.descripcion, a.fechaLanzamiento, a.imagen, a.precio) FROM Album a WHERE a.id = :id"),
+            + "(a.id, a.artista.id, a.generoMusical.id, a.nombre, a.descripcion, a.fechaLanzamiento, a.imagen, a.precio) FROM Album a WHERE a.id = :id"),
     @NamedQuery(name = "Album.ObtenerAlbumesArtista", query = "SELECT NEW co.edu.unicundi.discobeatsejb.dto.AlbumDto" 
             + "(a.id, a.generoMusical.id, a.artista.id, a.nombre, a.descripcion, a.fechaLanzamiento, a.imagen, a.precio) FROM Album a WHERE a.artista.id = :idartista"),
     @NamedQuery(name = "Album.ContarPorId", query = "SELECT COUNT(l) FROM Album l WHERE l.id=:id"),
