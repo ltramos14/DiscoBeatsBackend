@@ -86,7 +86,7 @@ public class CompraAlbumServiceImpl implements ICompraAlbumService{
         
         Long validarExistenciaCompra = repo.validarExistenciaCompra(compraNueva.getIdUsuario(), compraNueva.getIdAlbum());
         if(validarExistenciaCompra >0){
-            throw new ResourceNotFoundException("Este usuario ya compro este album");
+            throw new ConflictException("Este usuario ya compro este album");
         }
         CompraAlbum compraA = convertToEntity(compraNueva);
 

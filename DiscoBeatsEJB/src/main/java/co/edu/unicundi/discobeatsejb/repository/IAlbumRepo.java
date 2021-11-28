@@ -1,6 +1,7 @@
 package co.edu.unicundi.discobeatsejb.repository;
 
 import co.edu.unicundi.discobeatsejb.entity.Album;
+import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
 import co.edu.unicundi.discobeatsejb.views.AlbumView;
 import java.util.List;
 import javax.ejb.Local;
@@ -21,6 +22,8 @@ public interface IAlbumRepo extends ICrud<Album, Integer> {
     public Long validarExistenciaAlbumDeArtista(String nombreAlbum, Integer idArtista);
     
     public List<AlbumView> listarAlbumesPorVentas();
+    
+    public AlbumView ventasAlbum(Integer id);
     
     public List<Album> obtenerPorId(Integer id);
     

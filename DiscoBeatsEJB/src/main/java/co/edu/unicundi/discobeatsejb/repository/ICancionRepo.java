@@ -28,4 +28,6 @@ public interface ICancionRepo extends ICrud<Cancion, Integer>{
     
     public List<CancionView> listarCancionesPorVentas();
     
+    public CancionView ventasCancion(Integer id);
+    
 }

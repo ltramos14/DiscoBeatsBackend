@@ -24,6 +24,8 @@ public interface IAlbumService {
     
     public List<AlbumView> listarAlbumesPorVentas();
     
+    public AlbumView ventasAlbum(Integer id) throws ResourceNotFoundException;
+    
      public List<Album> obtenerPorId(Integer id) throws ResourceNotFoundException;
     
     public List<Album> obtenerAlbumesArtista(Integer id) throws ResourceNotFoundException;

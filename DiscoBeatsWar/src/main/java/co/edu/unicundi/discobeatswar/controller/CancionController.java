@@ -59,7 +59,6 @@ public class CancionController {
     @Path("/artista/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response obtenerCancionesArtista(@PathParam("id") Integer id) throws Exception {
-
         List<Cancion> listaCancionesArtista = this.cancionService.obtenerCancionesArtista(id);
         if (listaCancionesArtista == null) {
             return Response.status(Response.Status.NO_CONTENT).build();
@@ -71,7 +70,6 @@ public class CancionController {
     @Path("/album/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response obtenerCancionesAlbum(@PathParam("id") Integer id) throws Exception {
-
         List<Cancion> listaCancionesAlbum = this.cancionService.obtenerCancionesAlbum(id);
         if (listaCancionesAlbum == null) {
             return Response.status(Response.Status.NO_CONTENT).build();
@@ -83,14 +81,19 @@ public class CancionController {
     @Path("/vista")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarVentasCanciones() throws Exception {
-
         List<CancionView> listaVentasCanciones = this.cancionService.listarCancionesPorVentas();
-
         if (listaVentasCanciones == null) {
             return Response.status(Response.Status.NO_CONTENT).build();
         }
-
         return Response.status(Response.Status.OK).entity(listaVentasCanciones).build();
+    }
+    
+    @GET
+    @Path("/vista/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response ventasCancion(@PathParam("id") Integer id) throws Exception {
+        CancionView ventasCancion = this.cancionService.ventasCancion(id);
+        return Response.status(Response.Status.OK).entity(ventasCancion).build();
     }
     
     @POST

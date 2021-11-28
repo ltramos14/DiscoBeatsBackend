@@ -73,15 +73,20 @@ public class AlbumController {
     @GET
     @Path("/vista")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listarVentasCanciones() throws Exception {
-
+    public Response listarVentasAlbumes() throws Exception {
         List<AlbumView> listaVentasAlbumes = this.albumService.listarAlbumesPorVentas();
-
         if (listaVentasAlbumes == null) {
             return Response.status(Response.Status.NO_CONTENT).build();
         }
-
         return Response.status(Response.Status.OK).entity(listaVentasAlbumes).build();
+    }
+    
+    @GET
+    @Path("/vista/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response ventasAlbum(@PathParam("id") Integer id) throws ResourceNotFoundException {
+        AlbumView ventasAlbum = this.albumService.ventasAlbum(id);
+        return Response.status(Response.Status.OK).entity(ventasAlbum).build();
     }
     
     @POST

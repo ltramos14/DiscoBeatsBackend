@@ -95,5 +95,10 @@ public class CancionRepoImpl implements ICancionRepo{
         query.setParameter("idalbum", id);
         return query.getResultList();
     }
+
+    @Override
+    public CancionView ventasCancion(Integer id) {
+        return this.em.find(CancionView.class, id);
+    }
     
 }

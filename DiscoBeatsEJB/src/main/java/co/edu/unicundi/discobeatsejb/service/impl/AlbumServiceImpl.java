@@ -211,4 +211,15 @@ public class AlbumServiceImpl implements IAlbumService {
         }
         return null;
     }
+
+    @Override
+    public AlbumView ventasAlbum(Integer id) throws ResourceNotFoundException {
+        Long count = this.localRepo.validarExistenciaPorId(id);
+        if (count > 0) {
+            AlbumView albumview = localRepo.ventasAlbum(id);
+            return albumview;
+        } else {
+            throw new ResourceNotFoundException("El album no fue encontrado");
+        }
+    }
 }

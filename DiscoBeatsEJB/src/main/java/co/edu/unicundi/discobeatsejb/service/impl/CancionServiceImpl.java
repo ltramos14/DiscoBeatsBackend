@@ -178,31 +178,6 @@ public class CancionServiceImpl implements ICancionService {
         
     }
      
-//    private static CancionDto convertirACancionDto(Cancion cancion) {
-//        
-//        ModelMapper modelMapper = new ModelMapper();
-//        
-//        PropertyMap<Cancion, CancionDto> orderMap = new PropertyMap<Cancion, CancionDto>() {
-//            @Override
-//            protected void configure() {
-//                skip(destination.getListaCompras());
-//                
-//            }
-//        };
-//        modelMapper.addMappings(orderMap);
-//        
-//        return modelMapper.map(cancion, CancionDto.class);
-//        
-//    }
-//    
-//    private static List<CancionDto> convertirAListaCancionDto(List<Cancion> cancionesEntity) {
-//        List<CancionDto> listaCancionesDto = new ArrayList<>();
-//        for (Cancion c : cancionesEntity) {
-//            listaCancionesDto.add(convertirACancionDto(c));
-//        }
-//        return listaCancionesDto;
-//    }
-    
     private Cancion convertToEntity(CancionDto cancionDto) {
         
         Artista artiste = new Artista();
@@ -260,6 +235,15 @@ public class CancionServiceImpl implements ICancionService {
             return cancionesAlbum;
         }
         return null;
+    }
+
+    @Override
+    public CancionView ventasCancion(Integer id) throws ResourceNotFoundException {
+        Long validarCancion = localRepo.validarExistenciaPorId(id);
+        if (validarCancion == 0)
+            throw new ResourceNotFoundException("La canción no existe");
+        
+        return localRepo.ventasCancion(id);
     }
     
 }

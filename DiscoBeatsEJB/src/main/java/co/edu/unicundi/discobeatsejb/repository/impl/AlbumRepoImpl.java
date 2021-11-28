@@ -1,6 +1,7 @@
 package co.edu.unicundi.discobeatsejb.repository.impl;
 
 import co.edu.unicundi.discobeatsejb.entity.Album;
+import co.edu.unicundi.discobeatsejb.exception.ResourceNotFoundException;
 import co.edu.unicundi.discobeatsejb.repository.IAlbumRepo;
 import co.edu.unicundi.discobeatsejb.views.AlbumView;
 import java.util.List;
@@ -84,6 +85,11 @@ public class AlbumRepoImpl implements IAlbumRepo {
         TypedQuery<Album> query = this.em.createNamedQuery("Album.ObtenerAlbumesArtista", Album.class);
         query.setParameter("idartista", id);
         return query.getResultList();
+    }
+
+    @Override
+    public AlbumView ventasAlbum(Integer id) {
+        return this.em.find(AlbumView.class, id);
     }
      
 }
