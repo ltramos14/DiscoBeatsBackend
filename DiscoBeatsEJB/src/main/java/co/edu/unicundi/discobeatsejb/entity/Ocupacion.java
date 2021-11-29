@@ -13,8 +13,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -36,8 +34,6 @@ public class Ocupacion implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @NotNull(message = "La ocupacion del artista es obligatoria")
-    @Size(min = 3, max = 15, message = "La ocupacion del artista debe estar entre 3 y 15 caracteres")
     @Column(name = "nombre_ocupacion", nullable = false, length = 15)
     private String nombreOcupacion;
 

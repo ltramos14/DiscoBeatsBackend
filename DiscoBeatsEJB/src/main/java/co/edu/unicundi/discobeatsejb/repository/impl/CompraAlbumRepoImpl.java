@@ -1,12 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.unicundi.discobeatsejb.repository.impl;
 
-import co.edu.unicundi.discobeatsejb.entity.Album;
-import co.edu.unicundi.discobeatsejb.entity.Artista;
 import co.edu.unicundi.discobeatsejb.entity.CompraAlbum;
 import co.edu.unicundi.discobeatsejb.repository.ICompraAlbumRepo;
 import java.util.List;
@@ -16,6 +9,14 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+/**
+ *
+ * @author Tatiana Ramos Villanueva
+ * @author Nicolás Nieto Cárdenas
+ * @author Camilo Preciado Rojas
+ * @version 1.0.0
+ * @since 1.0.0
+ */
 @Stateless
 public class CompraAlbumRepoImpl implements ICompraAlbumRepo{
 

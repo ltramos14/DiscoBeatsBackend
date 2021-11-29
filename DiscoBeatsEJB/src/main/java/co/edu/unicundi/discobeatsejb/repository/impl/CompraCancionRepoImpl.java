@@ -15,6 +15,14 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+/**
+ *
+ * @author Tatiana Ramos Villanueva
+ * @author Nicolás Nieto Cárdenas
+ * @author Camilo Preciado Rojas
+ * @version 1.0.0
+ * @since 1.0.0
+ */
 @Stateless
 public class CompraCancionRepoImpl implements ICompraCancionRepo{
 
@@ -37,7 +45,7 @@ public class CompraCancionRepoImpl implements ICompraCancionRepo{
 
     @Override
     public CompraCancion listarPorId(Integer id) {
-         return this.em.find(CompraCancion.class, id);
+        return this.em.find(CompraCancion.class, id);
     }
 
     @Override

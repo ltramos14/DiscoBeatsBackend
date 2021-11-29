@@ -1,7 +1,7 @@
 package co.edu.unicundi.discobeatsejb.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,8 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -41,21 +39,17 @@ public class CompraCancion implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @NotNull(message = "La compra debe tener una canción obligatoriamente")
     @ManyToOne
     @JoinColumn(name = "id_cancion", nullable = false )
     private Cancion cancionCompra;
     
-    @NotNull(message = "La compra debe pertenecer a un usuario obligatoriamente")
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false )
     private Usuario usuarioCancion;
      
     @Column(name = "fecha_compra", nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaCompra;
     
-    @NotNull(message = "El precio total es obligatorio")
     @Column(name = "precio_total", nullable = false, length = 25)
     private Integer precioTotal;
     

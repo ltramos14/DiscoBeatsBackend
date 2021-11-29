@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.unicundi.discobeatsejb.dto;
 
 import java.io.Serializable;
@@ -17,10 +12,10 @@ public class CompraCancionDto implements Serializable {
     
     private Integer id;
     
-    @NotNull(message = "La canción no es obligatoria")
+    @NotNull(message = "La compra debe tener una canción obligatoriamente")
     private Integer idCancion;
     
-    @NotNull(message = "El usuario el obligatorio")
+    @NotNull(message = "El id del usuario es obligatorio")
     private Integer idUsuario;
 
     @NotNull(message = "El precio total de la compra es obligatorio")

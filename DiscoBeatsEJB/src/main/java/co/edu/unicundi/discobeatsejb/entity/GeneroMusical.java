@@ -15,8 +15,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -41,8 +39,6 @@ public class GeneroMusical implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull(message = "El tipo de genero musical es obligatorio")
-    @Size(min = 3, max = 15, message = "El nombre del genero musical debe estar entre 3 y 15 caracteres")
     @Column(name = "nombre_genero_musical", nullable = false, length = 15)
     private String nombreGeneroMusical;
 
